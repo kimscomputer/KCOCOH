@@ -31,9 +31,21 @@
 - `https://kcocoh.org/`, `https://www.kcocoh.org/`, `https://kcocoh-site-2im.pages.dev/` 모두 HTTP 200 및 KCOC 핵심 문구 렌더링을 확인했다.
 - 작업에 사용된 임시 Cloudflare API 토큰은 노출된 값으로 간주하며, 작업 후 Cloudflare 대시보드에서 삭제/폐기해야 한다.
 
+### 2026-05-17 12:12 PDT
+
+- 제공받은 공식 로고 `image/kcc-logo.png`를 홈페이지 헤더에 반영했다.
+- 2026년 5월 17일 주보 이미지 기준으로 주일 장년예배, 주일 영어예배, 수요예배, 새벽기도, 교회학교, 청년부/중고등부/성경공부 시간과 교회 비전/섬기는 사람들 정보를 홈페이지에 반영했다.
+- `kcocoh.org`와 `www.kcocoh.org` 라이브 페이지에서 로고 파일과 예배시간/교회정보 문구가 표시되는 것을 확인했다.
+
+### 2026-05-17 12:26 PDT
+
+- 기존 홈페이지 `https://www.mykoreanchurch.org/`에서 공개 이미지/아이콘 자산을 내려받아 `site/v1/media/existing-home/`에 정리했다.
+- 메인 히어로 배경과 미디어 섹션에 기존 홈 사진을 적용하고, 공식 YouTube 채널 `https://www.youtube.com/@KoreanChurchofColumbus`와 수요예배 재생목록 `PLuzUYNV8E-aTJhoS5FhvO8s3F0GNBeDWU`를 연결했다.
+- 한국어/영어/중국어/스페인어 4개 언어 전환 버튼과 `site/v1/assets/app.js` 번역 스크립트를 추가했다.
+- `kcocoh.org`와 `www.kcocoh.org`에서 미디어 섹션, YouTube iframe, 사진 자산, 언어 버튼이 표시되는 것을 확인했다.
+
 ## 다음 작업
 
-1. 예배 시간/온라인 예배 링크 세부 정보 확인 후 홈페이지에 반영
-2. 교회 사진/로고 등 사용 허가된 원본 자산 수집 및 최적화
-3. Cloudflare Pages custom-domain 상태가 `active`로 바뀌는지 재확인
-4. 필요 시 `www.kcocoh.org` → `kcocoh.org` canonical redirect 정책 추가
+1. 번역 문구를 교회 공식 표현으로 검수/수정
+2. 교회 사진 원본이 더 확보되면 히어로/사역 섹션 이미지 교체 또는 추가
+3. 필요 시 `www.kcocoh.org` → `kcocoh.org` canonical redirect 정책 추가

@@ -4,7 +4,9 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>KCOC — Korean Church of Columbus | 콜럼버스 한인교회</title>
-  <meta name="description" content="Korean Church of Columbus / 콜럼버스 한인교회 공식 새 웹사이트 준비 페이지입니다. 예배, 다음세대, 한글학교, 선교와 교회 소식을 안내합니다.">
+  <meta name="description" content="Korean Church of Columbus / 콜럼버스 한인교회 공식 웹사이트입니다. 예배, 말씀, 다음세대, 한글학교, 선교와 교회 소식을 안내합니다.">
+  <link rel="icon" href="media/existing-home/cropped-favicon-32x32.png" sizes="32x32">
+  <link rel="apple-touch-icon" href="media/existing-home/cropped-favicon-180x180.png">
   <style>
     :root {
       color-scheme: light;
@@ -72,30 +74,19 @@
     .brand {
       display: inline-flex;
       align-items: center;
-      gap: 12px;
       text-decoration: none;
-      font-weight: 900;
-      letter-spacing: -.03em;
       color: var(--ink-strong);
     }
-    .brand-mark {
-      width: 44px;
-      height: 44px;
-      border-radius: 14px;
-      display: grid;
-      place-items: center;
-      color: #fff;
-      font-size: 18px;
-      background: linear-gradient(135deg, var(--brand), var(--brand-2));
-      box-shadow: 0 12px 28px rgba(29, 78, 216, .24);
-    }
-    .brand small {
+    .brand-logo {
       display: block;
-      color: var(--muted);
-      font-size: 12px;
-      line-height: 1.2;
-      letter-spacing: .02em;
-      font-weight: 800;
+      width: auto;
+      height: 56px;
+      max-width: min(330px, 44vw);
+      object-fit: contain;
+      padding: 3px 5px;
+      border-radius: 14px;
+      background: #fff;
+      box-shadow: 0 10px 28px rgba(15, 23, 42, .08);
     }
     nav ul {
       margin: 0;
@@ -137,14 +128,21 @@
       scroll-margin-top: 96px;
       border: 1px solid rgba(219, 229, 241, .9);
       border-radius: 38px;
-      background:
-        linear-gradient(135deg, rgba(15, 23, 42, .86), rgba(30, 64, 175, .75)),
-        radial-gradient(circle at 75% 20%, rgba(250, 204, 21, .28), transparent 22%),
-        linear-gradient(135deg, #1e3a8a, #0f766e);
+      background: #0f172a;
       color: #fff;
       box-shadow: var(--shadow);
       overflow: hidden;
       position: relative;
+    }
+    .hero::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(135deg, rgba(15, 23, 42, .88), rgba(30, 64, 175, .64)),
+        radial-gradient(circle at 75% 20%, rgba(250, 204, 21, .26), transparent 22%),
+        url("media/existing-home/5W2A1213_cropped-1500x630.jpg") center / cover no-repeat;
+      transform: scale(1.02);
     }
     .hero::after {
       content: "";
@@ -243,7 +241,7 @@
       box-shadow: 0 18px 50px rgba(0, 0, 0, .12);
     }
     .quick-card strong { display: block; font-size: 19px; color: #fff; margin-bottom: 6px; }
-    .quick-card span { display: block; color: #eff6ff; font-size: 16px; line-height: 1.6; }
+    .quick-card span { display: block; color: #eff6ff; font-size: 17px; line-height: 1.62; }
 
     .section-head {
       display: flex;
@@ -294,11 +292,34 @@
     }
     .time {
       color: var(--ink-strong);
-      font-size: 28px;
+      font-size: 27px;
       font-weight: 950;
-      line-height: 1.12;
+      line-height: 1.2;
       margin: 10px 0;
       letter-spacing: -.035em;
+    }
+    .schedule-list, .detail-list {
+      display: grid;
+      gap: 9px;
+      margin: 14px 0 0;
+      padding: 0;
+      list-style: none;
+      color: #334155;
+      font-weight: 760;
+    }
+    .schedule-list li, .detail-list li {
+      padding-left: 16px;
+      position: relative;
+    }
+    .schedule-list li::before, .detail-list li::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: .72em;
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--brand);
     }
     .note { font-size: 15px; color: var(--muted); }
     .feature-band {
@@ -374,6 +395,89 @@
     }
     .news-list span { color: var(--muted); font-size: 14px; font-weight: 800; }
 
+
+    .language-switch {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: rgba(255, 255, 255, .86);
+    }
+    .language-switch button {
+      min-height: 36px;
+      min-width: 46px;
+      padding: 0 10px;
+      border: 0;
+      border-radius: 999px;
+      background: transparent;
+      color: #334155;
+      font-weight: 900;
+      white-space: nowrap;
+      cursor: pointer;
+    }
+    .language-switch button.is-active { background: var(--ink-strong); color: #fff; }
+
+    .media-showcase {
+      display: grid;
+      grid-template-columns: minmax(0, 1.1fr) minmax(320px, .9fr);
+      gap: 22px;
+      align-items: stretch;
+    }
+    .photo-feature {
+      min-height: 440px;
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      position: relative;
+      background: #0f172a;
+      box-shadow: var(--shadow);
+    }
+    .photo-feature img, .photo-tile img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .photo-feature::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, transparent 45%, rgba(15,23,42,.78));
+    }
+    .photo-caption {
+      position: absolute;
+      left: 24px;
+      right: 24px;
+      bottom: 22px;
+      z-index: 1;
+      color: #fff;
+    }
+    .photo-caption strong { display: block; font-size: 28px; line-height: 1.15; letter-spacing: -.04em; }
+    .photo-caption span { display: block; margin-top: 8px; color: #dbeafe; }
+    .media-side { display: grid; gap: 18px; }
+    .video-card {
+      overflow: hidden;
+      border-radius: var(--radius-md);
+      background: #0f172a;
+      color: #fff;
+      box-shadow: 0 16px 40px rgba(15, 23, 42, .14);
+    }
+    .video-frame { position: relative; aspect-ratio: 16 / 9; background: #020617; }
+    .video-frame iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+    .video-copy { padding: 22px; }
+    .video-copy h3 { color: #fff; }
+    .video-copy p { color: #cbd5e1; margin-top: 8px; }
+    .media-actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 16px; }
+    .media-actions a {
+      display: inline-flex;
+      min-height: 42px;
+      align-items: center;
+      padding: 0 14px;
+      border-radius: 999px;
+      background: rgba(255,255,255,.12);
+      color: #fff;
+      text-decoration: none;
+      font-weight: 900;
+    }
+    .photo-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+    .photo-tile { min-height: 132px; border-radius: 20px; overflow: hidden; box-shadow: 0 12px 30px rgba(15,23,42,.1); }
+
     .contact-card {
       overflow: hidden;
       padding: 0;
@@ -430,9 +534,11 @@
       nav { width: 100%; overflow-x: auto; padding-bottom: 4px; }
       nav ul { justify-content: flex-start; }
       nav a { font-size: 14px; }
+      .language-switch { margin-left: auto; }
+      .photo-feature { min-height: 340px; }
       .hero-inner { grid-template-columns: 1fr; min-height: auto; }
       .hero-panel { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-      .grid-3, .grid-2, .contact-inner { grid-template-columns: 1fr; }
+      .grid-3, .grid-2, .contact-inner, .media-showcase { grid-template-columns: 1fr; }
       .section { padding: 64px 0; }
       .section-head { display: block; }
       .map-box { min-height: 280px; }
@@ -446,10 +552,14 @@
       .hero-panel { grid-template-columns: 1fr; }
       .hero h1 { font-size: clamp(42px, 13vw, 62px); }
       .hero-actions, .card-actions { display: grid; grid-template-columns: 1fr; }
+      .language-switch { width: 100%; justify-content: space-between; }
+      .language-switch button { flex: 1; }
+      .photo-grid { grid-template-columns: 1fr; }
+      .photo-feature { min-height: 280px; }
       .btn { width: 100%; min-height: 54px; }
       .card { padding: 22px; }
       .section { padding: 54px 0; }
-      .brand small { display: none; }
+      .brand-logo { height: 44px; max-width: min(260px, 60vw); }
     }
   </style>
 </head>
@@ -458,21 +568,27 @@
 
   <header class="site-header" aria-label="KCOC main navigation">
     <div class="nav-wrap">
-      <a class="brand" href="#top" aria-label="KCOC home">
-        <span class="brand-mark">✚</span>
-        <span>KCOC <small>Korean Church of Columbus</small></span>
+      <a class="brand" href="#top" aria-label="콜럼버스 한인교회 Korean Church of Columbus home">
+        <img class="brand-logo" src="image/kcc-logo.png" alt="콜럼버스 한인교회 Korean Church of Columbus" width="290" height="71">
       </a>
       <nav aria-label="주요 메뉴">
         <ul>
-          <li><a href="#visit">처음 오셨나요</a></li>
-          <li><a href="#worship">예배와 말씀</a></li>
-          <li><a href="#nextgen">다음세대</a></li>
-          <li><a href="#mission">공동체와 선교</a></li>
-          <li><a href="#news">소식</a></li>
-          <li><a href="#school">한글학교</a></li>
-          <li><a class="nav-cta" href="#contact">오시는 길</a></li>
+          <li><a href="#visit" data-i18n="nav.visit">처음 오셨나요</a></li>
+          <li><a href="#worship" data-i18n="nav.worship">예배와 말씀</a></li>
+          <li><a href="#media" data-i18n="nav.media">미디어</a></li>
+          <li><a href="#nextgen" data-i18n="nav.nextgen">다음세대</a></li>
+          <li><a href="#mission" data-i18n="nav.mission">공동체와 선교</a></li>
+          <li><a href="#news" data-i18n="nav.news">소식</a></li>
+          <li><a href="#school" data-i18n="nav.school">한글학교</a></li>
+          <li><a class="nav-cta" href="#contact" data-i18n="nav.contact">오시는 길</a></li>
         </ul>
       </nav>
+      <div class="language-switch" aria-label="Language selector">
+        <button type="button" class="is-active" data-lang="ko">KO</button>
+        <button type="button" data-lang="en">EN</button>
+        <button type="button" data-lang="zh">中文</button>
+        <button type="button" data-lang="es">ES</button>
+      </div>
     </div>
   </header>
 
@@ -481,63 +597,105 @@
       <div class="hero-inner">
         <div>
           <div class="eyebrow">KCOC · kcocoh.org</div>
-          <h1 id="hero-title">한 영혼과 열방과 다음 세대를 살리는 교회</h1>
-          <p class="hero-lead">콜럼버스 한인교회에 오신 여러분을 주님의 이름으로 환영합니다. 함께 예배하고, 말씀 안에서 자라며, 다음 세대와 열방을 섬기는 믿음의 공동체입니다.</p>
-          <p class="hero-en">Welcome to Korean Church of Columbus. Worship with us, grow in God’s Word, and walk the journey of faith together.</p>
+          <h1 id="hero-title" data-i18n="hero.title">한 영혼과 열방과 다음 세대를 살리는 교회</h1>
+          <p class="hero-lead" data-i18n="hero.lead">콜럼버스 한인교회에 오신 여러분을 주님의 이름으로 환영합니다. 함께 예배하고, 말씀 안에서 자라며, 다음 세대와 열방을 섬기는 믿음의 공동체입니다.</p>
+          <p class="hero-en" data-i18n="hero.sub">Welcome to Korean Church of Columbus. Worship with us, grow in God’s Word, and walk the journey of faith together.</p>
           <div class="hero-actions" aria-label="주요 바로가기">
-            <a class="btn btn-primary" href="#worship">예배 시간 보기</a>
-            <a class="btn btn-light" href="#visit">처음 방문 안내</a>
-            <a class="btn btn-light" href="#contact">오시는 길</a>
+            <a class="btn btn-primary" href="#worship" data-i18n="cta.worship">예배 시간 보기</a>
+            <a class="btn btn-light" href="#visit" data-i18n="cta.visit">처음 방문 안내</a>
+            <a class="btn btn-light" href="#contact" data-i18n="cta.directions">오시는 길</a>
           </div>
         </div>
         <aside class="hero-panel" aria-label="빠른 안내">
           <div class="quick-card">
-            <strong>주일 한글예배</strong>
-            <span>말씀과 찬양으로 함께 예배하는 주일 공동체 예배를 안내합니다.</span>
+            <strong>주일 장년 예배</strong>
+            <span>1부 오전 9시 · 2부 오전 11시</span>
           </div>
           <div class="quick-card">
-            <strong>English Ministry</strong>
-            <span>English-speaking families and students are welcome to worship with us.</span>
+            <strong>Sunday English Worship</strong>
+            <span>1st 9:00 AM · 2nd 11:00 AM</span>
           </div>
           <div class="quick-card">
-            <strong>다음세대</strong>
-            <span>Sunday School, Youth Group, 청년부가 믿음의 다음 세대를 함께 세웁니다.</span>
+            <strong>주중 예배와 기도</strong>
+            <span>수요예배 오후 7시 · 새벽기도 매일 오전 6시</span>
           </div>
           <div class="quick-card">
-            <strong>한글학교</strong>
-            <span>KCC Korean School을 통해 한국어와 문화를 다음 세대에 전합니다.</span>
+            <strong>교회학교</strong>
+            <span>주일 오전 11시 · 자녀 예배와 교육</span>
           </div>
         </aside>
       </div>
     </section>
+
+    <section class="section" id="media" aria-labelledby="media-title">
+      <div class="section-head">
+        <div>
+          <p class="section-kicker" data-i18n="media.kicker">Media & Worship</p>
+          <h2 id="media-title" data-i18n="media.title">예배와 공동체를 영상과 사진으로 만나다</h2>
+          <p class="section-intro" data-i18n="media.intro">기존 홈페이지의 사진과 공식 YouTube 채널을 연결해 예배, 말씀, 공동체의 현장을 더 생생하게 보여드립니다.</p>
+        </div>
+        <a class="btn btn-soft" href="https://www.youtube.com/@KoreanChurchofColumbus" target="_blank" rel="noopener" data-i18n="media.channel">YouTube 채널 보기</a>
+      </div>
+      <div class="media-showcase">
+        <figure class="photo-feature">
+          <img src="media/existing-home/DSC06622-1500x630.jpg" alt="콜럼버스 한인교회 예배와 공동체 사진" loading="lazy">
+          <figcaption class="photo-caption">
+            <strong data-i18n="media.photoTitle">함께 예배하고 함께 자라는 공동체</strong>
+            <span data-i18n="media.photoText">예배, 다음세대, 성도들의 교제를 사진으로 소개합니다.</span>
+          </figcaption>
+        </figure>
+        <div class="media-side">
+          <article class="video-card">
+            <div class="video-frame">
+              <iframe title="Korean Church of Columbus YouTube playlist" src="https://www.youtube.com/embed/videoseries?list=PLuzUYNV8E-aTJhoS5FhvO8s3F0GNBeDWU" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+            </div>
+            <div class="video-copy">
+              <h3 data-i18n="media.videoTitle">수요예배 말씀 다시보기</h3>
+              <p data-i18n="media.videoText">공식 YouTube 재생목록을 통해 최근 말씀과 예배 영상을 이어서 볼 수 있습니다.</p>
+              <div class="media-actions">
+                <a href="https://www.youtube.com/playlist?list=PLuzUYNV8E-aTJhoS5FhvO8s3F0GNBeDWU" target="_blank" rel="noopener" data-i18n="media.playlist">재생목록 열기</a>
+                <a href="https://www.youtube.com/@KoreanChurchofColumbus" target="_blank" rel="noopener" data-i18n="media.channelShort">채널 방문</a>
+              </div>
+            </div>
+          </article>
+          <div class="photo-grid" aria-label="KCOC photo gallery">
+            <div class="photo-tile"><img src="media/existing-home/DSCF9332-1500x630.jpg" alt="KCOC community photo" loading="lazy"></div>
+            <div class="photo-tile"><img src="media/existing-home/XE1A9331-1-1500x630.jpg" alt="KCOC worship photo" loading="lazy"></div>
+            <div class="photo-tile"><img src="media/existing-home/DSCF2315-1500x630.jpg" alt="KCOC fellowship photo" loading="lazy"></div>
+            <div class="photo-tile"><img src="media/existing-home/VL6D2190-3-1500x630.jpg" alt="KCOC ministry photo" loading="lazy"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
 
     <section class="section" id="worship" aria-labelledby="worship-title">
       <div class="section-head">
         <div>
           <p class="section-kicker">Worship & Word</p>
           <h2 id="worship-title">예배와 말씀</h2>
-          <p class="section-intro">방문자가 가장 먼저 확인하는 예배 안내를 눈에 잘 보이게 정리했습니다. 정확한 예배 시간과 온라인 예배 링크는 확인 후 바로 반영할 수 있습니다.</p>
+          <p class="section-intro">주보에 공개된 예배와 성경공부 시간을 방문자가 바로 확인할 수 있도록 정리했습니다.</p>
         </div>
-        <a class="btn btn-soft" href="https://www.mykoreanchurch.org/" rel="noopener">예배 안내 확인하기</a>
+        <a class="btn btn-soft" href="#contact">교회 위치 보기</a>
       </div>
       <div class="grid grid-3">
         <article class="card">
           <span class="label">Korean Worship</span>
-          <h3>주일 한글예배</h3>
-          <div class="time">시간 확인 중</div>
+          <h3>주일 장년 예배</h3>
+          <div class="time">1부 오전 9시<br>2부 오전 11시</div>
           <p>말씀과 찬양, 기도로 함께 하나님께 나아가는 주일 공동체 예배입니다.</p>
         </article>
         <article class="card">
-          <span class="label">English Ministry</span>
-          <h3>English Ministry</h3>
-          <div class="time">Schedule TBD</div>
+          <span class="label">English Congregation</span>
+          <h3>주일 영어 예배</h3>
+          <div class="time">1st 9:00 AM<br>2nd 11:00 AM</div>
           <p>English-speaking members, students, and families are invited to worship and grow together.</p>
         </article>
         <article class="card">
-          <span class="label">Midweek</span>
-          <h3>수요예배와 주중 모임</h3>
-          <div class="time">확인 중</div>
-          <p>주중에도 말씀과 기도 안에서 삶을 세워가는 모임을 준비해 안내합니다.</p>
+          <span class="label">Midweek & Prayer</span>
+          <h3>주중 예배와 기도</h3>
+          <div class="time">수요예배 오후 7시<br>새벽기도 매일 오전 6시</div>
+          <p>주중에도 말씀과 기도 안에서 삶을 세워가는 모임입니다.</p>
         </article>
       </div>
     </section>
@@ -573,12 +731,12 @@
         </div>
       </div>
       <div class="grid grid-3">
-        <article class="card ministry-card"><div><div class="icon">🌱</div><h3>주일학교</h3><p>어린이들이 복음을 배우고 예배의 기쁨을 경험하도록 돕습니다.</p></div></article>
-        <article class="card ministry-card"><div><div class="icon">🙌</div><h3>중고등부 Youth Group</h3><p>청소년들이 말씀과 공동체 안에서 정체성과 믿음을 세워갑니다.</p></div></article>
-        <article class="card ministry-card"><div><div class="icon">🤝</div><h3>청년부</h3><p>학업과 일상 속에서 함께 기도하고 성장하는 청년 공동체입니다.</p></div></article>
+        <article class="card ministry-card"><div><div class="icon">🌱</div><h3>교회학교</h3><p>주일 오전 11시, 어린이들이 복음을 배우고 예배의 기쁨을 경험하도록 돕습니다.</p></div></article>
+        <article class="card ministry-card"><div><div class="icon">🙌</div><h3>중고등부 Youth Group</h3><p>금요일 오후 7시, 청소년들이 말씀과 공동체 안에서 정체성과 믿음을 세워갑니다.</p></div></article>
+        <article class="card ministry-card"><div><div class="icon">🤝</div><h3>청년부</h3><p>금요일 오후 7시 모이며, 수요일 오후 8시 30분에는 청년부 성경공부가 있습니다.</p></div></article>
         <article class="card ministry-card"><div><div class="icon">🌎</div><h3>English Ministry</h3><p>English-speaking members can worship, serve, and belong in community.</p></div></article>
-        <article class="card ministry-card" id="school"><div><div class="icon">📚</div><h3>KCC Korean School</h3><p>한국어와 문화를 배우며 다음 세대의 뿌리를 세워가는 한글학교입니다.</p></div></article>
-        <article class="card ministry-card"><div><div class="icon">🏠</div><h3>가정과 공동체</h3><p>세대가 함께 예배하고 서로를 돌보는 따뜻한 교회 공동체를 지향합니다.</p></div></article>
+        <article class="card ministry-card" id="school"><div><div class="icon">📚</div><h3>KCC Korean School</h3><p>주일학교 교사반 토요일 오전 8시 등 한국어와 문화를 다음 세대에 전하는 교육 사역입니다.</p></div></article>
+        <article class="card ministry-card"><div><div class="icon">🏠</div><h3>영어부와 성경공부</h3><p>영어부 수요일 오후 7시, 중고등부 교사반 토요일 오전 11시 / 주일 오후 1시.</p></div></article>
       </div>
     </section>
 
@@ -586,13 +744,19 @@
       <div class="grid grid-2">
         <div>
           <p class="section-kicker">Community & Mission</p>
-          <h2 id="mission-title">공동체와 선교</h2>
-          <p class="section-intro">KCOC는 한 영혼, 지역, 열방을 향한 하나님의 마음을 따라 복음을 전하고 섬기는 공동체입니다.</p>
+          <h2 id="mission-title">교회 비전</h2>
+          <p class="section-intro">2026년 표어 “다시 기초를 쌓으라” 아래, 말씀과 성령으로 사역하는 교회, 예배와 소그룹 공동체의 교회, 전 성도를 제자와 사역자로 세우는 교회를 꿈꿉니다.</p>
         </div>
         <div class="card">
-          <h3>선교 안내</h3>
-          <p>협력 선교, 지역 선교, 선교 소식과 기도 제목은 공개 가능 범위를 확인한 뒤 안전하게 정리해 게시합니다.</p>
-          <div class="card-actions"><a class="btn btn-soft" href="mailto:help@mykoreanchurch.org">선교 문의하기</a></div>
+          <h3>한 영혼과 열방과 다음 세대를 살리는 교회</h3>
+          <ul class="detail-list">
+            <li>말씀과 성령으로 사역하는 교회</li>
+            <li>예배와 소그룹 공동체의 교회</li>
+            <li>전 성도를 제자와 사역자로 세우는 교회</li>
+            <li>복음으로 한 영혼과 열방을 섬기는 교회</li>
+            <li>다음 세대를 일으키는 교회</li>
+          </ul>
+          <div class="card-actions"><a class="btn btn-soft" href="mailto:help@mykoreanchurch.org">교회 문의하기</a></div>
         </div>
       </div>
     </section>
@@ -609,15 +773,20 @@
         <div class="card">
           <h3>최근 안내</h3>
           <ul class="news-list">
-            <li><a href="mailto:help@mykoreanchurch.org"><span>주보</span> 최신 주보 연결 준비 중</a></li>
-            <li><a href="mailto:help@mykoreanchurch.org"><span>광고</span> 교회 광고 게시 방식 준비 중</a></li>
-            <li><a href="mailto:help@mykoreanchurch.org"><span>사진</span> 사진모음집 정리 예정</a></li>
+            <li><a href="mailto:help@mykoreanchurch.org"><span>주보</span> 2026년 5월 17일 주보 정보 반영</a></li>
+            <li><a href="mailto:help@mykoreanchurch.org"><span>말씀</span> 사랑의 복음이 충만한 가정</a></li>
+            <li><a href="mailto:help@mykoreanchurch.org"><span>성경봉독</span> 에베소서 5:21–28</a></li>
           </ul>
         </div>
         <div class="card">
-          <h3>온라인 예배</h3>
-          <p>한글예배와 English Ministry 생중계 링크를 쉽게 찾을 수 있도록 이 영역에 연결합니다.</p>
-          <div class="card-actions"><a class="btn btn-blue" href="https://www.mykoreanchurch.org/" rel="noopener">온라인 예배 바로가기</a></div>
+          <h3>섬기는 사람들</h3>
+          <ul class="detail-list">
+            <li>정지웅 담임 목사</li>
+            <li>이성영 목사 / 어린이</li>
+            <li>Jedi Yi 전도사 / Youth</li>
+            <li>Simon Baik 전도사 / EC</li>
+          </ul>
+          <div class="card-actions"><a class="btn btn-blue" href="mailto:help@mykoreanchurch.org">문의하기</a></div>
         </div>
       </div>
     </section>
@@ -639,7 +808,7 @@
           <div class="map-box" aria-label="교회 주소 안내">
             <div>
               <strong>2825 Snouffer Rd<br>Columbus, OH 43235</strong>
-              <p>지도 임베드는 보안 정책과 최종 배포 설정 확인 후 연결합니다.</p>
+              <p>주일 장년예배와 영어예배는 오전 9시와 11시에 드립니다.</p>
               <div class="card-actions"><a class="btn btn-primary" href="https://maps.google.com/?q=2825+Snouffer+Rd,+Columbus,+OH+43235" rel="noopener">구글 지도에서 길찾기</a></div>
             </div>
           </div>
@@ -650,9 +819,10 @@
 
   <footer class="site-footer">
     <div class="footer-inner">
-      <div><strong>KCOC · Korean Church of Columbus</strong><br>콜럼버스 한인교회 새 웹사이트 준비 중</div>
+      <div><strong>KCOC · Korean Church of Columbus</strong><br>콜럼버스 한인교회 공식 웹사이트</div>
       <div>Working domain: <a href="https://kcocoh.org/">kcocoh.org</a></div>
     </div>
   </footer>
+  <script src="assets/app.js" defer></script>
 </body>
 </html>
