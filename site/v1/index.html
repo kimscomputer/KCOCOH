@@ -4,43 +4,57 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>KCOC — Korean Church of Columbus | 콜럼버스 한인교회</title>
-  <meta name="description" content="Korean Church of Columbus / 콜럼버스 한인교회 공식 웹사이트입니다. 예배, 말씀, 다음세대, 한글학교, 선교와 교회 소식을 안내합니다.">
+  <meta name="description" content="Korean Church of Columbus / 콜럼버스 한인교회 공식 웹사이트입니다. 예배 시간, 방문 안내, 말씀 영상, 다음세대, 한글학교와 교회 위치를 안내합니다.">
   <link rel="icon" href="media/existing-home/cropped-favicon-32x32.png" sizes="32x32">
   <link rel="apple-touch-icon" href="media/existing-home/cropped-favicon-180x180.png">
   <style>
     :root {
       color-scheme: light;
-      --ink: #172033;
-      --ink-strong: #0f172a;
-      --muted: #4b5d75;
-      --soft: #eff6ff;
-      --soft-2: #f8fafc;
-      --line: #dbe5f1;
-      --brand: #1d4ed8;
-      --brand-2: #0f766e;
-      --gold: #b7791f;
+      --paper: #f7f3ec;
+      --paper-2: #fcfaf6;
+      --ink: #161615;
+      --muted: #66635d;
+      --quiet: #8a867d;
+      --line: #e3ded4;
+      --line-dark: rgba(255,255,255,.22);
+      --charcoal: #111315;
+      --charcoal-2: #1c2024;
+      --bronze: #a66f3e;
+      --bronze-dark: #7d512c;
+      --sage: #68715f;
       --white: #ffffff;
-      --shadow: 0 24px 70px rgba(15, 23, 42, .12);
-      --radius-lg: 30px;
-      --radius-md: 22px;
-      --radius-sm: 16px;
+      --radius-xl: 32px;
+      --radius-lg: 24px;
+      --radius-md: 18px;
+      --shadow-soft: 0 26px 70px rgba(20, 20, 18, .10);
+      --shadow-photo: 0 30px 80px rgba(17, 19, 21, .22);
     }
 
     * { box-sizing: border-box; }
     html { scroll-behavior: smooth; }
     body {
       margin: 0;
-      font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans KR", sans-serif;
       color: var(--ink);
-      background:
-        radial-gradient(circle at 8% 0%, rgba(29, 78, 216, .12), transparent 30%),
-        radial-gradient(circle at 92% 12%, rgba(15, 118, 110, .12), transparent 34%),
-        linear-gradient(180deg, #f8fbff 0%, #ffffff 42%, #f6f8fb 100%);
+      background: var(--paper);
+      font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans KR", "Apple SD Gothic Neo", sans-serif;
       font-size: 17px;
-      line-height: 1.7;
+      line-height: 1.68;
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
     }
-
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      z-index: -1;
+      pointer-events: none;
+      background:
+        radial-gradient(circle at 8% 2%, rgba(166, 111, 62, .10), transparent 30%),
+        radial-gradient(circle at 95% 12%, rgba(104, 113, 95, .10), transparent 34%),
+        linear-gradient(180deg, #fbf8f2 0%, #f7f3ec 48%, #f4efe7 100%);
+    }
     a { color: inherit; }
+    img { max-width: 100%; }
     .skip-link {
       position: absolute;
       left: 16px;
@@ -49,7 +63,7 @@
       padding: 12px 16px;
       border-radius: 999px;
       color: #fff;
-      background: var(--ink-strong);
+      background: var(--charcoal);
       transition: top .2s ease;
     }
     .skip-link:focus { top: 16px; }
@@ -57,537 +71,390 @@
     .site-header {
       position: sticky;
       top: 0;
-      z-index: 20;
-      backdrop-filter: blur(20px);
-      background: rgba(255, 255, 255, .86);
-      border-bottom: 1px solid rgba(219, 229, 241, .8);
+      z-index: 30;
+      border-bottom: 1px solid rgba(227, 222, 212, .84);
+      background: rgba(247, 243, 236, .88);
+      backdrop-filter: blur(18px);
     }
     .nav-wrap {
-      width: min(1180px, calc(100% - 32px));
+      width: min(1240px, calc(100% - 36px));
+      min-height: 82px;
       margin: 0 auto;
-      min-height: 74px;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 24px;
+      gap: 18px;
     }
-    .brand {
-      display: inline-flex;
-      align-items: center;
-      text-decoration: none;
-      color: var(--ink-strong);
-    }
+    .brand { display: inline-flex; align-items: center; text-decoration: none; flex: 0 0 auto; }
     .brand-logo {
       display: block;
       width: auto;
-      height: 56px;
-      max-width: min(330px, 44vw);
+      height: 54px;
+      max-width: min(300px, 36vw);
       object-fit: contain;
-      padding: 3px 5px;
+      padding: 3px 4px;
       border-radius: 14px;
-      background: #fff;
-      box-shadow: 0 10px 28px rgba(15, 23, 42, .08);
+      background: rgba(255,255,255,.72);
     }
+    nav { min-width: 0; }
     nav ul {
+      display: flex;
+      align-items: center;
+      gap: 2px;
       margin: 0;
       padding: 0;
       list-style: none;
-      display: flex;
-      align-items: center;
-      gap: 4px;
     }
     nav a {
-      min-height: 44px;
+      min-height: 42px;
       display: inline-flex;
       align-items: center;
-      padding: 0 12px;
+      padding: 0 10px;
       border-radius: 999px;
-      color: #334155;
+      color: #3f3d38;
       text-decoration: none;
-      font-size: 15px;
-      font-weight: 800;
+      font-size: 14px;
+      font-weight: 760;
       white-space: nowrap;
     }
-    nav a:hover, nav a:focus-visible { background: var(--soft); color: var(--brand); outline: none; }
-    .nav-cta {
-      background: var(--ink-strong);
-      color: #fff !important;
-      padding-inline: 16px;
+    nav a:hover, nav a:focus-visible { background: rgba(255,255,255,.72); outline: none; }
+    .header-actions { display: inline-flex; align-items: center; gap: 10px; flex: 0 0 auto; }
+    .watch-link {
+      min-height: 42px;
+      display: inline-flex;
+      align-items: center;
+      padding: 0 14px;
+      border-radius: 999px;
+      background: var(--charcoal);
+      color: #fff;
+      font-size: 14px;
+      font-weight: 850;
+      text-decoration: none;
+      white-space: nowrap;
     }
+    .language-switch {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 4px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: rgba(255,255,255,.68);
+    }
+    .language-switch button {
+      min-height: 34px;
+      min-width: 44px;
+      padding: 0 9px;
+      border: 0;
+      border-radius: 999px;
+      background: transparent;
+      color: #4b4944;
+      font-size: 13px;
+      font-weight: 850;
+      white-space: nowrap;
+      cursor: pointer;
+    }
+    .language-switch button.is-active { background: var(--charcoal); color: #fff; }
 
     main { overflow: hidden; }
     .section {
-      width: min(1180px, calc(100% - 32px));
+      width: min(1180px, calc(100% - 36px));
       margin: 0 auto;
-      padding: 84px 0;
-      scroll-margin-top: 96px;
+      padding: 96px 0;
+      scroll-margin-top: 104px;
     }
+    .section.compact { padding-top: 34px; }
+    .kicker {
+      margin: 0 0 12px;
+      color: var(--bronze-dark);
+      font-size: 12px;
+      font-weight: 900;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+    }
+    h1, h2, h3 { margin: 0; color: var(--ink); line-height: 1.04; letter-spacing: -.055em; text-wrap: balance; }
+    h1 { font-size: clamp(46px, 6.4vw, 88px); max-width: 940px; }
+    h2 { font-size: clamp(34px, 4.7vw, 62px); }
+    h3 { font-size: 25px; letter-spacing: -.035em; }
+    p { margin: 0; }
+    .lead {
+      max-width: 680px;
+      color: var(--muted);
+      font-size: clamp(18px, 2vw, 21px);
+      line-height: 1.72;
+      text-wrap: pretty;
+    }
+    .section-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: end;
+      gap: 32px;
+      margin-bottom: 30px;
+    }
+    .section-head .lead { margin-top: 16px; }
+
     .hero {
-      width: min(1240px, calc(100% - 28px));
-      margin: 24px auto 0;
-      scroll-margin-top: 96px;
-      border: 1px solid rgba(219, 229, 241, .9);
-      border-radius: 38px;
-      background: #0f172a;
+      width: min(1280px, calc(100% - 24px));
+      min-height: calc(100vh - 116px);
+      margin: 18px auto 0;
+      border-radius: 34px;
+      background: var(--charcoal);
       color: #fff;
-      box-shadow: var(--shadow);
       overflow: hidden;
       position: relative;
+      box-shadow: var(--shadow-photo);
+      scroll-margin-top: 104px;
     }
     .hero::before {
       content: "";
       position: absolute;
       inset: 0;
       background:
-        linear-gradient(135deg, rgba(15, 23, 42, .88), rgba(30, 64, 175, .64)),
-        radial-gradient(circle at 75% 20%, rgba(250, 204, 21, .26), transparent 22%),
+        linear-gradient(90deg, rgba(17,19,21,.88) 0%, rgba(17,19,21,.70) 46%, rgba(17,19,21,.28) 100%),
+        linear-gradient(180deg, rgba(17,19,21,.22), rgba(17,19,21,.62)),
         url("media/existing-home/5W2A1213_cropped-1500x630.jpg") center / cover no-repeat;
       transform: scale(1.02);
-    }
-    .hero::after {
-      content: "";
-      position: absolute;
-      inset: auto -150px -190px auto;
-      width: 380px;
-      height: 380px;
-      border-radius: 50%;
-      background: rgba(255, 255, 255, .08);
-      border: 1px solid rgba(255, 255, 255, .18);
     }
     .hero-inner {
       position: relative;
       z-index: 1;
-      min-height: 650px;
+      min-height: calc(100vh - 116px);
       display: grid;
-      grid-template-columns: minmax(0, 1.28fr) minmax(300px, .72fr);
-      gap: 44px;
-      align-items: center;
+      grid-template-columns: minmax(0, 1fr) 360px;
+      align-items: end;
+      gap: 52px;
       padding: clamp(34px, 6vw, 76px);
     }
-    .eyebrow {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      margin-bottom: 18px;
-      color: #bfdbfe;
-      font-size: 14px;
-      font-weight: 900;
-      letter-spacing: .13em;
-      text-transform: uppercase;
-    }
-    .eyebrow::before {
-      content: "";
-      width: 34px;
-      height: 2px;
-      background: #facc15;
-    }
-    h1, h2, h3 { color: var(--ink-strong); line-height: 1.08; letter-spacing: -.045em; margin: 0; }
-    .hero h1 {
-      color: #fff;
-      max-width: 840px;
-      font-size: clamp(44px, 6.1vw, 78px);
-      line-height: 1.02;
-    }
-    .hero-lead {
-      max-width: 720px;
-      margin: 24px 0 0;
-      color: #e5eefc;
-      font-size: clamp(18px, 2.2vw, 23px);
-      line-height: 1.72;
-    }
-    .hero-en {
-      margin-top: 18px;
-      padding-left: 18px;
-      border-left: 3px solid rgba(250, 204, 21, .85);
-      color: #dbeafe;
-      font-size: 17px;
-      line-height: 1.65;
-    }
-    .hero-actions, .card-actions {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 12px;
-      margin-top: 32px;
-    }
+    .hero h1 { color: #fff; }
+    .hero .lead { margin-top: 24px; color: #eee8dc; }
+    .hero-actions, .actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 32px; }
     .btn {
       min-height: 52px;
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      gap: 8px;
-      padding: 0 22px;
+      padding: 0 20px;
       border-radius: 999px;
       border: 1px solid transparent;
       text-decoration: none;
-      font-weight: 900;
+      font-weight: 850;
       line-height: 1.1;
-      transition: transform .18s ease, box-shadow .18s ease, background .18s ease;
+      white-space: nowrap;
+      transition: transform .16s ease, background .16s ease, border-color .16s ease;
     }
     .btn:hover, .btn:focus-visible { transform: translateY(-1px); outline: none; }
-    .btn-primary { background: #facc15; color: #1f2937; box-shadow: 0 16px 30px rgba(250, 204, 21, .24); }
-    .btn-light { background: rgba(255,255,255,.12); color: #fff; border-color: rgba(255,255,255,.28); }
-    .btn-blue { background: var(--brand); color: #fff; box-shadow: 0 14px 26px rgba(29, 78, 216, .2); }
-    .btn-soft { background: var(--soft); color: var(--brand); }
+    .btn-primary { background: var(--bronze); color: #fff; }
+    .btn-primary:hover { background: var(--bronze-dark); }
+    .btn-light { border-color: rgba(255,255,255,.38); color: #fff; background: rgba(255,255,255,.08); }
+    .btn-outline { border-color: var(--line); color: var(--ink); background: rgba(255,255,255,.54); }
+    .btn-dark { background: var(--charcoal); color: #fff; }
 
-    .hero-panel {
+    .service-panel {
+      padding: 24px;
+      border: 1px solid var(--line-dark);
+      border-radius: 26px;
+      background: rgba(17,19,21,.62);
+      backdrop-filter: blur(12px);
+    }
+    .service-panel h2 { color: #fff; font-size: 29px; margin-bottom: 18px; }
+    .service-row {
       display: grid;
-      gap: 16px;
+      grid-template-columns: 1fr auto;
+      gap: 18px;
+      padding: 16px 0;
+      border-top: 1px solid var(--line-dark);
     }
-    .quick-card {
-      padding: 22px;
-      border-radius: 24px;
-      background: rgba(255, 255, 255, .12);
-      border: 1px solid rgba(255, 255, 255, .20);
-      box-shadow: 0 18px 50px rgba(0, 0, 0, .12);
-    }
-    .quick-card strong { display: block; font-size: 19px; color: #fff; margin-bottom: 6px; }
-    .quick-card span { display: block; color: #eff6ff; font-size: 17px; line-height: 1.62; }
+    .service-row:first-of-type { border-top: 0; padding-top: 0; }
+    .service-row strong { display: block; color: #fff; font-size: 16px; line-height: 1.35; }
+    .service-row span { color: #ddd5c8; font-size: 14px; }
+    .service-row time { color: #fff; font-size: 18px; font-weight: 900; white-space: nowrap; }
 
-    .section-head {
-      display: flex;
-      align-items: end;
-      justify-content: space-between;
-      gap: 28px;
-      margin-bottom: 28px;
+    .info-strip {
+      width: min(1180px, calc(100% - 36px));
+      margin: -44px auto 0;
+      position: relative;
+      z-index: 4;
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 1px;
+      overflow: hidden;
+      border: 1px solid var(--line);
+      border-radius: 26px;
+      background: var(--line);
+      box-shadow: var(--shadow-soft);
     }
-    .section-kicker {
-      margin: 0 0 10px;
-      color: var(--brand);
-      font-size: 14px;
-      font-weight: 900;
-      letter-spacing: .12em;
-      text-transform: uppercase;
-    }
-    .section h2 { font-size: clamp(34px, 4.4vw, 58px); }
-    .section-intro {
-      max-width: 620px;
-      color: var(--muted);
-      font-size: 18px;
-      margin: 14px 0 0;
-    }
+    .info-item { padding: 24px; background: rgba(255,255,255,.92); }
+    .info-item span { display: block; color: var(--quiet); font-size: 12px; font-weight: 900; letter-spacing: .14em; text-transform: uppercase; }
+    .info-item strong { display: block; margin-top: 7px; font-size: 20px; line-height: 1.28; }
 
     .grid { display: grid; gap: 18px; }
-    .grid-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
     .grid-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .grid-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
     .card {
-      background: rgba(255, 255, 255, .88);
+      padding: 28px;
       border: 1px solid var(--line);
-      border-radius: var(--radius-md);
-      padding: 26px;
-      box-shadow: 0 14px 38px rgba(15, 23, 42, .06);
-    }
-    .card h3 { font-size: 23px; margin-bottom: 10px; }
-    .card p { margin: 0; color: var(--muted); }
-    .label {
-      display: inline-flex;
-      min-height: 32px;
-      align-items: center;
-      padding: 0 10px;
-      margin-bottom: 16px;
-      border-radius: 999px;
-      background: var(--soft);
-      color: var(--brand);
-      font-size: 13px;
-      font-weight: 900;
-    }
-    .time {
-      color: var(--ink-strong);
-      font-size: 27px;
-      font-weight: 950;
-      line-height: 1.2;
-      margin: 10px 0;
-      letter-spacing: -.035em;
-    }
-    .schedule-list, .detail-list {
-      display: grid;
-      gap: 9px;
-      margin: 14px 0 0;
-      padding: 0;
-      list-style: none;
-      color: #334155;
-      font-weight: 760;
-    }
-    .schedule-list li, .detail-list li {
-      padding-left: 16px;
-      position: relative;
-    }
-    .schedule-list li::before, .detail-list li::before {
-      content: "";
-      position: absolute;
-      left: 0;
-      top: .72em;
-      width: 6px;
-      height: 6px;
-      border-radius: 50%;
-      background: var(--brand);
-    }
-    .note { font-size: 15px; color: var(--muted); }
-    .feature-band {
       border-radius: var(--radius-lg);
-      padding: clamp(28px, 5vw, 54px);
-      background: linear-gradient(135deg, #ecfeff, #eff6ff 58%, #fff7ed);
-      border: 1px solid #cfe8f6;
+      background: rgba(255,255,255,.72);
+      box-shadow: 0 16px 48px rgba(20,20,18,.05);
     }
-    .visit-list {
-      display: grid;
-      gap: 14px;
-      margin: 24px 0 0;
-      padding: 0;
-      list-style: none;
-    }
-    .visit-list li {
-      display: flex;
-      gap: 12px;
-      align-items: flex-start;
-      color: #334155;
-      font-weight: 750;
-    }
-    .visit-list li::before {
-      content: "✓";
-      flex: 0 0 28px;
-      width: 28px;
-      height: 28px;
-      display: grid;
-      place-items: center;
-      border-radius: 50%;
-      background: #dcfce7;
-      color: #166534;
-      font-size: 15px;
-      font-weight: 950;
-    }
+    .card.subtle { background: rgba(255,255,255,.48); box-shadow: none; }
+    .card p { color: var(--muted); margin-top: 12px; }
+    .meta { color: var(--quiet); font-size: 13px; font-weight: 900; letter-spacing: .12em; text-transform: uppercase; }
+    .time { margin-top: 12px; color: var(--ink); font-size: 29px; font-weight: 920; line-height: 1.18; letter-spacing: -.04em; }
 
-    .ministry-card {
-      min-height: 210px;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-    }
-    .ministry-card .icon {
-      width: 54px;
-      height: 54px;
-      display: grid;
-      place-items: center;
-      border-radius: 18px;
-      margin-bottom: 18px;
-      background: linear-gradient(135deg, #dbeafe, #ccfbf1);
-      font-size: 26px;
-    }
-
-    .news-list {
-      display: grid;
-      gap: 12px;
-      margin: 0;
-      padding: 0;
-      list-style: none;
-    }
-    .news-list a {
-      min-height: 68px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 16px;
-      padding: 16px 18px;
-      border-radius: 18px;
-      background: #fff;
-      border: 1px solid var(--line);
-      text-decoration: none;
-      font-weight: 900;
-    }
-    .news-list span { color: var(--muted); font-size: 14px; font-weight: 800; }
-
-
-    .language-switch {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      padding: 4px;
-      border: 1px solid var(--line);
-      border-radius: 999px;
-      background: rgba(255, 255, 255, .86);
-    }
-    .language-switch button {
-      min-height: 36px;
-      min-width: 46px;
-      padding: 0 10px;
-      border: 0;
-      border-radius: 999px;
-      background: transparent;
-      color: #334155;
-      font-weight: 900;
-      white-space: nowrap;
-      cursor: pointer;
-    }
-    .language-switch button.is-active { background: var(--ink-strong); color: #fff; }
-
-    .media-showcase {
-      display: grid;
-      grid-template-columns: minmax(0, 1.1fr) minmax(320px, .9fr);
-      gap: 22px;
-      align-items: stretch;
-    }
-    .photo-feature {
-      min-height: 440px;
-      border-radius: var(--radius-lg);
-      overflow: hidden;
-      position: relative;
-      background: #0f172a;
-      box-shadow: var(--shadow);
-    }
-    .photo-feature img, .photo-tile img { width: 100%; height: 100%; object-fit: cover; display: block; }
-    .photo-feature::after {
-      content: "";
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(180deg, transparent 45%, rgba(15,23,42,.78));
-    }
-    .photo-caption {
+    .visit-steps { counter-reset: visit; }
+    .visit-step { position: relative; padding-left: 72px; min-height: 124px; }
+    .visit-step::before {
+      counter-increment: visit;
+      content: counter(visit, decimal-leading-zero);
       position: absolute;
       left: 24px;
-      right: 24px;
-      bottom: 22px;
-      z-index: 1;
-      color: #fff;
+      top: 29px;
+      color: var(--bronze-dark);
+      font-size: 13px;
+      font-weight: 950;
+      letter-spacing: .10em;
     }
-    .photo-caption strong { display: block; font-size: 28px; line-height: 1.15; letter-spacing: -.04em; }
-    .photo-caption span { display: block; margin-top: 8px; color: #dbeafe; }
-    .media-side { display: grid; gap: 18px; }
-    .video-card {
+
+    .media-layout { display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(340px, .95fr); gap: 20px; align-items: stretch; }
+    .photo-feature {
+      min-height: 500px;
+      margin: 0;
+      position: relative;
       overflow: hidden;
-      border-radius: var(--radius-md);
-      background: #0f172a;
-      color: #fff;
-      box-shadow: 0 16px 40px rgba(15, 23, 42, .14);
+      border-radius: var(--radius-xl);
+      background: var(--charcoal);
+      box-shadow: var(--shadow-photo);
     }
-    .video-frame { position: relative; aspect-ratio: 16 / 9; background: #020617; }
+    .photo-feature img, .photo-tile img { width: 100%; height: 100%; object-fit: cover; display: block; filter: saturate(1.04) brightness(1.10); }
+    .photo-feature::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(17,19,21,.04) 0%, rgba(17,19,21,.10) 44%, rgba(17,19,21,.70) 100%); }
+    .photo-caption { position: absolute; left: 28px; right: 28px; bottom: 28px; z-index: 1; color: #fff; }
+    .photo-caption strong { display: block; font-size: 32px; line-height: 1.12; letter-spacing: -.045em; }
+    .photo-caption span { display: block; margin-top: 10px; color: #e6ded1; }
+    .media-stack { display: grid; gap: 18px; }
+    .video-card { overflow: hidden; border-radius: var(--radius-lg); background: #1b1f24; color: #fff; box-shadow: var(--shadow-soft); }
+    .video-frame { position: relative; aspect-ratio: 16 / 9; background: linear-gradient(135deg, #27211c, #111315); }
     .video-frame iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
-    .video-copy { padding: 22px; }
+    .video-copy { padding: 24px; }
     .video-copy h3 { color: #fff; }
-    .video-copy p { color: #cbd5e1; margin-top: 8px; }
-    .media-actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 16px; }
-    .media-actions a {
-      display: inline-flex;
-      min-height: 42px;
-      align-items: center;
-      padding: 0 14px;
-      border-radius: 999px;
-      background: rgba(255,255,255,.12);
-      color: #fff;
-      text-decoration: none;
-      font-weight: 900;
-    }
+    .video-copy p { color: #d8d2c7; }
+    .video-links { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 18px; }
+    .video-links a { min-height: 42px; display: inline-flex; align-items: center; padding: 0 14px; border: 1px solid rgba(255,255,255,.22); border-radius: 999px; color: #fff; text-decoration: none; font-weight: 850; }
     .photo-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
-    .photo-tile { min-height: 132px; border-radius: 20px; overflow: hidden; box-shadow: 0 12px 30px rgba(15,23,42,.1); }
+    .photo-tile { min-height: 160px; overflow: hidden; border-radius: 20px; background: #ddd4c7; }
 
-    .contact-card {
-      overflow: hidden;
-      padding: 0;
-    }
-    .contact-inner {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 0;
-    }
-    .contact-copy { padding: clamp(28px, 5vw, 48px); }
-    .map-box {
-      min-height: 390px;
-      display: grid;
-      place-items: center;
-      padding: 32px;
-      background:
-        linear-gradient(135deg, rgba(15,118,110,.92), rgba(29,78,216,.84)),
-        repeating-linear-gradient(45deg, rgba(255,255,255,.18) 0 1px, transparent 1px 14px);
+    .ministry-card { min-height: 240px; display: flex; flex-direction: column; justify-content: space-between; }
+    .ministry-card .meta-line { margin-top: 26px; padding-top: 16px; border-top: 1px solid var(--line); color: var(--bronze-dark); font-weight: 850; }
+
+    .vision-band {
+      padding: clamp(34px, 6vw, 64px);
+      border-radius: var(--radius-xl);
       color: #fff;
-      text-align: center;
+      background:
+        linear-gradient(135deg, rgba(17,19,21,.92), rgba(28,32,36,.76)),
+        url("media/existing-home/XE1A9331-1-1500x630.jpg") center / cover no-repeat;
+      box-shadow: var(--shadow-photo);
     }
-    .map-box strong { display: block; font-size: 30px; line-height: 1.15; letter-spacing: -.04em; }
-    .map-box p { margin: 14px 0 0; color: #dbeafe; }
-    .contact-lines { display: grid; gap: 12px; margin-top: 22px; }
-    .contact-line {
-      padding: 15px 16px;
-      border: 1px solid var(--line);
-      border-radius: 16px;
-      background: var(--soft-2);
-      font-weight: 850;
-    }
-    .contact-line span { display: block; color: var(--muted); font-size: 13px; font-weight: 900; text-transform: uppercase; letter-spacing: .08em; }
+    .vision-band h2, .vision-band h3 { color: #fff; }
+    .vision-band .lead { color: #e8e1d5; }
+    .vision-list { display: grid; gap: 12px; margin: 24px 0 0; padding: 0; list-style: none; }
+    .vision-list li { padding-top: 12px; border-top: 1px solid rgba(255,255,255,.18); color: #f5efe7; font-weight: 740; }
 
-    .site-footer {
-      margin-top: 40px;
-      padding: 46px 0;
-      background: #0f172a;
-      color: #cbd5e1;
+    .news-list { display: grid; gap: 12px; margin: 0; padding: 0; list-style: none; }
+    .news-list a { min-height: 70px; display: grid; grid-template-columns: 108px 1fr; align-items: center; gap: 16px; padding: 16px 18px; border: 1px solid var(--line); border-radius: 18px; background: rgba(255,255,255,.56); text-decoration: none; font-weight: 840; }
+    .news-list span { color: var(--quiet); font-size: 13px; font-weight: 900; letter-spacing: .10em; text-transform: uppercase; }
+
+    .contact-card { overflow: hidden; padding: 0; }
+    .contact-inner { display: grid; grid-template-columns: minmax(0, .95fr) minmax(360px, 1.05fr); }
+    .contact-copy { padding: clamp(30px, 5vw, 54px); }
+    .contact-lines { display: grid; gap: 12px; margin-top: 26px; }
+    .contact-line { padding: 16px 0; border-top: 1px solid var(--line); font-weight: 830; }
+    .contact-line span { display: block; color: var(--quiet); font-size: 12px; font-weight: 900; letter-spacing: .14em; text-transform: uppercase; }
+    .map-box {
+      min-height: 430px;
+      display: grid;
+      place-items: end start;
+      padding: 34px;
+      color: #fff;
+      background:
+        linear-gradient(180deg, rgba(17,19,21,.20), rgba(17,19,21,.78)),
+        url("media/existing-home/DSCF2315-1500x630.jpg") center / cover no-repeat;
     }
-    .footer-inner {
-      width: min(1180px, calc(100% - 32px));
-      margin: 0 auto;
-      display: flex;
-      justify-content: space-between;
-      gap: 24px;
-      align-items: center;
-      flex-wrap: wrap;
-    }
+    .map-box strong { display: block; font-size: 30px; line-height: 1.15; letter-spacing: -.045em; }
+    .map-box p { margin-top: 12px; color: #efe8dc; }
+
+    .site-footer { margin-top: 42px; padding: 46px 0; color: #d8d2c7; background: var(--charcoal); }
+    .footer-inner { width: min(1180px, calc(100% - 36px)); margin: 0 auto; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 24px; }
     .footer-inner strong { color: #fff; }
-    .footer-inner a { color: #bfdbfe; }
+    .footer-inner a { color: #fff; }
 
-    @media (max-width: 980px) {
+    @media (max-width: 1120px) {
       .nav-wrap { flex-wrap: wrap; padding: 12px 0; }
-      nav { width: 100%; overflow-x: auto; padding-bottom: 4px; }
+      nav { order: 3; width: 100%; overflow-x: auto; padding-bottom: 2px; }
       nav ul { justify-content: flex-start; }
-      nav a { font-size: 14px; }
-      .language-switch { margin-left: auto; }
-      .photo-feature { min-height: 340px; }
-      .hero-inner { grid-template-columns: 1fr; min-height: auto; }
-      .hero-panel { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-      .grid-3, .grid-2, .contact-inner, .media-showcase { grid-template-columns: 1fr; }
-      .section { padding: 64px 0; }
-      .section-head { display: block; }
-      .map-box { min-height: 280px; }
+      .header-actions { margin-left: auto; }
+      .hero-inner { grid-template-columns: 1fr; align-items: end; }
+      .service-panel { max-width: 620px; }
+      .media-layout, .contact-inner { grid-template-columns: 1fr; }
+      .grid-3 { grid-template-columns: repeat(2, minmax(0,1fr)); }
     }
-
-    @media (max-width: 640px) {
+    @media (max-width: 760px) {
       body { font-size: 16px; }
-      .nav-wrap, .section, .footer-inner { width: min(100% - 24px, 1180px); }
-      .hero { width: min(100% - 18px, 1240px); border-radius: 28px; margin-top: 12px; }
-      .hero-inner { padding: 30px 22px; gap: 24px; }
-      .hero-panel { grid-template-columns: 1fr; }
-      .hero h1 { font-size: clamp(42px, 13vw, 62px); }
-      .hero-actions, .card-actions { display: grid; grid-template-columns: 1fr; }
-      .language-switch { width: 100%; justify-content: space-between; }
-      .language-switch button { flex: 1; }
-      .photo-grid { grid-template-columns: 1fr; }
-      .photo-feature { min-height: 280px; }
+      .nav-wrap, .section, .info-strip, .footer-inner { width: min(100% - 24px, 1180px); }
+      .brand-logo { height: 44px; max-width: min(250px, 58vw); }
+      .header-actions { width: 100%; justify-content: space-between; }
+      .watch-link { flex: 1; justify-content: center; }
+      .language-switch { flex: 0 0 auto; }
+      .language-switch button { min-width: 40px; }
+      .hero { width: min(100% - 14px, 1280px); min-height: auto; border-radius: 26px; }
+      .hero::before { background-position: 58% center; }
+      .hero-inner { min-height: auto; padding: 34px 22px; gap: 34px; }
+      h1 { font-size: clamp(42px, 13vw, 60px); }
+      .hero-actions, .actions { display: grid; grid-template-columns: 1fr; }
       .btn { width: 100%; min-height: 54px; }
-      .card { padding: 22px; }
-      .section { padding: 54px 0; }
-      .brand-logo { height: 44px; max-width: min(260px, 60vw); }
+      .service-row { grid-template-columns: 1fr; gap: 4px; }
+      .info-strip { grid-template-columns: 1fr; margin-top: 14px; }
+      .section { padding: 68px 0; }
+      .section-head { display: block; }
+      .grid-2, .grid-3 { grid-template-columns: 1fr; }
+      .photo-feature { min-height: 360px; }
+      .photo-grid { grid-template-columns: 1fr; }
+      .visit-step { padding-left: 28px; }
+      .visit-step::before { left: 0; top: 30px; }
+      .news-list a { grid-template-columns: 1fr; gap: 6px; }
+      .map-box { min-height: 340px; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { scroll-behavior: auto !important; transition: none !important; }
     }
   </style>
 </head>
 <body>
-  <a class="skip-link" href="#main">본문으로 바로가기</a>
+  <a class="skip-link" href="#main" data-i18n="skip">본문으로 바로가기</a>
 
   <header class="site-header" aria-label="KCOC main navigation">
     <div class="nav-wrap">
-      <a class="brand" href="#top" aria-label="콜럼버스 한인교회 Korean Church of Columbus home">
-        <img class="brand-logo" src="image/kcc-logo.png" alt="콜럼버스 한인교회 Korean Church of Columbus" width="290" height="71">
+      <a class="brand" href="#top" aria-label="Korean Church of Columbus home">
+        <img class="brand-logo" src="image/kcc-logo.png" alt="Korean Church of Columbus" width="290" height="71">
       </a>
-      <nav aria-label="주요 메뉴">
+      <nav aria-label="Primary navigation">
         <ul>
           <li><a href="#visit" data-i18n="nav.visit">처음 오셨나요</a></li>
-          <li><a href="#worship" data-i18n="nav.worship">예배와 말씀</a></li>
-          <li><a href="#media" data-i18n="nav.media">미디어</a></li>
+          <li><a href="#worship" data-i18n="nav.worship">예배</a></li>
+          <li><a href="#media" data-i18n="nav.media">설교와 미디어</a></li>
           <li><a href="#nextgen" data-i18n="nav.nextgen">다음세대</a></li>
-          <li><a href="#mission" data-i18n="nav.mission">공동체와 선교</a></li>
-          <li><a href="#news" data-i18n="nav.news">소식</a></li>
-          <li><a href="#school" data-i18n="nav.school">한글학교</a></li>
-          <li><a class="nav-cta" href="#contact" data-i18n="nav.contact">오시는 길</a></li>
+          <li><a href="#community" data-i18n="nav.community">공동체</a></li>
+          <li><a href="#contact" data-i18n="nav.contact">오시는 길</a></li>
         </ul>
       </nav>
-      <div class="language-switch" aria-label="Language selector">
-        <button type="button" class="is-active" data-lang="ko">KO</button>
-        <button type="button" data-lang="en">EN</button>
-        <button type="button" data-lang="zh">中文</button>
-        <button type="button" data-lang="es">ES</button>
+      <div class="header-actions">
+        <a class="watch-link" href="https://www.youtube.com/@KoreanChurchofColumbus" target="_blank" rel="noopener" data-i18n="nav.watch">온라인 예배</a>
+        <div class="language-switch" aria-label="Language selector">
+          <button type="button" class="is-active" data-lang="ko">KO</button>
+          <button type="button" data-lang="en">EN</button>
+          <button type="button" data-lang="zh">中文</button>
+          <button type="button" data-lang="es">ES</button>
+        </div>
       </div>
     </div>
   </header>
@@ -596,232 +463,147 @@
     <section class="hero" id="top" aria-labelledby="hero-title">
       <div class="hero-inner">
         <div>
-          <div class="eyebrow">KCOC · kcocoh.org</div>
-          <h1 id="hero-title" data-i18n="hero.title">한 영혼과 열방과 다음 세대를 살리는 교회</h1>
-          <p class="hero-lead" data-i18n="hero.lead">콜럼버스 한인교회에 오신 여러분을 주님의 이름으로 환영합니다. 함께 예배하고, 말씀 안에서 자라며, 다음 세대와 열방을 섬기는 믿음의 공동체입니다.</p>
-          <p class="hero-en" data-i18n="hero.sub">Welcome to Korean Church of Columbus. Worship with us, grow in God’s Word, and walk the journey of faith together.</p>
-          <div class="hero-actions" aria-label="주요 바로가기">
-            <a class="btn btn-primary" href="#worship" data-i18n="cta.worship">예배 시간 보기</a>
-            <a class="btn btn-light" href="#visit" data-i18n="cta.visit">처음 방문 안내</a>
+          <p class="kicker" data-i18n="hero.kicker">Korean Church of Columbus</p>
+          <h1 id="hero-title" data-i18n="hero.title">콜럼버스에서 함께 예배하고 자라는 믿음의 공동체</h1>
+          <p class="lead" data-i18n="hero.lead">처음 오신 분도 편안하게 예배드릴 수 있도록 예배 시간, 주차, 자녀 예배와 영어 안내를 준비했습니다.</p>
+          <div class="hero-actions" aria-label="Primary actions">
+            <a class="btn btn-primary" href="#visit" data-i18n="cta.visit">처음 방문 안내</a>
+            <a class="btn btn-light" href="#worship" data-i18n="cta.worship">예배 시간 보기</a>
             <a class="btn btn-light" href="#contact" data-i18n="cta.directions">오시는 길</a>
           </div>
         </div>
-        <aside class="hero-panel" aria-label="빠른 안내">
-          <div class="quick-card">
-            <strong>주일 장년 예배</strong>
-            <span>1부 오전 9시 · 2부 오전 11시</span>
+        <aside class="service-panel" aria-label="Sunday services">
+          <h2 data-i18n="panel.title">이번 주 예배</h2>
+          <div class="service-row">
+            <div><strong data-i18n="panel.korean">주일 장년 예배</strong><span data-i18n="panel.koreanSub">한국어 예배</span></div>
+            <time data-i18n="time.sundayKo">9:00 / 11:00 AM</time>
           </div>
-          <div class="quick-card">
-            <strong>Sunday English Worship</strong>
-            <span>1st 9:00 AM · 2nd 11:00 AM</span>
+          <div class="service-row">
+            <div><strong data-i18n="panel.english">English Worship</strong><span data-i18n="panel.englishSub">English Congregation</span></div>
+            <time data-i18n="time.sundayEn">9:00 / 11:00 AM</time>
           </div>
-          <div class="quick-card">
-            <strong>주중 예배와 기도</strong>
-            <span>수요예배 오후 7시 · 새벽기도 매일 오전 6시</span>
+          <div class="service-row">
+            <div><strong data-i18n="panel.children">교회학교</strong><span data-i18n="panel.childrenSub">어린이 예배와 교육</span></div>
+            <time data-i18n="time.children">11:00 AM</time>
           </div>
-          <div class="quick-card">
-            <strong>교회학교</strong>
-            <span>주일 오전 11시 · 자녀 예배와 교육</span>
+          <div class="service-row">
+            <div><strong data-i18n="panel.midweek">수요예배</strong><span data-i18n="panel.midweekSub">말씀과 기도</span></div>
+            <time data-i18n="time.midweek">7:00 PM</time>
           </div>
         </aside>
+      </div>
+    </section>
+
+    <div class="info-strip" aria-label="Quick church information">
+      <div class="info-item"><span data-i18n="strip.addressLabel">주소</span><strong data-i18n="address.full">2825 Snouffer Rd, Columbus, OH 43235</strong></div>
+      <div class="info-item"><span data-i18n="strip.phoneLabel">전화</span><strong><a href="tel:+16147261022">(614) 726-1022</a></strong></div>
+      <div class="info-item"><span data-i18n="strip.emailLabel">이메일</span><strong><a href="mailto:help@mykoreanchurch.org">help@mykoreanchurch.org</a></strong></div>
+    </div>
+
+    <section class="section compact" id="visit" aria-labelledby="visit-title">
+      <div class="section-head">
+        <div>
+          <p class="kicker" data-i18n="visit.kicker">New Here</p>
+          <h2 id="visit-title" data-i18n="visit.title">처음 오신 분도 편안하게</h2>
+        </div>
+        <p class="lead" data-i18n="visit.lead">방문 전 알아야 할 핵심 정보를 간결하게 정리했습니다. 예배 시간, 자녀 안내, 위치와 문의를 한 곳에서 확인하실 수 있습니다.</p>
+      </div>
+      <div class="grid grid-3 visit-steps">
+        <article class="card visit-step"><h3 data-i18n="visit.step1Title">예배 시간 확인</h3><p data-i18n="visit.step1Text">주일 한국어 예배와 영어 예배는 오전 9시와 11시에 드립니다.</p></article>
+        <article class="card visit-step"><h3 data-i18n="visit.step2Title">자녀와 함께 방문</h3><p data-i18n="visit.step2Text">교회학교와 Youth 안내를 통해 자녀들도 안전하고 편안하게 예배할 수 있도록 돕습니다.</p></article>
+        <article class="card visit-step"><h3 data-i18n="visit.step3Title">위치와 주차</h3><p data-i18n="visit.step3Text">2825 Snouffer Rd 주소로 오시면 됩니다. 처음 방문하시면 안내를 받을 수 있도록 문의해 주세요.</p></article>
+      </div>
+    </section>
+
+    <section class="section" id="worship" aria-labelledby="worship-title">
+      <div class="section-head">
+        <div>
+          <p class="kicker" data-i18n="worship.kicker">Worship</p>
+          <h2 id="worship-title" data-i18n="worship.title">예배 안내</h2>
+          <p class="lead" data-i18n="worship.lead">주일예배, 주중예배, 새벽기도와 성경공부 시간을 한눈에 확인하세요.</p>
+        </div>
+        <a class="btn btn-outline" href="https://maps.google.com/?q=2825+Snouffer+Rd,+Columbus,+OH+43235" rel="noopener" data-i18n="cta.map">Google 지도에서 보기</a>
+      </div>
+      <div class="grid grid-3">
+        <article class="card"><span class="meta" data-i18n="worship.card1Meta">Korean Worship</span><h3 data-i18n="worship.card1Title">주일 장년 예배</h3><div class="time" data-i18n="worship.card1Time">1부 오전 9시<br>2부 오전 11시</div><p data-i18n="worship.card1Text">말씀과 찬양, 기도로 함께 하나님께 나아가는 주일 공동체 예배입니다.</p></article>
+        <article class="card"><span class="meta" data-i18n="worship.card2Meta">English Congregation</span><h3 data-i18n="worship.card2Title">주일 영어 예배</h3><div class="time" data-i18n="worship.card2Time">1st 9:00 AM<br>2nd 11:00 AM</div><p data-i18n="worship.card2Text">영어권 성도와 가정, 학생들이 함께 예배하고 교제하는 공동체입니다.</p></article>
+        <article class="card"><span class="meta" data-i18n="worship.card3Meta">Midweek</span><h3 data-i18n="worship.card3Title">주중 예배와 기도</h3><div class="time" data-i18n="worship.card3Time">수요예배 오후 7시<br>새벽기도 매일 오전 6시</div><p data-i18n="worship.card3Text">주중에도 말씀과 기도 안에서 삶을 세워가는 시간입니다.</p></article>
       </div>
     </section>
 
     <section class="section" id="media" aria-labelledby="media-title">
       <div class="section-head">
         <div>
-          <p class="section-kicker" data-i18n="media.kicker">Media & Worship</p>
-          <h2 id="media-title" data-i18n="media.title">예배와 공동체를 영상과 사진으로 만나다</h2>
-          <p class="section-intro" data-i18n="media.intro">기존 홈페이지의 사진과 공식 YouTube 채널을 연결해 예배, 말씀, 공동체의 현장을 더 생생하게 보여드립니다.</p>
+          <p class="kicker" data-i18n="media.kicker">Sermons & Media</p>
+          <h2 id="media-title" data-i18n="media.title">최근 말씀과 교회 이야기</h2>
+          <p class="lead" data-i18n="media.lead">공식 YouTube 채널에서 예배와 말씀 영상을 볼 수 있습니다. 사진은 공동체의 실제 분위기를 차분하게 전하도록 구성했습니다.</p>
         </div>
-        <a class="btn btn-soft" href="https://www.youtube.com/@KoreanChurchofColumbus" target="_blank" rel="noopener" data-i18n="media.channel">YouTube 채널 보기</a>
+        <a class="btn btn-outline" href="https://www.youtube.com/@KoreanChurchofColumbus" target="_blank" rel="noopener" data-i18n="media.channel">YouTube 채널</a>
       </div>
-      <div class="media-showcase">
+      <div class="media-layout">
         <figure class="photo-feature">
-          <img src="media/existing-home/DSC06622-1500x630.jpg" alt="콜럼버스 한인교회 예배와 공동체 사진" loading="lazy">
-          <figcaption class="photo-caption">
-            <strong data-i18n="media.photoTitle">함께 예배하고 함께 자라는 공동체</strong>
-            <span data-i18n="media.photoText">예배, 다음세대, 성도들의 교제를 사진으로 소개합니다.</span>
-          </figcaption>
+          <img src="media/existing-home/DSC06622-1500x630.jpg" alt="Korean Church of Columbus worship and community" loading="eager" decoding="async">
+          <figcaption class="photo-caption"><strong data-i18n="media.photoTitle">함께 예배하고 함께 자라는 공동체</strong><span data-i18n="media.photoText">예배와 교제, 다음세대의 시간을 사진으로 소개합니다.</span></figcaption>
         </figure>
-        <div class="media-side">
+        <div class="media-stack">
           <article class="video-card">
-            <div class="video-frame">
-              <iframe title="Korean Church of Columbus YouTube playlist" src="https://www.youtube.com/embed/videoseries?list=PLuzUYNV8E-aTJhoS5FhvO8s3F0GNBeDWU" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
-            </div>
-            <div class="video-copy">
-              <h3 data-i18n="media.videoTitle">수요예배 말씀 다시보기</h3>
-              <p data-i18n="media.videoText">공식 YouTube 재생목록을 통해 최근 말씀과 예배 영상을 이어서 볼 수 있습니다.</p>
-              <div class="media-actions">
-                <a href="https://www.youtube.com/playlist?list=PLuzUYNV8E-aTJhoS5FhvO8s3F0GNBeDWU" target="_blank" rel="noopener" data-i18n="media.playlist">재생목록 열기</a>
-                <a href="https://www.youtube.com/@KoreanChurchofColumbus" target="_blank" rel="noopener" data-i18n="media.channelShort">채널 방문</a>
-              </div>
-            </div>
+            <div class="video-frame"><iframe title="Korean Church of Columbus YouTube playlist" src="https://www.youtube.com/embed/videoseries?list=PLuzUYNV8E-aTJhoS5FhvO8s3F0GNBeDWU" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe></div>
+            <div class="video-copy"><p class="kicker" data-i18n="media.videoKicker">Latest Teaching</p><h3 data-i18n="media.videoTitle">수요예배 말씀 다시보기</h3><p data-i18n="media.videoText">재생목록에서 최근 말씀을 이어서 볼 수 있습니다.</p><div class="video-links"><a href="https://www.youtube.com/playlist?list=PLuzUYNV8E-aTJhoS5FhvO8s3F0GNBeDWU" target="_blank" rel="noopener" data-i18n="media.playlist">수요예배 영상</a><a href="https://www.youtube.com/@KoreanChurchofColumbus" target="_blank" rel="noopener" data-i18n="media.channelShort">공식 채널</a></div></div>
           </article>
           <div class="photo-grid" aria-label="KCOC photo gallery">
-            <div class="photo-tile"><img src="media/existing-home/DSCF9332-1500x630.jpg" alt="KCOC community photo" loading="lazy"></div>
-            <div class="photo-tile"><img src="media/existing-home/XE1A9331-1-1500x630.jpg" alt="KCOC worship photo" loading="lazy"></div>
-            <div class="photo-tile"><img src="media/existing-home/DSCF2315-1500x630.jpg" alt="KCOC fellowship photo" loading="lazy"></div>
-            <div class="photo-tile"><img src="media/existing-home/VL6D2190-3-1500x630.jpg" alt="KCOC ministry photo" loading="lazy"></div>
+            <div class="photo-tile"><img src="media/existing-home/DSCF9332-1500x630.jpg" alt="KCOC church community" loading="eager" decoding="async"></div>
+            <div class="photo-tile"><img src="media/existing-home/XE1A9331-1-1500x630.jpg" alt="KCOC worship gathering" loading="eager" decoding="async"></div>
+            <div class="photo-tile"><img src="media/existing-home/DSCF2315-1500x630.jpg" alt="KCOC fellowship" loading="eager" decoding="async"></div>
+            <div class="photo-tile"><img src="media/existing-home/VL6D2190-3-1500x630.jpg" alt="KCOC ministry" loading="eager" decoding="async"></div>
           </div>
-        </div>
-      </div>
-    </section>
-
-
-    <section class="section" id="worship" aria-labelledby="worship-title">
-      <div class="section-head">
-        <div>
-          <p class="section-kicker">Worship & Word</p>
-          <h2 id="worship-title">예배와 말씀</h2>
-          <p class="section-intro">주보에 공개된 예배와 성경공부 시간을 방문자가 바로 확인할 수 있도록 정리했습니다.</p>
-        </div>
-        <a class="btn btn-soft" href="#contact">교회 위치 보기</a>
-      </div>
-      <div class="grid grid-3">
-        <article class="card">
-          <span class="label">Korean Worship</span>
-          <h3>주일 장년 예배</h3>
-          <div class="time">1부 오전 9시<br>2부 오전 11시</div>
-          <p>말씀과 찬양, 기도로 함께 하나님께 나아가는 주일 공동체 예배입니다.</p>
-        </article>
-        <article class="card">
-          <span class="label">English Congregation</span>
-          <h3>주일 영어 예배</h3>
-          <div class="time">1st 9:00 AM<br>2nd 11:00 AM</div>
-          <p>English-speaking members, students, and families are invited to worship and grow together.</p>
-        </article>
-        <article class="card">
-          <span class="label">Midweek & Prayer</span>
-          <h3>주중 예배와 기도</h3>
-          <div class="time">수요예배 오후 7시<br>새벽기도 매일 오전 6시</div>
-          <p>주중에도 말씀과 기도 안에서 삶을 세워가는 모임입니다.</p>
-        </article>
-      </div>
-    </section>
-
-    <section class="section" id="visit" aria-labelledby="visit-title">
-      <div class="feature-band">
-        <div class="grid grid-2">
-          <div>
-            <p class="section-kicker">New Here</p>
-            <h2 id="visit-title">처음 오신 분도 편안하게</h2>
-            <p class="section-intro">교회를 처음 방문하는 분들이 예배 전부터 예배 후까지 무엇을 기대하면 되는지 쉽게 알 수 있도록 안내합니다.</p>
-            <div class="card-actions">
-              <a class="btn btn-blue" href="mailto:help@mykoreanchurch.org">방문 전 문의하기</a>
-              <a class="btn btn-soft" href="#contact">위치 확인하기</a>
-            </div>
-          </div>
-          <ul class="visit-list">
-            <li>편안한 복장으로 오셔도 좋습니다.</li>
-            <li>주차와 입구 안내를 쉽게 찾을 수 있도록 정리합니다.</li>
-            <li>자녀와 함께 오시는 가정을 위해 주일학교와 Youth 안내를 제공합니다.</li>
-            <li>예배 후 새가족 안내와 문의 연결을 도와드립니다.</li>
-          </ul>
         </div>
       </div>
     </section>
 
     <section class="section" id="nextgen" aria-labelledby="nextgen-title">
       <div class="section-head">
-        <div>
-          <p class="section-kicker">Next Generation</p>
-          <h2 id="nextgen-title">다음세대와 교육</h2>
-          <p class="section-intro">아이들, 청소년, 청년, 영어권 성도와 가정이 믿음 안에서 자라도록 각 사역을 한눈에 볼 수 있게 구성합니다.</p>
-        </div>
+        <div><p class="kicker" data-i18n="next.kicker">Next Generation</p><h2 id="nextgen-title" data-i18n="next.title">다음세대와 교육</h2></div>
+        <p class="lead" data-i18n="next.lead">어린이, 청소년, 청년, 영어권 성도와 가정이 믿음 안에서 자라도록 각 사역을 연결합니다.</p>
       </div>
       <div class="grid grid-3">
-        <article class="card ministry-card"><div><div class="icon">🌱</div><h3>교회학교</h3><p>주일 오전 11시, 어린이들이 복음을 배우고 예배의 기쁨을 경험하도록 돕습니다.</p></div></article>
-        <article class="card ministry-card"><div><div class="icon">🙌</div><h3>중고등부 Youth Group</h3><p>금요일 오후 7시, 청소년들이 말씀과 공동체 안에서 정체성과 믿음을 세워갑니다.</p></div></article>
-        <article class="card ministry-card"><div><div class="icon">🤝</div><h3>청년부</h3><p>금요일 오후 7시 모이며, 수요일 오후 8시 30분에는 청년부 성경공부가 있습니다.</p></div></article>
-        <article class="card ministry-card"><div><div class="icon">🌎</div><h3>English Ministry</h3><p>English-speaking members can worship, serve, and belong in community.</p></div></article>
-        <article class="card ministry-card" id="school"><div><div class="icon">📚</div><h3>KCC Korean School</h3><p>주일학교 교사반 토요일 오전 8시 등 한국어와 문화를 다음 세대에 전하는 교육 사역입니다.</p></div></article>
-        <article class="card ministry-card"><div><div class="icon">🏠</div><h3>영어부와 성경공부</h3><p>영어부 수요일 오후 7시, 중고등부 교사반 토요일 오전 11시 / 주일 오후 1시.</p></div></article>
+        <article class="card ministry-card"><div><span class="meta" data-i18n="next.card1Meta">Children</span><h3 data-i18n="next.card1Title">교회학교</h3><p data-i18n="next.card1Text">주일 오전 11시, 어린이들이 예배와 말씀 안에서 자라도록 돕습니다.</p></div><div class="meta-line" data-i18n="next.card1Time">주일 11:00 AM</div></article>
+        <article class="card ministry-card"><div><span class="meta" data-i18n="next.card2Meta">Youth</span><h3 data-i18n="next.card2Title">중고등부</h3><p data-i18n="next.card2Text">청소년들이 말씀과 공동체 안에서 정체성과 믿음을 세워갑니다.</p></div><div class="meta-line" data-i18n="next.card2Time">금요일 7:00 PM</div></article>
+        <article class="card ministry-card"><div><span class="meta" data-i18n="next.card3Meta">Young Adults</span><h3 data-i18n="next.card3Title">청년부</h3><p data-i18n="next.card3Text">청년들이 예배, 말씀, 교제 안에서 믿음의 여정을 함께 걷습니다.</p></div><div class="meta-line" data-i18n="next.card3Time">금요일 7:00 PM</div></article>
+        <article class="card ministry-card"><div><span class="meta" data-i18n="next.card4Meta">English Ministry</span><h3 data-i18n="next.card4Title">English Ministry</h3><p data-i18n="next.card4Text">English-speaking members can worship, serve, and belong in community.</p></div><div class="meta-line" data-i18n="next.card4Time">Sunday 9:00 / 11:00 AM</div></article>
+        <article class="card ministry-card" id="school"><div><span class="meta" data-i18n="next.card5Meta">Korean School</span><h3 data-i18n="next.card5Title">KCC Korean School</h3><p data-i18n="next.card5Text">한국어와 문화를 다음 세대에 전하는 교육 사역입니다.</p></div><div class="meta-line" data-i18n="next.card5Time">문의 필요</div></article>
+        <article class="card ministry-card"><div><span class="meta" data-i18n="next.card6Meta">Bible Study</span><h3 data-i18n="next.card6Title">성경공부</h3><p data-i18n="next.card6Text">청년부, 영어부, 중고등부 교사반 등 말씀 안에서 함께 배우는 모임입니다.</p></div><div class="meta-line" data-i18n="next.card6Time">주중 모임</div></article>
       </div>
     </section>
 
-    <section class="section" id="mission" aria-labelledby="mission-title">
-      <div class="grid grid-2">
-        <div>
-          <p class="section-kicker">Community & Mission</p>
-          <h2 id="mission-title">교회 비전</h2>
-          <p class="section-intro">2026년 표어 “다시 기초를 쌓으라” 아래, 말씀과 성령으로 사역하는 교회, 예배와 소그룹 공동체의 교회, 전 성도를 제자와 사역자로 세우는 교회를 꿈꿉니다.</p>
-        </div>
-        <div class="card">
-          <h3>한 영혼과 열방과 다음 세대를 살리는 교회</h3>
-          <ul class="detail-list">
-            <li>말씀과 성령으로 사역하는 교회</li>
-            <li>예배와 소그룹 공동체의 교회</li>
-            <li>전 성도를 제자와 사역자로 세우는 교회</li>
-            <li>복음으로 한 영혼과 열방을 섬기는 교회</li>
-            <li>다음 세대를 일으키는 교회</li>
-          </ul>
-          <div class="card-actions"><a class="btn btn-soft" href="mailto:help@mykoreanchurch.org">교회 문의하기</a></div>
+    <section class="section" id="community" aria-labelledby="community-title">
+      <div class="vision-band">
+        <div class="grid grid-2">
+          <div><p class="kicker" data-i18n="vision.kicker">Community & Mission</p><h2 id="community-title" data-i18n="vision.title">교회 비전</h2><p class="lead" data-i18n="vision.lead">2026년 표어 “다시 기초를 쌓으라” 아래, 말씀과 성령으로 사역하고 예배와 소그룹 공동체 안에서 성도를 세워갑니다.</p></div>
+          <div><h3 data-i18n="vision.statement">한 영혼과 열방과 다음 세대를 살리는 교회</h3><ul class="vision-list"><li data-i18n="vision.item1">말씀과 성령으로 사역하는 교회</li><li data-i18n="vision.item2">예배와 소그룹 공동체의 교회</li><li data-i18n="vision.item3">전 성도를 제자와 사역자로 세우는 교회</li><li data-i18n="vision.item4">복음으로 한 영혼과 열방을 섬기는 교회</li><li data-i18n="vision.item5">다음 세대를 일으키는 교회</li></ul></div>
         </div>
       </div>
     </section>
 
     <section class="section" id="news" aria-labelledby="news-title">
-      <div class="section-head">
-        <div>
-          <p class="section-kicker">News & Updates</p>
-          <h2 id="news-title">주보와 교회소식</h2>
-          <p class="section-intro">초기 버전에서는 최신 소식 영역을 정적으로 준비하고, 추후 운영 방식이 정해지면 주보/광고/사진을 쉽게 갱신하도록 분리합니다.</p>
-        </div>
-      </div>
+      <div class="section-head"><div><p class="kicker" data-i18n="news.kicker">News</p><h2 id="news-title" data-i18n="news.title">주보와 교회소식</h2><p class="lead" data-i18n="news.lead">최근 주보 정보와 말씀 안내를 정리했습니다. 새로운 운영 방식이 정해지면 소식과 주보를 더 쉽게 갱신하도록 확장합니다.</p></div></div>
       <div class="grid grid-2">
-        <div class="card">
-          <h3>최근 안내</h3>
-          <ul class="news-list">
-            <li><a href="mailto:help@mykoreanchurch.org"><span>주보</span> 2026년 5월 17일 주보 정보 반영</a></li>
-            <li><a href="mailto:help@mykoreanchurch.org"><span>말씀</span> 사랑의 복음이 충만한 가정</a></li>
-            <li><a href="mailto:help@mykoreanchurch.org"><span>성경봉독</span> 에베소서 5:21–28</a></li>
-          </ul>
-        </div>
-        <div class="card">
-          <h3>섬기는 사람들</h3>
-          <ul class="detail-list">
-            <li>정지웅 담임 목사</li>
-            <li>이성영 목사 / 어린이</li>
-            <li>Jedi Yi 전도사 / Youth</li>
-            <li>Simon Baik 전도사 / EC</li>
-          </ul>
-          <div class="card-actions"><a class="btn btn-blue" href="mailto:help@mykoreanchurch.org">문의하기</a></div>
-        </div>
+        <div class="card"><h3 data-i18n="news.latest">최근 안내</h3><ul class="news-list"><li><a href="mailto:help@mykoreanchurch.org"><span data-i18n="news.label1">Bulletin</span><span data-i18n="news.item1">2026년 5월 17일 주보 정보 반영</span></a></li><li><a href="https://www.youtube.com/@KoreanChurchofColumbus" target="_blank" rel="noopener"><span data-i18n="news.label2">Sermon</span><span data-i18n="news.item2">사랑의 복음이 충만한 가정</span></a></li><li><a href="mailto:help@mykoreanchurch.org"><span data-i18n="news.label3">Reading</span><span data-i18n="news.item3">에베소서 5:21–28</span></a></li></ul></div>
+        <div class="card subtle"><h3 data-i18n="news.staff">섬기는 사람들</h3><p data-i18n="news.staffText">정지웅 담임 목사, 이성영 목사, Jedi Yi 전도사, Simon Baik 전도사가 각 사역을 섬기고 있습니다.</p><div class="actions"><a class="btn btn-dark" href="mailto:help@mykoreanchurch.org" data-i18n="cta.contact">문의하기</a></div></div>
       </div>
     </section>
 
     <section class="section" id="contact" aria-labelledby="contact-title">
       <article class="card contact-card">
         <div class="contact-inner">
-          <div class="contact-copy">
-            <p class="section-kicker">Visit Us</p>
-            <h2 id="contact-title">오시는 길</h2>
-            <p class="section-intro">예배 방문, 새가족 안내, 한글학교와 사역 문의가 필요하시면 아래 연락처로 문의해 주세요.</p>
-            <div class="contact-lines">
-              <div class="contact-line"><span>Church</span>Korean Church of Columbus</div>
-              <div class="contact-line"><span>Address</span>2825 Snouffer Rd, Columbus, OH 43235</div>
-              <div class="contact-line"><span>Phone</span><a href="tel:+16147261022">(614) 726-1022</a></div>
-              <div class="contact-line"><span>Email</span><a href="mailto:help@mykoreanchurch.org">help@mykoreanchurch.org</a></div>
-            </div>
-          </div>
-          <div class="map-box" aria-label="교회 주소 안내">
-            <div>
-              <strong>2825 Snouffer Rd<br>Columbus, OH 43235</strong>
-              <p>주일 장년예배와 영어예배는 오전 9시와 11시에 드립니다.</p>
-              <div class="card-actions"><a class="btn btn-primary" href="https://maps.google.com/?q=2825+Snouffer+Rd,+Columbus,+OH+43235" rel="noopener">구글 지도에서 길찾기</a></div>
-            </div>
-          </div>
+          <div class="contact-copy"><p class="kicker" data-i18n="contact.kicker">Visit Us</p><h2 id="contact-title" data-i18n="contact.title">오시는 길</h2><p class="lead" data-i18n="contact.lead">예배 방문, 새가족 안내, 자녀 교육과 사역 문의가 필요하시면 연락해 주세요.</p><div class="contact-lines"><div class="contact-line"><span data-i18n="contact.churchLabel">Church</span>Korean Church of Columbus</div><div class="contact-line"><span data-i18n="contact.addressLabel">Address</span><span data-i18n="address.full">2825 Snouffer Rd, Columbus, OH 43235</span></div><div class="contact-line"><span data-i18n="contact.phoneLabel">Phone</span><a href="tel:+16147261022">(614) 726-1022</a></div><div class="contact-line"><span data-i18n="contact.emailLabel">Email</span><a href="mailto:help@mykoreanchurch.org">help@mykoreanchurch.org</a></div></div></div>
+          <div class="map-box" aria-label="Church address"><div><strong data-i18n="contact.mapTitle">2825 Snouffer Rd<br>Columbus, OH 43235</strong><p data-i18n="contact.mapText">주일 예배와 방문 안내가 필요하시면 언제든 문의해 주세요.</p><div class="actions"><a class="btn btn-primary" href="https://maps.google.com/?q=2825+Snouffer+Rd,+Columbus,+OH+43235" rel="noopener" data-i18n="cta.map">Google 지도에서 보기</a></div></div></div>
         </div>
       </article>
     </section>
   </main>
 
   <footer class="site-footer">
-    <div class="footer-inner">
-      <div><strong>KCOC · Korean Church of Columbus</strong><br>콜럼버스 한인교회 공식 웹사이트</div>
-      <div>Working domain: <a href="https://kcocoh.org/">kcocoh.org</a></div>
-    </div>
+    <div class="footer-inner"><div><strong>KCOC · Korean Church of Columbus</strong><br><span data-i18n="footer.tagline">콜럼버스 한인교회 공식 웹사이트</span></div><div><span data-i18n="footer.domainLabel">Domain</span>: <a href="https://kcocoh.org/">kcocoh.org</a></div></div>
   </footer>
   <script src="assets/app.js" defer></script>
 </body>
