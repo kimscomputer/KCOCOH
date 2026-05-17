@@ -53,9 +53,10 @@
 
 ## 다음 작업
 
-1. 번역 문구를 교회 공식 표현으로 검수/수정
-2. 교회 사진 원본이 더 확보되면 히어로/사역 섹션 이미지 교체 또는 추가
-3. 필요 시 `www.kcocoh.org` → `kcocoh.org` canonical redirect 정책 추가
+1. Cloudflare Pages 운영 계정에서 R2/KV 또는 D1 바인딩을 연결해 실제 업로드 저장 활성화
+2. 번역 문구를 교회 공식 표현으로 최종 검수
+3. 교회 사진 원본이 더 확보되면 히어로/사역 섹션 이미지 교체 또는 추가
+4. 필요 시 `www.kcocoh.org` → `kcocoh.org` canonical redirect 정책 추가
 
 
 ### 2026-05-17 13:20 PDT
@@ -65,3 +66,12 @@
 - Hero와 섹션 제목의 최대 글자 크기를 낮춰 타이틀이 과도하게 커 보이지 않게 조정했다.
 - `site/v1/admin/`에 관리 페이지 UI를 추가하고, `site/v1/functions/api/admin/content.js`에 Cloudflare Pages Functions 기반 관리 API 스캐폴드를 추가했다.
 - 원격 쓰기는 Cloudflare Access와 D1/KV 바인딩이 연결되기 전까지 안전하게 비활성화된다.
+
+### 2026-05-17 14:05 PDT
+
+- 사랑의교회, 온누리교회, 영락교회, Life.Church, Redeemer, Jubilee Seoul 등 공개 교회 사이트의 헤드카피 패턴을 다시 확인하고, KCOC 문구를 예배/말씀/공동체/복음/다음세대 중심의 교회 언어로 보정했다.
+- Hero 문구를 `예수 그리스도의 사랑으로 / 여러분을 환영합니다`로 의미 단위 줄바꿈 처리하고, 한국어/영어/중국어/스페인어 주요 문구를 함께 수정했다.
+- 공개 페이지에 `교회 앨범` 섹션과 `주보와 교회 소식` 웹 뷰어 구조를 추가했다. 사진은 대표 이미지 + 썸네일 그리드, 주보는 PDF iframe 또는 이미지 뷰어 + 다운로드 링크 패턴으로 렌더링된다.
+- 관리자 페이지에 `사진 업로드`와 `주보 업로드` 탭을 추가했고, Pages Functions API `/api/admin/media`, `/api/admin/bulletins`, `/api/media/gallery`, `/api/bulletins`를 준비했다.
+- 실제 원격 업로드에는 Cloudflare Access, R2 `KCOC_MEDIA`, KV `KCOC_CONTENT` 또는 D1 `DB`, 공개 URL 변수 `KCOC_MEDIA_PUBLIC_URL` 연결이 필요하다.
+- 현재 프로젝트/문서/코드에서 Figma 연결 흔적은 확인되지 않았다. Figma 연동은 별도 MCP/플러그인/토큰 설정이 필요한 후속 작업이다.

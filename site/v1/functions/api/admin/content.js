@@ -1,12 +1,12 @@
 const seedContent = {
   hero: {
     title: {
-      ko: '콜럼버스에서 함께 예배하고 자라는 믿음의 공동체',
-      en: 'A worshiping community growing together in Columbus'
+      ko: '예수 그리스도의 사랑으로 여러분을 환영합니다',
+      en: 'Welcome in the love of Jesus Christ'
     },
     lead: {
-      ko: '처음 오신 분도 편안하게 예배드릴 수 있도록 예배 시간, 주차, 자녀 예배와 영어 안내를 준비했습니다.',
-      en: 'We want your first visit to feel clear and welcoming, with worship times, parking, children’s ministry, and English-language guidance easy to find.'
+      ko: '콜럼버스 한인교회는 말씀과 성령 안에서 예배하고, 성도를 세우며, 한 영혼과 다음 세대를 복음으로 섬기는 믿음의 공동체입니다.',
+      en: 'Korean Church of Columbus is a gospel community worshiping in the Word and Spirit, building up believers, and serving one soul and the next generation in Christ.'
     }
   },
   services: {

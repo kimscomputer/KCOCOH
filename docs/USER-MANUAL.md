@@ -67,11 +67,20 @@
 - 관리 API 스캐폴드: `site/v1/functions/api/admin/content.js`
 - 접속 경로: `/admin/`
 
-현재 관리 페이지는 Hero 문구, 예배 시간, 주보/소식, 연락처를 입력하고 JSON으로 내보낼 수 있다. Cloudflare Pages Functions는 `/api/admin/content` 경로로 준비되어 있으며, 실제 원격 저장은 다음 조건이 충족되면 활성화한다.
+현재 관리 페이지는 Hero 문구, 예배 시간, 주보/소식, 사진 업로드, 주보 업로드, 연락처를 입력하고 JSON으로 내보낼 수 있다. Cloudflare Pages Functions는 `/api/admin/content`, `/api/admin/media`, `/api/admin/bulletins`, `/api/media/gallery`, `/api/bulletins` 경로로 준비되어 있으며, 실제 원격 저장은 다음 조건이 충족되면 활성화한다.
 
 1. Cloudflare Access로 관리자 경로 보호
 2. `ADMIN_ACCESS_ENFORCED=true` 설정
 3. 허용 이메일 `ADMIN_ALLOWED_EMAILS` 설정
 4. D1 `DB` 또는 KV `KCOC_CONTENT` 바인딩 연결
+5. 사진/주보 파일 저장용 R2 `KCOC_MEDIA` 바인딩 연결
+6. 공개 파일 URL용 `KCOC_MEDIA_PUBLIC_URL` 설정
 
 Access와 저장소가 연결되기 전에는 원격 쓰기 요청이 안전하게 실패하도록 설계되어 있다.
+
+## 사진/주보 운영
+
+- 사진은 관리자 페이지의 `사진 업로드` 탭에서 올린다. 공개 페이지는 대표 사진 1장과 썸네일 그리드로 정돈해 보여준다.
+- 주보는 관리자 페이지의 `주보 업로드` 탭에서 PDF 또는 이미지 파일로 올린다. 공개 페이지는 PDF는 iframe 뷰어, 이미지는 이미지 뷰어로 보여주며 다운로드 링크를 함께 제공한다.
+- 현재 저장소 바인딩이 없으면 업로드 버튼은 안전하게 실패하고, 사진은 브라우저 로컬 미리보기만 표시할 수 있다. 이 상태는 공개 저장이 된 것이 아니다.
+- 운영 업로드를 실제로 사용하려면 Cloudflare Pages 프로젝트에 Access, KV/D1, R2 바인딩을 먼저 연결해야 한다.
