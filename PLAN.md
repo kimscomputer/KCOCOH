@@ -22,10 +22,18 @@
 - 데스크톱 브라우저 시각 검토 후 Hero 제목 줄바꿈, 본문 대비, CTA 문구, 오른쪽 안내 카드 문구를 보정했다.
 - 예배 시간과 온라인 예배 링크는 아직 운영 확인이 필요하므로 확정값 대신 방문자 친화 문구로 임시 배치했다.
 
+### 2026-05-17 11:57 PDT
+
+- GitHub repo `kimscomputer/KCOCOH`에 초기 홈페이지 작업을 push했다.
+- `kcocoh.org` Zone이 있는 `Joe@solisenginc.com's Account`에 Cloudflare Pages 프로젝트 `kcocoh-site`를 생성했다.
+- 운영 Pages subdomain은 `https://kcocoh-site-2im.pages.dev`이다.
+- `kcocoh.org`와 `www.kcocoh.org`를 Pages custom domain에 추가하고, 두 DNS record를 `kcocoh-site-2im.pages.dev`로 proxied CNAME 연결했다.
+- `https://kcocoh.org/`, `https://www.kcocoh.org/`, `https://kcocoh-site-2im.pages.dev/` 모두 HTTP 200 및 KCOC 핵심 문구 렌더링을 확인했다.
+- 작업에 사용된 임시 Cloudflare API 토큰은 노출된 값으로 간주하며, 작업 후 Cloudflare 대시보드에서 삭제/폐기해야 한다.
+
 ## 다음 작업
 
 1. 예배 시간/온라인 예배 링크 세부 정보 확인 후 홈페이지에 반영
 2. 교회 사진/로고 등 사용 허가된 원본 자산 수집 및 최적화
-3. Cloudflare Pages 프로젝트 생성
-4. `kcocoh.org` / `www.kcocoh.org` 연결
-5. 라이브 검증 및 GitHub 원격 백업 구성
+3. Cloudflare Pages custom-domain 상태가 `active`로 바뀌는지 재확인
+4. 필요 시 `www.kcocoh.org` → `kcocoh.org` canonical redirect 정책 추가
