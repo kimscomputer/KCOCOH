@@ -82,3 +82,12 @@
 - 홈페이지 전체 타이포그래피 스케일을 다시 낮췄다. H1 최대값을 42px, H2 최대값을 35px 수준으로 줄이고, body/lead/button/service/info-strip/card 타이포그래피와 여백을 함께 줄여 한 요소만 튀지 않도록 조정했다.
 - 연락처 바는 폭, 내부 padding, 그림자, 글자 크기를 줄여 히어로 아래에서 과도하게 무겁지 않게 정리했다.
 - 모바일은 390px CDP viewport에서 hero/card/button/service panel의 오른쪽 overflow가 없도록 hero margin, 내부 padding, min-width, overflow-x를 보정했다. 측정값 기준 document/body scrollWidth는 390px이고 hero/right edge는 370px으로 viewport 안에 들어온다. 가로 내비게이션 항목만 의도적으로 스크롤된다.
+
+### 2026-05-17 15:25 PDT
+
+- 관리자 페이지에 비밀번호 기반 로그인 흐름을 추가했다.
+- `/admin/` 아래 모든 정적 관리 화면은 Pages Functions middleware에서 인증 세션이 없으면 `/admin/login/`으로 302 redirect한다.
+- 새 API: `/api/admin/auth` GET/POST. POST 로그인 성공 시 `HttpOnly; Secure; SameSite=Lax` 세션 쿠키를 발급하고, `action: logout`으로 로그아웃한다.
+- 기존 `/api/admin/content`, `/api/admin/media`, `/api/admin/bulletins` 관리자 API는 Cloudflare Access 세션 또는 비밀번호 로그인 세션 중 하나가 있어야 접근/업로드 가능하도록 통합했다.
+- 로컬 검증: `wrangler pages dev`에서 `/admin/` 미인증 접근은 로그인으로 redirect, 잘못된 비밀번호는 401, 올바른 비밀번호는 `/admin/` 진입, 로그아웃 후 로그인 화면 복귀 확인.
+- 운영 적용에는 Cloudflare Pages 환경변수/secret `ADMIN_PASSWORD` 또는 `ADMIN_PASSWORD_SHA256`, `ADMIN_SESSION_SECRET`, 선택적으로 `ADMIN_SESSION_MAX_AGE` 설정 후 배포가 필요하다. 이번에 생성한 관리자 비밀번호는 Git 밖의 `~/kcoc-admin-login.txt`에 0600 권한으로 저장했다.

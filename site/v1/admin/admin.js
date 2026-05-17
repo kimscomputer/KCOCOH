@@ -2,6 +2,7 @@
   const form = document.getElementById('adminForm');
   const status = document.getElementById('status');
   const saveBtn = document.getElementById('saveBtn');
+  const logoutBtn = document.getElementById('logoutBtn');
   const exportBtn = document.getElementById('exportBtn');
   const previewBox = document.getElementById('previewBox');
   const backendFacts = document.getElementById('backendFacts');
@@ -115,6 +116,19 @@
     }
   });
 
+  logoutBtn?.addEventListener('click', async () => {
+    logoutBtn.disabled = true;
+    try {
+      await fetch('/api/admin/auth', {
+        method: 'POST',
+        headers: { 'content-type': 'application/json', accept: 'application/json' },
+        body: JSON.stringify({ action: 'logout' })
+      });
+    } finally {
+      location.replace('/admin/login/');
+    }
+  });
+
   const fileToPayload = (file) => new Promise((resolve, reject) => {
     const reader = new FileReader();
     reader.onload = () => resolve({
@@ -211,6 +225,10 @@
     try {
       const res = await fetch('/api/admin/content', { headers: { accept: 'application/json' } });
       const data = await res.json().catch(() => ({}));
+      if (res.status === 401) {
+        location.replace(data.loginUrl || '/admin/login/');
+        return;
+      }
       if (data.content) fill(data.content);
       renderFacts(data);
       if (res.ok && !data.configRequired) setStatus('ok', '관리 백엔드 연결됨', data.message || '콘텐츠를 불러왔습니다.');

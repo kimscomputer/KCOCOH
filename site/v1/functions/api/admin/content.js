@@ -1,3 +1,5 @@
+import { json, requireAdmin, unauthorizedJson, accessIdentity } from '../../_shared/admin-auth.js';
+
 const seedContent = {
   hero: {
     title: {
@@ -29,25 +31,9 @@ const seedContent = {
   }
 };
 
-const json = (body, init = {}) => new Response(JSON.stringify(body, null, 2), {
-  ...init,
-  headers: {
-    'content-type': 'application/json; charset=utf-8',
-    'cache-control': 'private, no-store',
-    ...(init.headers || {})
-  }
-});
-
 const accessState = (env, request) => {
-  const enforced = env.ADMIN_ACCESS_ENFORCED === 'true';
-  const email = request.headers.get('Cf-Access-Authenticated-User-Email') || '';
-  const hasJwt = Boolean(request.headers.get('Cf-Access-Jwt-Assertion'));
-  const allowed = String(env.ADMIN_ALLOWED_EMAILS || '')
-    .split(',')
-    .map((item) => item.trim().toLowerCase())
-    .filter(Boolean);
-  const emailAllowed = Boolean(email) && (allowed.length === 0 || allowed.includes(email.toLowerCase()));
-  return { enforced, email, hasJwt, emailAllowed, allowed };
+  const access = accessIdentity(env, request);
+  return { enforced: access.enforced, email: access.email, hasJwt: access.hasJwt, emailAllowed: access.emailAllowed, allowed: access.allowed };
 };
 
 const getStore = (env) => {
@@ -87,6 +73,8 @@ const writeContent = async (env, payload) => {
 };
 
 export async function onRequestGet({ env, request }) {
+  const admin = await requireAdmin(env, request);
+  if (!admin.ok) return unauthorizedJson(admin);
   const store = getStore(env);
   const access = accessState(env, request);
   const content = await readContent(env);
@@ -104,18 +92,14 @@ export async function onRequestGet({ env, request }) {
 }
 
 export async function onRequestPut({ env, request }) {
-  const access = accessState(env, request);
-  if (!access.enforced) {
-    return json({ ok: false, error: 'ADMIN_ACCESS_ENFORCED must be true before remote admin writes are enabled.' }, { status: 503 });
-  }
-  if (!access.hasJwt || !access.emailAllowed) {
-    return json({ ok: false, error: 'Cloudflare Access admin session is required.' }, { status: 401 });
-  }
+  const admin = await requireAdmin(env, request);
+  if (!admin.ok) return unauthorizedJson(admin);
+  const actor = admin.identity.email || 'password-admin';
   const payload = await request.json().catch(() => null);
   if (!payload || typeof payload !== 'object') return json({ ok: false, error: 'Invalid JSON payload.' }, { status: 400 });
-  const store = await writeContent(env, { ...payload, updatedAt: new Date().toISOString(), updatedBy: access.email });
+  const store = await writeContent(env, { ...payload, updatedAt: new Date().toISOString(), updatedBy: actor });
   if (!store) return json({ ok: false, error: 'No D1 DB or KCOC_CONTENT KV binding is configured.' }, { status: 503 });
-  return json({ ok: true, message: '관리 콘텐츠를 저장했습니다.', store, access: access.email, publicReflection: 'saved; public homepage reflection is the next integration step' });
+  return json({ ok: true, message: '관리 콘텐츠를 저장했습니다.', store, access: actor, publicReflection: 'saved; public homepage reflection is the next integration step' });
 }
 
 export async function onRequestOptions() {

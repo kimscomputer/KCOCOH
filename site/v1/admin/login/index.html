@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>KCOC 관리자 로그인</title>
+  <meta name="robots" content="noindex, nofollow">
+  <style>
+    :root { color-scheme: light; --paper:#f8f4ec; --panel:#fffdf8; --ink:#1b1a17; --muted:#6d655c; --line:#e6dccf; --bronze:#a96732; --dark:#1f2327; --green:#48684c; --red:#9d3d34; }
+    * { box-sizing:border-box; }
+    body { min-height:100vh; margin:0; display:grid; place-items:center; background:linear-gradient(135deg,#fbf8f2,#efe4d6); color:var(--ink); font-family:ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans KR",sans-serif; font-size:16px; line-height:1.6; }
+    .card { width:min(460px, calc(100% - 32px)); padding:30px; border:1px solid var(--line); border-radius:28px; background:rgba(255,253,248,.92); box-shadow:0 24px 64px rgba(82,58,34,.14); }
+    .brand { display:flex; gap:14px; align-items:center; margin-bottom:22px; }
+    .brand img { height:50px; width:auto; padding:4px 8px; border-radius:14px; background:#fff; }
+    .eyebrow { margin:0 0 5px; color:var(--bronze); font-size:12px; font-weight:900; letter-spacing:.16em; text-transform:uppercase; }
+    h1 { margin:0; font-size:clamp(28px,6vw,38px); line-height:1.12; letter-spacing:-.04em; }
+    p { margin:0; color:var(--muted); }
+    form { display:grid; gap:14px; margin-top:22px; }
+    label { display:grid; gap:8px; color:#3f3932; font-size:13px; font-weight:900; letter-spacing:.04em; text-transform:uppercase; }
+    input { width:100%; min-height:50px; border:1px solid var(--line); border-radius:16px; background:#fff; color:var(--ink); padding:0 14px; font:inherit; }
+    button, .btn { min-height:50px; display:inline-flex; align-items:center; justify-content:center; border:0; border-radius:999px; background:var(--dark); color:#fff; padding:0 18px; font:inherit; font-weight:900; cursor:pointer; text-decoration:none; }
+    .row { display:flex; flex-wrap:wrap; gap:10px; align-items:center; justify-content:space-between; margin-top:14px; }
+    .status { min-height:46px; margin-top:14px; padding:12px 14px; border:1px solid var(--line); border-radius:16px; background:#fff; color:var(--muted); }
+    .status.ok { border-color:rgba(72,104,76,.28); background:#f4faf3; color:var(--green); }
+    .status.error { border-color:rgba(157,61,52,.26); background:#fff2f0; color:var(--red); }
+    .muted { font-size:14px; }
+  </style>
+</head>
+<body>
+  <main class="card">
+    <div class="brand">
+      <img src="../../image/kcc-logo.png" alt="Korean Church of Columbus">
+      <div>
+        <p class="eyebrow">KCOC Admin</p>
+        <h1>관리자 로그인</h1>
+      </div>
+    </div>
+    <p>교회 웹사이트 관리 페이지는 승인된 관리자만 사용할 수 있습니다. 관리자 비밀번호로 로그인해 주세요.</p>
+    <form id="loginForm">
+      <label>관리자 비밀번호
+        <input id="password" name="password" type="password" autocomplete="current-password" required autofocus>
+      </label>
+      <button type="submit" id="loginBtn">로그인</button>
+    </form>
+    <div id="status" class="status" role="status" aria-live="polite">로그인 대기 중입니다.</div>
+    <div class="row">
+      <a class="muted" href="../../">홈페이지로 돌아가기</a>
+      <span class="muted">세션은 일정 시간 후 자동 만료됩니다.</span>
+    </div>
+  </main>
+  <script src="login.js" defer></script>
+</body>
+</html>

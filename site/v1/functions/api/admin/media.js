@@ -1,22 +1,8 @@
-const json = (body, init = {}) => new Response(JSON.stringify(body, null, 2), {
-  ...init,
-  headers: { 'content-type': 'application/json; charset=utf-8', 'cache-control': 'private, no-store', ...(init.headers || {}) }
-});
+import { accessIdentity, json, requireAdmin, unauthorizedJson } from '../../_shared/admin-auth.js';
 
 const accessState = (env, request) => {
-  const enforced = env.ADMIN_ACCESS_ENFORCED === 'true';
-  const email = request.headers.get('Cf-Access-Authenticated-User-Email') || '';
-  const hasJwt = Boolean(request.headers.get('Cf-Access-Jwt-Assertion'));
-  const allowed = String(env.ADMIN_ALLOWED_EMAILS || '').split(',').map((item) => item.trim().toLowerCase()).filter(Boolean);
-  const emailAllowed = Boolean(email) && (allowed.length === 0 || allowed.includes(email.toLowerCase()));
-  return { enforced, email, hasJwt, emailAllowed };
-};
-
-const requireAdmin = (env, request) => {
-  const access = accessState(env, request);
-  if (!access.enforced) return { error: json({ ok: false, error: 'ADMIN_ACCESS_ENFORCED must be true before remote media uploads are enabled.' }, { status: 503 }) };
-  if (!access.hasJwt || !access.emailAllowed) return { error: json({ ok: false, error: 'Cloudflare Access admin session is required.' }, { status: 401 }) };
-  return { access };
+  const access = accessIdentity(env, request);
+  return { enforced: access.enforced, email: access.email, hasJwt: access.hasJwt, emailAllowed: access.emailAllowed };
 };
 
 const decodeBase64 = (data) => Uint8Array.from(atob(data), (ch) => ch.charCodeAt(0));
@@ -55,8 +41,8 @@ const saveItem = async (env, item) => {
 };
 
 export async function onRequestPost({ env, request }) {
-  const admin = requireAdmin(env, request);
-  if (admin.error) return admin.error;
+  const admin = await requireAdmin(env, request);
+  if (!admin.ok) return unauthorizedJson(admin);
   if (!env.KCOC_MEDIA?.put) return json({ ok: false, error: 'KCOC_MEDIA R2 bucket binding is required before photo upload is enabled.' }, { status: 503 });
   const payload = await request.json().catch(() => null);
   if (!payload?.file?.data || !payload?.file?.type?.startsWith('image/')) return json({ ok: false, error: 'Valid image file payload is required.' }, { status: 400 });
