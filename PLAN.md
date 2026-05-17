@@ -110,3 +110,11 @@
 - 새 관리자 비밀번호는 salt 포함 SHA-256 해시로 저장하고 원문은 저장하지 않는다. 세션 쿠키에는 type/id/username/name/role 정보를 HMAC 서명한 v2 payload로 넣는다.
 - 로컬 검증: `wrangler pages dev --kv KCOC_CONTENT`에서 `/admin/` 미인증 redirect, 초기 관리자 로그인, 관리자 추가, 추가 관리자 이메일 로그인, 관리자 탭 표시를 확인했다.
 - 운영 배포에는 Cloudflare 토큰이 다시 필요하며, 운영에서 계정 관리가 실제 저장되려면 Pages 프로젝트에 `KCOC_CONTENT` KV 또는 `DB` D1 바인딩이 연결되어 있어야 한다.
+
+### 2026-05-17 16:50 PDT
+
+- 관리자 계정 관리 코드 운영 배포 완료: `https://546cbfb9.kcocoh-site-2im.pages.dev`가 `https://kcocoh.org/admin/`에 반영됐다.
+- 라이브 검증: `/admin/` 미인증 302 redirect, `/admin/login/` 200 및 `관리자 이메일 아이디` 표시, 초기 관리자 비밀번호 로그인 200, `/api/admin/users` owner 세션 접근 200 확인.
+- 현재 운영 `/api/admin/users` 응답은 `store: not_configured`, `writable: false`이다. 즉 UI와 API는 배포됐지만 실제 관리자 추가 저장은 아직 비활성이다.
+- 원인: 현재 `/tmp/kcocoh_cf_token` 토큰은 Pages 프로젝트 조회/배포에는 성공하지만 KV/D1 list/create API에서 `Authentication error`가 발생한다. `KCOC_CONTENT` KV namespace 생성/바인딩을 위해서는 KV Storage Edit 또는 D1 Edit 권한이 포함된 Joe@solisenginc.com 계정 토큰이 필요하다.
+- 배포 후 `/tmp/kcocoh_cf_token` 삭제 완료.
