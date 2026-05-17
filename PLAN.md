@@ -75,3 +75,10 @@
 - 관리자 페이지에 `사진 업로드`와 `주보 업로드` 탭을 추가했고, Pages Functions API `/api/admin/media`, `/api/admin/bulletins`, `/api/media/gallery`, `/api/bulletins`를 준비했다.
 - 실제 원격 업로드에는 Cloudflare Access, R2 `KCOC_MEDIA`, KV `KCOC_CONTENT` 또는 D1 `DB`, 공개 URL 변수 `KCOC_MEDIA_PUBLIC_URL` 연결이 필요하다.
 - 현재 프로젝트/문서/코드에서 Figma 연결 흔적은 확인되지 않았다. Figma 연동은 별도 MCP/플러그인/토큰 설정이 필요한 후속 작업이다.
+
+### 2026-05-17 14:40 PDT
+
+- 사용자 피드백: 첫 화면과 섹션 타이틀이 필요 이상으로 크고 전체 디자인 균형을 무너뜨린다는 지적.
+- 홈페이지 전체 타이포그래피 스케일을 다시 낮췄다. H1 최대값을 42px, H2 최대값을 35px 수준으로 줄이고, body/lead/button/service/info-strip/card 타이포그래피와 여백을 함께 줄여 한 요소만 튀지 않도록 조정했다.
+- 연락처 바는 폭, 내부 padding, 그림자, 글자 크기를 줄여 히어로 아래에서 과도하게 무겁지 않게 정리했다.
+- 모바일은 390px CDP viewport에서 hero/card/button/service panel의 오른쪽 overflow가 없도록 hero margin, 내부 padding, min-width, overflow-x를 보정했다. 측정값 기준 document/body scrollWidth는 390px이고 hero/right edge는 370px으로 viewport 안에 들어온다. 가로 내비게이션 항목만 의도적으로 스크롤된다.
