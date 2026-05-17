@@ -72,6 +72,19 @@ export async function onRequestPost({ env, request }) {
   return json({ ok: true, message: '주보를 업로드하고 웹 뷰어 목록에 저장했습니다.', item, items });
 }
 
+export async function onRequestGet({ env, request }) {
+  const access = accessState(env, request);
+  return json({
+    ok: true,
+    feature: 'bulletin-upload',
+    ready: Boolean(env.KCOC_MEDIA?.put && (env.KCOC_CONTENT?.put || env.DB?.prepare) && access.enforced),
+    access: access.enforced ? 'enforced' : 'not_enforced_yet',
+    mediaStore: env.KCOC_MEDIA?.put ? 'r2_configured' : 'r2_not_configured',
+    metadataStore: env.KCOC_CONTENT?.put ? 'kv_configured' : env.DB?.prepare ? 'd1_configured' : 'not_configured',
+    message: '주보 업로드 API는 배포됐습니다. 실제 저장은 Cloudflare Access, R2 KCOC_MEDIA, KV KCOC_CONTENT 또는 D1 DB 바인딩 연결 후 활성화됩니다.'
+  });
+}
+
 export async function onRequestOptions() {
-  return new Response(null, { status: 204, headers: { allow: 'POST, OPTIONS' } });
+  return new Response(null, { status: 204, headers: { allow: 'GET, POST, OPTIONS' } });
 }
