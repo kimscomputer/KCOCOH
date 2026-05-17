@@ -11,3 +11,5 @@ kcocoh-deploy/
 /tmp/
 /dist/
 /backups/local/
+# Local reference exports from the old WordPress site
+/image/*.html
