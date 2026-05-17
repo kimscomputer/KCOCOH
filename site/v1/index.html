@@ -10,18 +10,18 @@
   <style>
     :root {
       color-scheme: light;
-      --paper: #f7f3ec;
-      --paper-2: #fcfaf6;
-      --ink: #161615;
-      --muted: #66635d;
-      --quiet: #8a867d;
-      --line: #e3ded4;
-      --line-dark: rgba(255,255,255,.22);
-      --charcoal: #111315;
-      --charcoal-2: #1c2024;
-      --bronze: #a66f3e;
-      --bronze-dark: #7d512c;
-      --sage: #68715f;
+      --paper: #f8f4ec;
+      --paper-2: #fffdf8;
+      --ink: #1b1a17;
+      --muted: #686158;
+      --quiet: #82796e;
+      --line: #e7ded1;
+      --line-dark: rgba(26,24,20,.14);
+      --charcoal: #1a1c1e;
+      --charcoal-2: #27221d;
+      --bronze: #b7773d;
+      --bronze-dark: #86542b;
+      --sage: #697865;
       --white: #ffffff;
       --radius-xl: 32px;
       --radius-lg: 24px;
@@ -173,9 +173,9 @@
       text-transform: uppercase;
     }
     h1, h2, h3 { margin: 0; color: var(--ink); line-height: 1.04; letter-spacing: -.055em; text-wrap: balance; }
-    h1 { font-size: clamp(46px, 6.4vw, 88px); max-width: 940px; }
-    h2 { font-size: clamp(34px, 4.7vw, 62px); }
-    h3 { font-size: 25px; letter-spacing: -.035em; }
+    h1 { font-size: clamp(36px, 4.6vw, 56px); max-width: 720px; }
+    h2 { font-size: clamp(28px, 3.3vw, 44px); }
+    h3 { font-size: 21px; letter-spacing: -.032em; }
     p { margin: 0; }
     .lead {
       max-width: 680px;
@@ -195,14 +195,15 @@
 
     .hero {
       width: min(1280px, calc(100% - 24px));
-      min-height: calc(100vh - 116px);
+      min-height: 680px;
       margin: 18px auto 0;
+      border: 1px solid rgba(231,222,209,.92);
       border-radius: 34px;
-      background: var(--charcoal);
-      color: #fff;
+      background: linear-gradient(135deg, #fffdf8 0%, #f5ecdf 100%);
+      color: var(--ink);
       overflow: hidden;
       position: relative;
-      box-shadow: var(--shadow-photo);
+      box-shadow: 0 28px 72px rgba(82, 58, 34, .16);
       scroll-margin-top: 104px;
     }
     .hero::before {
@@ -210,23 +211,24 @@
       position: absolute;
       inset: 0;
       background:
-        linear-gradient(90deg, rgba(17,19,21,.88) 0%, rgba(17,19,21,.70) 46%, rgba(17,19,21,.28) 100%),
-        linear-gradient(180deg, rgba(17,19,21,.22), rgba(17,19,21,.62)),
-        url("media/existing-home/5W2A1213_cropped-1500x630.jpg") center / cover no-repeat;
-      transform: scale(1.02);
+        linear-gradient(90deg, rgba(255,253,248,.96) 0%, rgba(255,253,248,.86) 36%, rgba(255,253,248,.34) 58%, rgba(255,253,248,0) 78%),
+        linear-gradient(180deg, rgba(255,253,248,.02), rgba(128,82,42,.14)),
+        url("media/existing-home/DSC06622-1500x630.jpg") 66% 55% / cover no-repeat;
+      filter: saturate(1.05) brightness(1.09);
     }
     .hero-inner {
       position: relative;
       z-index: 1;
-      min-height: calc(100vh - 116px);
+      min-height: 680px;
       display: grid;
-      grid-template-columns: minmax(0, 1fr) 360px;
+      grid-template-columns: minmax(0, .92fr) 350px;
       align-items: end;
-      gap: 52px;
-      padding: clamp(34px, 6vw, 76px);
+      gap: 44px;
+      padding: clamp(34px, 5vw, 64px);
     }
-    .hero h1 { color: #fff; }
-    .hero .lead { margin-top: 24px; color: #eee8dc; }
+    .hero h1 { color: var(--ink); }
+    .hero .lead { margin-top: 20px; color: #5f574f; }
+    .hero .kicker { color: var(--bronze-dark); }
     .hero-actions, .actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 32px; }
     .btn {
       min-height: 52px;
@@ -245,29 +247,30 @@
     .btn:hover, .btn:focus-visible { transform: translateY(-1px); outline: none; }
     .btn-primary { background: var(--bronze); color: #fff; }
     .btn-primary:hover { background: var(--bronze-dark); }
-    .btn-light { border-color: rgba(255,255,255,.38); color: #fff; background: rgba(255,255,255,.08); }
+    .btn-light { border-color: rgba(134,84,43,.22); color: var(--ink); background: rgba(255,255,255,.66); box-shadow: 0 12px 30px rgba(82,58,34,.10); }
     .btn-outline { border-color: var(--line); color: var(--ink); background: rgba(255,255,255,.54); }
     .btn-dark { background: var(--charcoal); color: #fff; }
 
     .service-panel {
       padding: 24px;
-      border: 1px solid var(--line-dark);
+      border: 1px solid rgba(231,222,209,.92);
       border-radius: 26px;
-      background: rgba(17,19,21,.62);
-      backdrop-filter: blur(12px);
+      background: rgba(255,253,248,.82);
+      box-shadow: 0 22px 54px rgba(82,58,34,.14);
+      backdrop-filter: blur(14px);
     }
-    .service-panel h2 { color: #fff; font-size: 29px; margin-bottom: 18px; }
+    .service-panel h2 { color: var(--ink); font-size: 24px; margin-bottom: 18px; letter-spacing: -.035em; }
     .service-row {
       display: grid;
       grid-template-columns: 1fr auto;
       gap: 18px;
-      padding: 16px 0;
-      border-top: 1px solid var(--line-dark);
+      padding: 15px 0;
+      border-top: 1px solid rgba(26,24,20,.12);
     }
     .service-row:first-of-type { border-top: 0; padding-top: 0; }
-    .service-row strong { display: block; color: #fff; font-size: 16px; line-height: 1.35; }
-    .service-row span { color: #ddd5c8; font-size: 14px; }
-    .service-row time { color: #fff; font-size: 18px; font-weight: 900; white-space: nowrap; }
+    .service-row strong { display: block; color: var(--ink); font-size: 15px; line-height: 1.35; }
+    .service-row span { color: var(--muted); font-size: 13px; }
+    .service-row time { color: var(--bronze-dark); font-size: 16px; font-weight: 900; white-space: nowrap; }
 
     .info-strip {
       width: min(1180px, calc(100% - 36px));
@@ -300,7 +303,7 @@
     .card.subtle { background: rgba(255,255,255,.48); box-shadow: none; }
     .card p { color: var(--muted); margin-top: 12px; }
     .meta { color: var(--quiet); font-size: 13px; font-weight: 900; letter-spacing: .12em; text-transform: uppercase; }
-    .time { margin-top: 12px; color: var(--ink); font-size: 29px; font-weight: 920; line-height: 1.18; letter-spacing: -.04em; }
+    .time { margin-top: 12px; color: var(--ink); font-size: 23px; font-weight: 900; line-height: 1.2; letter-spacing: -.035em; }
 
     .visit-steps { counter-reset: visit; }
     .visit-step { position: relative; padding-left: 72px; min-height: 124px; }
@@ -387,6 +390,7 @@
     .footer-inner { width: min(1180px, calc(100% - 36px)); margin: 0 auto; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 24px; }
     .footer-inner strong { color: #fff; }
     .footer-inner a { color: #fff; }
+    .admin-foot-link { display:inline-flex; margin-top:8px; padding:6px 12px; border:1px solid rgba(255,255,255,.22); border-radius:999px; color:#fff; text-decoration:none; font-size:13px; font-weight:800; }
 
     @media (max-width: 1120px) {
       .nav-wrap { flex-wrap: wrap; padding: 12px 0; }
@@ -407,9 +411,14 @@
       .language-switch { flex: 0 0 auto; }
       .language-switch button { min-width: 40px; }
       .hero { width: min(100% - 14px, 1280px); min-height: auto; border-radius: 26px; }
-      .hero::before { background-position: 58% center; }
+      .hero::before {
+        background:
+          linear-gradient(180deg, rgba(255,253,248,.96) 0%, rgba(255,253,248,.88) 46%, rgba(255,253,248,.54) 100%),
+          url("media/existing-home/DSC06622-1500x630.jpg") 64% center / cover no-repeat;
+      }
       .hero-inner { min-height: auto; padding: 34px 22px; gap: 34px; }
-      h1 { font-size: clamp(42px, 13vw, 60px); }
+      h1 { font-size: clamp(32px, 9vw, 42px); }
+      h2 { font-size: clamp(26px, 8vw, 36px); }
       .hero-actions, .actions { display: grid; grid-template-columns: 1fr; }
       .btn { width: 100%; min-height: 54px; }
       .service-row { grid-template-columns: 1fr; gap: 4px; }
@@ -603,7 +612,7 @@
   </main>
 
   <footer class="site-footer">
-    <div class="footer-inner"><div><strong>KCOC · Korean Church of Columbus</strong><br><span data-i18n="footer.tagline">콜럼버스 한인교회 공식 웹사이트</span></div><div><span data-i18n="footer.domainLabel">Domain</span>: <a href="https://kcocoh.org/">kcocoh.org</a></div></div>
+    <div class="footer-inner"><div><strong>KCOC · Korean Church of Columbus</strong><br><span data-i18n="footer.tagline">콜럼버스 한인교회 공식 웹사이트</span></div><div><span data-i18n="footer.domainLabel">Domain</span>: <a href="https://kcocoh.org/">kcocoh.org</a><br><a class="admin-foot-link" href="admin/">관리 페이지</a></div></div>
   </footer>
   <script src="assets/app.js" defer></script>
 </body>

@@ -56,3 +56,12 @@
 1. 번역 문구를 교회 공식 표현으로 검수/수정
 2. 교회 사진 원본이 더 확보되면 히어로/사역 섹션 이미지 교체 또는 추가
 3. 필요 시 `www.kcocoh.org` → `kcocoh.org` canonical redirect 정책 추가
+
+
+### 2026-05-17 13:20 PDT
+
+- 사용자의 피드백에 따라 첫 화면이 너무 어둡고 사진이 식별되지 않는 문제를 수정했다.
+- Hero를 밝은 크림/화이트 기반으로 바꾸고, 실제 예배당 사진이 오른쪽에서 보이도록 오버레이를 낮췄다.
+- Hero와 섹션 제목의 최대 글자 크기를 낮춰 타이틀이 과도하게 커 보이지 않게 조정했다.
+- `site/v1/admin/`에 관리 페이지 UI를 추가하고, `site/v1/functions/api/admin/content.js`에 Cloudflare Pages Functions 기반 관리 API 스캐폴드를 추가했다.
+- 원격 쓰기는 Cloudflare Access와 D1/KV 바인딩이 연결되기 전까지 안전하게 비활성화된다.

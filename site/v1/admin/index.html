@@ -1,0 +1,156 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>KCOC 관리 페이지</title>
+  <meta name="robots" content="noindex, nofollow">
+  <style>
+    :root { color-scheme: light; --paper:#f8f4ec; --panel:#fffdf8; --ink:#1b1a17; --muted:#6d655c; --line:#e6dccf; --bronze:#a96732; --dark:#1f2327; --green:#48684c; --red:#9d3d34; }
+    * { box-sizing:border-box; }
+    body { margin:0; background:linear-gradient(180deg,#fbf8f2,#f2eadf); color:var(--ink); font-family:ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans KR",sans-serif; font-size:16px; line-height:1.6; }
+    a { color:inherit; }
+    .shell { width:min(1180px, calc(100% - 32px)); margin:0 auto; padding:28px 0 56px; }
+    header { display:flex; justify-content:space-between; align-items:center; gap:18px; padding:18px 0 26px; }
+    .brand { display:flex; align-items:center; gap:14px; text-decoration:none; }
+    .brand img { height:48px; width:auto; padding:3px 6px; border-radius:12px; background:rgba(255,255,255,.78); }
+    .eyebrow { margin:0 0 8px; color:var(--bronze); font-size:12px; font-weight:900; letter-spacing:.16em; text-transform:uppercase; }
+    h1, h2, h3 { margin:0; line-height:1.15; letter-spacing:-.035em; }
+    h1 { font-size:clamp(30px,4vw,46px); }
+    h2 { font-size:26px; }
+    h3 { font-size:20px; }
+    p { margin:0; color:var(--muted); }
+    .top-actions { display:flex; flex-wrap:wrap; gap:10px; }
+    .btn { min-height:44px; display:inline-flex; align-items:center; justify-content:center; padding:0 16px; border:1px solid var(--line); border-radius:999px; background:rgba(255,255,255,.7); color:var(--ink); font-weight:850; text-decoration:none; cursor:pointer; }
+    .btn.primary { border-color:transparent; background:var(--dark); color:#fff; }
+    .btn.bronze { border-color:transparent; background:var(--bronze); color:#fff; }
+    .btn.danger { border-color:rgba(157,61,52,.2); color:var(--red); }
+    .grid { display:grid; grid-template-columns:280px minmax(0,1fr); gap:18px; align-items:start; }
+    .panel { border:1px solid var(--line); border-radius:24px; background:rgba(255,253,248,.82); box-shadow:0 20px 54px rgba(82,58,34,.10); overflow:hidden; }
+    .panel-pad { padding:24px; }
+    .status { margin-bottom:18px; padding:16px 18px; border:1px solid var(--line); border-radius:18px; background:#fff; }
+    .status strong { display:block; margin-bottom:4px; }
+    .status.ok { border-color:rgba(72,104,76,.28); background:#f4faf3; }
+    .status.warn { border-color:rgba(169,103,50,.30); background:#fff7eb; }
+    .status.error { border-color:rgba(157,61,52,.26); background:#fff2f0; }
+    .tabs { display:grid; gap:8px; padding:10px; }
+    .tab { width:100%; min-height:48px; display:flex; align-items:center; justify-content:space-between; gap:10px; padding:0 14px; border:0; border-radius:16px; background:transparent; color:var(--ink); font-weight:850; text-align:left; cursor:pointer; }
+    .tab[aria-selected="true"] { background:var(--dark); color:#fff; }
+    .tab span { color:inherit; opacity:.72; font-size:12px; font-weight:900; letter-spacing:.08em; }
+    form { display:grid; gap:18px; }
+    .form-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:16px; }
+    label { display:grid; gap:7px; color:#3f3932; font-size:13px; font-weight:900; letter-spacing:.04em; text-transform:uppercase; }
+    input, textarea, select { width:100%; border:1px solid var(--line); border-radius:14px; background:#fff; color:var(--ink); padding:12px 13px; font:inherit; line-height:1.45; }
+    textarea { min-height:118px; resize:vertical; }
+    .wide { grid-column:1 / -1; }
+    .preview { display:grid; gap:12px; margin-top:20px; padding:18px; border:1px dashed #d6c8b7; border-radius:18px; background:rgba(255,255,255,.56); }
+    .preview-card { padding:16px; border:1px solid var(--line); border-radius:16px; background:#fff; }
+    .row { display:flex; flex-wrap:wrap; gap:10px; align-items:center; justify-content:space-between; }
+    .list { display:grid; gap:10px; margin-top:14px; }
+    .item { padding:14px; border:1px solid var(--line); border-radius:16px; background:#fff; }
+    .muted { color:var(--muted); font-size:14px; }
+    .hidden { display:none !important; }
+    @media (max-width:860px){ header{align-items:flex-start; flex-direction:column;} .grid{grid-template-columns:1fr;} .form-grid{grid-template-columns:1fr;} .top-actions{width:100%;} .btn{flex:1;} }
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <header>
+      <a class="brand" href="../" aria-label="KCOC 홈페이지로 돌아가기">
+        <img src="../image/kcc-logo.png" alt="Korean Church of Columbus">
+        <div>
+          <p class="eyebrow">KCOC Admin</p>
+          <h1>교회 웹사이트 관리</h1>
+        </div>
+      </a>
+      <div class="top-actions">
+        <a class="btn" href="../">홈페이지 보기</a>
+        <button class="btn bronze" type="button" id="saveBtn">변경 저장</button>
+      </div>
+    </header>
+
+    <div id="status" class="status warn" role="status" aria-live="polite">
+      <strong>관리 백엔드 확인 중</strong>
+      <span>Cloudflare Pages Functions와 저장소 연결 상태를 확인하고 있습니다.</span>
+    </div>
+
+    <main class="grid">
+      <aside class="panel" aria-label="관리 메뉴">
+        <div class="tabs" role="tablist">
+          <button class="tab" type="button" role="tab" aria-selected="true" data-section="hero">첫 화면 <span>Hero</span></button>
+          <button class="tab" type="button" role="tab" aria-selected="false" data-section="services">예배 시간 <span>Times</span></button>
+          <button class="tab" type="button" role="tab" aria-selected="false" data-section="news">주보/소식 <span>News</span></button>
+          <button class="tab" type="button" role="tab" aria-selected="false" data-section="contact">연락처 <span>Contact</span></button>
+          <button class="tab" type="button" role="tab" aria-selected="false" data-section="publish">게시 상태 <span>Publish</span></button>
+        </div>
+      </aside>
+
+      <section class="panel panel-pad">
+        <form id="adminForm">
+          <div data-pane="hero">
+            <p class="eyebrow">Homepage Hero</p>
+            <h2>첫 화면 문구와 버튼</h2>
+            <p class="muted">방문자가 처음 보는 제목, 소개 문구, 주요 버튼을 관리합니다.</p>
+            <div class="form-grid" style="margin-top:20px">
+              <label class="wide">한국어 제목<input name="hero.title.ko" value="콜럼버스에서 함께 예배하고 자라는 믿음의 공동체"></label>
+              <label class="wide">영문 제목<input name="hero.title.en" value="A worshiping community growing together in Columbus"></label>
+              <label class="wide">한국어 소개<textarea name="hero.lead.ko">처음 오신 분도 편안하게 예배드릴 수 있도록 예배 시간, 주차, 자녀 예배와 영어 안내를 준비했습니다.</textarea></label>
+              <label class="wide">영문 소개<textarea name="hero.lead.en">We want your first visit to feel clear and welcoming, with worship times, parking, children’s ministry, and English-language guidance easy to find.</textarea></label>
+            </div>
+          </div>
+
+          <div data-pane="services" class="hidden">
+            <p class="eyebrow">Worship Schedule</p>
+            <h2>예배 시간</h2>
+            <p class="muted">홈페이지의 예배 시간 카드와 첫 화면 예배 패널에 반영될 값입니다.</p>
+            <div class="form-grid" style="margin-top:20px">
+              <label>주일 장년예배<input name="services.korean" value="9:00 / 11:00 AM"></label>
+              <label>주일 영어예배<input name="services.english" value="9:00 / 11:00 AM"></label>
+              <label>교회학교<input name="services.children" value="11:00 AM"></label>
+              <label>수요예배<input name="services.midweek" value="7:00 PM"></label>
+              <label>새벽기도<input name="services.dawn" value="6:00 AM"></label>
+              <label>중고등부/청년부<input name="services.youth" value="Friday 7:00 PM"></label>
+            </div>
+          </div>
+
+          <div data-pane="news" class="hidden">
+            <p class="eyebrow">Bulletin & News</p>
+            <h2>주보와 교회소식</h2>
+            <p class="muted">반복되는 주간 안내를 간단히 바꿀 수 있도록 준비한 관리 영역입니다.</p>
+            <div class="form-grid" style="margin-top:20px">
+              <label>소식 1 분류<input name="news.0.label" value="Bulletin"></label>
+              <label>소식 1 제목<input name="news.0.title" value="2026년 5월 17일 주보 정보 반영"></label>
+              <label>소식 2 분류<input name="news.1.label" value="Sermon"></label>
+              <label>소식 2 제목<input name="news.1.title" value="사랑의 복음이 충만한 가정"></label>
+              <label>소식 3 분류<input name="news.2.label" value="Reading"></label>
+              <label>소식 3 제목<input name="news.2.title" value="에베소서 5:21–28"></label>
+            </div>
+          </div>
+
+          <div data-pane="contact" class="hidden">
+            <p class="eyebrow">Contact</p>
+            <h2>주소와 연락처</h2>
+            <div class="form-grid" style="margin-top:20px">
+              <label class="wide">주소<input name="contact.address" value="2825 Snouffer Rd, Columbus, OH 43235"></label>
+              <label>전화<input name="contact.phone" value="(614) 726-1022"></label>
+              <label>이메일<input name="contact.email" value="help@mykoreanchurch.org"></label>
+            </div>
+          </div>
+
+          <div data-pane="publish" class="hidden">
+            <p class="eyebrow">Publish Status</p>
+            <h2>게시와 백엔드 상태</h2>
+            <p class="muted">저장 버튼은 Cloudflare Access로 보호된 관리자 세션과 D1 또는 KV 저장소가 연결되면 실제 서버에 저장됩니다.</p>
+            <div class="list" id="backendFacts"></div>
+          </div>
+        </form>
+        <div class="preview">
+          <div class="row"><h3>미리보기 / 운영 메모</h3><button class="btn" type="button" id="exportBtn">JSON 내보내기</button></div>
+          <div class="preview-card" id="previewBox">입력 값을 수정하면 이곳에 요약이 표시됩니다.</div>
+        </div>
+      </section>
+    </main>
+  </div>
+  <script src="admin.js" defer></script>
+</body>
+</html>
