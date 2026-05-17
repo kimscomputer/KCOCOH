@@ -91,3 +91,11 @@
 - 기존 `/api/admin/content`, `/api/admin/media`, `/api/admin/bulletins` 관리자 API는 Cloudflare Access 세션 또는 비밀번호 로그인 세션 중 하나가 있어야 접근/업로드 가능하도록 통합했다.
 - 로컬 검증: `wrangler pages dev`에서 `/admin/` 미인증 접근은 로그인으로 redirect, 잘못된 비밀번호는 401, 올바른 비밀번호는 `/admin/` 진입, 로그아웃 후 로그인 화면 복귀 확인.
 - 운영 적용에는 Cloudflare Pages 환경변수/secret `ADMIN_PASSWORD` 또는 `ADMIN_PASSWORD_SHA256`, `ADMIN_SESSION_SECRET`, 선택적으로 `ADMIN_SESSION_MAX_AGE` 설정 후 배포가 필요하다. 이번에 생성한 관리자 비밀번호는 Git 밖의 `~/kcoc-admin-login.txt`에 0600 권한으로 저장했다.
+
+### 2026-05-17 16:15 PDT
+
+- 관리자 로그인 기능 운영 배포 완료: Cloudflare Pages `kcocoh-site` production secrets `ADMIN_PASSWORD`, `ADMIN_SESSION_SECRET`, `ADMIN_SESSION_MAX_AGE`를 설정한 뒤 배포했다.
+- 최종 배포 URL: `https://8006d377.kcocoh-site-2im.pages.dev`; custom domains `https://kcocoh.org/admin/`, `https://www.kcocoh.org/admin/` 모두 미인증 접근 시 `/admin/login/`으로 302 redirect 확인.
+- 라이브 검증: `/admin/login/` 200 및 `관리자 로그인` marker 확인, `/api/admin/auth` 미인증 401 및 `passwordLoginConfigured: true` 확인, 비밀번호 로그인 200, 로그인 쿠키로 `/api/admin/content` 200 및 content 반환 확인.
+- 브라우저 시각 검증: `https://kcocoh.org/admin/` 접속 시 로그인 카드/비밀번호 입력/로그인 버튼이 정상 표시된다.
+- 배포 후 `/tmp/kcocoh_cf_token` 삭제 완료. 관리자 비밀번호 파일 `~/kcoc-admin-login.txt`는 사용자가 관리 페이지에 로그인할 수 있도록 유지한다.
