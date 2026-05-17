@@ -8,6 +8,8 @@
   const backendFacts = document.getElementById('backendFacts');
   const photoList = document.getElementById('photoList');
   const bulletinList = document.getElementById('bulletinList');
+  const adminUsersList = document.getElementById('adminUsersList');
+  let latestAdminUsers = [];
 
   const escapeHtml = (value) => String(value ?? '').replace(/[&<>"]/g, (ch) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[ch]));
 
@@ -105,6 +107,7 @@
         body: JSON.stringify(collect())
       });
       const data = await res.json().catch(() => ({}));
+      if (res.status === 401) location.replace(data.loginUrl || '/admin/login/');
       if (!res.ok) throw new Error(data.error || `HTTP ${res.status}`);
       setStatus('ok', '저장 완료', data.message || '관리 백엔드에 저장했습니다.');
       renderFacts(data);
@@ -182,6 +185,64 @@
     } catch { renderBulletins([]); }
   };
 
+  const renderAdminUsers = (data = {}) => {
+    if (!adminUsersList) return;
+    const users = Array.isArray(data.users) ? data.users : [];
+    latestAdminUsers = users;
+    const intro = data.writable
+      ? `<div class="item"><strong>관리자 저장소 연결됨</strong><p>등록된 관리자는 이메일 아이디와 비밀번호로 로그인할 수 있습니다. 현재 로그인: ${escapeHtml(data.identity?.name || data.identity?.username || '관리자')}</p></div>`
+      : '<div class="item"><strong>관리자 저장소 필요</strong><p>KCOC_CONTENT KV 또는 DB 바인딩이 연결되면 관리자 추가/수정/삭제가 활성화됩니다. 현재는 초기 관리자 비밀번호로만 로그인할 수 있습니다.</p></div>';
+    const bootstrap = '<div class="admin-user-card"><div><strong>초기 관리자</strong><p class="muted">환경변수 ADMIN_PASSWORD 기반 백업 로그인</p></div><span class="badge">OWNER</span></div>';
+    const cards = users.map((user) => `
+      <div class="admin-user-card" data-admin-id="${escapeHtml(user.id)}">
+        <div>
+          <strong>${escapeHtml(user.name || user.username)}</strong>
+          <p class="muted">${escapeHtml(user.username)} · ${escapeHtml(user.active ? '활성' : '비활성')} · 마지막 로그인 ${escapeHtml(user.lastLoginAt || '없음')}</p>
+        </div>
+        <div class="mini-actions">
+          <span class="badge">${escapeHtml((user.role || 'editor').toUpperCase())}</span>
+          <button class="btn" type="button" data-admin-toggle="${escapeHtml(user.id)}">${user.active ? '비활성화' : '활성화'}</button>
+          <button class="btn" type="button" data-admin-reset="${escapeHtml(user.id)}">비밀번호 변경</button>
+          <button class="btn danger" type="button" data-admin-delete="${escapeHtml(user.id)}">삭제</button>
+        </div>
+      </div>`).join('');
+    adminUsersList.innerHTML = intro + bootstrap + (cards || '<div class="item"><strong>추가 관리자 없음</strong><p>위 양식에서 관리자를 추가하세요.</p></div>');
+  };
+
+  const refreshAdmins = async () => {
+    if (!adminUsersList) return;
+    try {
+      const res = await fetch('/api/admin/users', { headers: { accept: 'application/json' } });
+      const data = await res.json().catch(() => ({}));
+      if (res.status === 401) return location.replace(data.loginUrl || '/admin/login/');
+      if (res.status === 403) return renderAdminUsers({ writable: false, users: [], identity: data.identity, message: data.error });
+      renderAdminUsers(data);
+    } catch {
+      renderAdminUsers({ writable: false, users: [] });
+    }
+  };
+
+  const adminPayload = () => ({
+    name: document.getElementById('adminName')?.value || '',
+    username: document.getElementById('adminUsername')?.value || '',
+    role: document.getElementById('adminRole')?.value || 'editor',
+    password: document.getElementById('adminPassword')?.value || ''
+  });
+
+  const saveAdminUser = async (method, payload, successTitle) => {
+    const res = await fetch('/api/admin/users', {
+      method,
+      headers: { 'content-type': 'application/json', accept: 'application/json' },
+      body: JSON.stringify(payload)
+    });
+    const data = await res.json().catch(() => ({}));
+    if (res.status === 401) return location.replace(data.loginUrl || '/admin/login/');
+    if (!res.ok) throw new Error(data.error || `HTTP ${res.status}`);
+    renderAdminUsers(data);
+    setStatus('ok', successTitle, data.message || '관리자 계정 정보를 저장했습니다.');
+    return data;
+  };
+
   document.getElementById('uploadPhotoBtn')?.addEventListener('click', async () => {
     const file = document.getElementById('photoFile')?.files?.[0];
     if (!file) return setStatus('warn', '사진 파일 필요', '업로드할 사진을 먼저 선택해 주세요.');
@@ -220,6 +281,44 @@
 
   document.getElementById('refreshPhotosBtn')?.addEventListener('click', refreshPhotos);
   document.getElementById('refreshBulletinsBtn')?.addEventListener('click', refreshBulletins);
+  document.getElementById('refreshAdminsBtn')?.addEventListener('click', refreshAdmins);
+  document.getElementById('addAdminBtn')?.addEventListener('click', async () => {
+    try {
+      await saveAdminUser('POST', adminPayload(), '관리자 추가 완료');
+      const passwordInput = document.getElementById('adminPassword');
+      if (passwordInput) passwordInput.value = '';
+    } catch (error) {
+      setStatus('error', '관리자 추가 실패', error.message);
+    }
+  });
+  adminUsersList?.addEventListener('click', async (event) => {
+    const target = event.target.closest('button');
+    if (!target) return;
+    const id = target.dataset.adminToggle || target.dataset.adminReset || target.dataset.adminDelete;
+    if (!id) return;
+    const user = latestAdminUsers.find((item) => item.id === id);
+    if (!user) return setStatus('error', '관리자 확인 실패', '선택한 관리자를 찾을 수 없습니다.');
+    try {
+      if (target.dataset.adminDelete) {
+        if (!confirm(`${user.name || user.username} 관리자를 삭제할까요?`)) return;
+        const res = await fetch(`/api/admin/users?id=${encodeURIComponent(id)}`, { method: 'DELETE', headers: { accept: 'application/json' } });
+        const data = await res.json().catch(() => ({}));
+        if (res.status === 401) return location.replace(data.loginUrl || '/admin/login/');
+        if (!res.ok) throw new Error(data.error || `HTTP ${res.status}`);
+        renderAdminUsers(data);
+        return setStatus('ok', '관리자 삭제 완료', data.message || '관리자를 삭제했습니다.');
+      }
+      if (target.dataset.adminReset) {
+        const password = prompt(`${user.name || user.username}의 새 비밀번호를 입력하세요. 최소 10자입니다.`);
+        if (!password) return;
+        await saveAdminUser('PUT', { id, name: user.name, role: user.role, active: user.active, password }, '비밀번호 변경 완료');
+        return;
+      }
+      await saveAdminUser('PUT', { id, name: user.name, role: user.role, active: !user.active }, user.active ? '관리자 비활성화 완료' : '관리자 활성화 완료');
+    } catch (error) {
+      setStatus('error', '관리자 저장 실패', error.message);
+    }
+  });
 
   const load = async () => {
     try {
@@ -239,6 +338,7 @@
     renderPreview();
     refreshPhotos();
     refreshBulletins();
+    refreshAdmins();
   };
 
   if (document.getElementById('bulletinDate')) document.getElementById('bulletinDate').valueAsDate = new Date();

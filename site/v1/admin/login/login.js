@@ -1,5 +1,6 @@
 (() => {
   const form = document.getElementById('loginForm');
+  const username = document.getElementById('username');
   const password = document.getElementById('password');
   const button = document.getElementById('loginBtn');
   const status = document.getElementById('status');
@@ -32,7 +33,7 @@
       const res = await fetch('/api/admin/auth', {
         method: 'POST',
         headers: { 'content-type': 'application/json', accept: 'application/json' },
-        body: JSON.stringify({ password: password.value })
+        body: JSON.stringify({ username: username.value, password: password.value })
       });
       const data = await res.json().catch(() => ({}));
       if (!res.ok) throw new Error(data.error || `HTTP ${res.status}`);

@@ -99,3 +99,14 @@
 - 라이브 검증: `/admin/login/` 200 및 `관리자 로그인` marker 확인, `/api/admin/auth` 미인증 401 및 `passwordLoginConfigured: true` 확인, 비밀번호 로그인 200, 로그인 쿠키로 `/api/admin/content` 200 및 content 반환 확인.
 - 브라우저 시각 검증: `https://kcocoh.org/admin/` 접속 시 로그인 카드/비밀번호 입력/로그인 버튼이 정상 표시된다.
 - 배포 후 `/tmp/kcocoh_cf_token` 삭제 완료. 관리자 비밀번호 파일 `~/kcoc-admin-login.txt`는 사용자가 관리 페이지에 로그인할 수 있도록 유지한다.
+
+### 2026-05-17 16:40 PDT
+
+- 관리자 페이지에 관리자 계정 관리 기능을 추가했다.
+- `/admin/` 왼쪽 메뉴에 `관리자 / Users` 탭을 추가하고, 관리자 이름/이메일 아이디/권한/임시 비밀번호로 새 관리자를 추가할 수 있게 했다.
+- 관리자 목록에서 활성/비활성 토글, 비밀번호 변경, 삭제 버튼을 제공한다. 이 작업은 최고 관리자(`owner`) 세션에서만 허용된다.
+- 새 API `/api/admin/users`를 추가했다. GET/POST/PUT/DELETE를 지원하며 `KCOC_CONTENT` KV 또는 `DB` D1 바인딩을 저장소로 사용한다.
+- 로그인 API `/api/admin/auth`는 기존 초기 관리자 비밀번호 로그인과 새 관리자 이메일+비밀번호 로그인을 모두 지원한다. 기존 `ADMIN_PASSWORD`는 백업/초기 최고 관리자 로그인으로 유지한다.
+- 새 관리자 비밀번호는 salt 포함 SHA-256 해시로 저장하고 원문은 저장하지 않는다. 세션 쿠키에는 type/id/username/name/role 정보를 HMAC 서명한 v2 payload로 넣는다.
+- 로컬 검증: `wrangler pages dev --kv KCOC_CONTENT`에서 `/admin/` 미인증 redirect, 초기 관리자 로그인, 관리자 추가, 추가 관리자 이메일 로그인, 관리자 탭 표시를 확인했다.
+- 운영 배포에는 Cloudflare 토큰이 다시 필요하며, 운영에서 계정 관리가 실제 저장되려면 Pages 프로젝트에 `KCOC_CONTENT` KV 또는 `DB` D1 바인딩이 연결되어 있어야 한다.

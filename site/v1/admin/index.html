@@ -59,6 +59,10 @@
     .media-card div { padding:10px 12px; }
     .mini-actions { display:flex; flex-wrap:wrap; gap:8px; margin-top:10px; }
     .file-hint { color:var(--muted); font-size:13px; }
+    .admin-list { display:grid; gap:10px; margin-top:16px; }
+    .admin-user-card { display:grid; grid-template-columns:minmax(0,1fr) auto; gap:12px; align-items:center; padding:14px; border:1px solid var(--line); border-radius:16px; background:#fff; }
+    .admin-user-card strong { display:block; }
+    .badge { display:inline-flex; align-items:center; min-height:24px; padding:0 9px; border-radius:999px; background:#f0e5d8; color:#6b3d17; font-size:12px; font-weight:900; letter-spacing:.04em; }
     @media (max-width:860px){ header{align-items:flex-start; flex-direction:column;} .grid{grid-template-columns:1fr;} .form-grid,.media-grid{grid-template-columns:1fr;} .top-actions{width:100%;} .btn{flex:1;} }
   </style>
 </head>
@@ -93,6 +97,7 @@
           <button class="tab" type="button" role="tab" aria-selected="false" data-section="photos">사진 업로드 <span>Photos</span></button>
           <button class="tab" type="button" role="tab" aria-selected="false" data-section="bulletins">주보 업로드 <span>PDF</span></button>
           <button class="tab" type="button" role="tab" aria-selected="false" data-section="contact">연락처 <span>Contact</span></button>
+          <button class="tab" type="button" role="tab" aria-selected="false" data-section="admins">관리자 <span>Users</span></button>
           <button class="tab" type="button" role="tab" aria-selected="false" data-section="publish">게시 상태 <span>Publish</span></button>
         </div>
       </aside>
@@ -182,6 +187,21 @@
               <label>전화<input name="contact.phone" value="(614) 726-1022"></label>
               <label>이메일<input name="contact.email" value="help@mykoreanchurch.org"></label>
             </div>
+          </div>
+
+          <div data-pane="admins" class="hidden">
+            <p class="eyebrow">Admin Users</p>
+            <h2>관리자 계정 관리</h2>
+            <p class="muted">관리 페이지에 로그인할 수 있는 관리자 계정을 추가, 수정, 비활성화, 삭제합니다. 초기 관리자 비밀번호는 계속 백업 로그인으로 사용할 수 있습니다.</p>
+            <div class="form-grid" style="margin-top:20px">
+              <label>관리자 이름<input id="adminName" value="KCOC 관리자"></label>
+              <label>관리자 이메일 아이디<input id="adminUsername" type="email" placeholder="admin@example.org"></label>
+              <label>권한<select id="adminRole"><option value="owner">최고 관리자</option><option value="editor">편집 관리자</option></select></label>
+              <label>임시 비밀번호<input id="adminPassword" type="password" autocomplete="new-password" placeholder="최소 10자"></label>
+            </div>
+            <div class="mini-actions"><button class="btn bronze" type="button" id="addAdminBtn">관리자 추가</button><button class="btn" type="button" id="refreshAdminsBtn">목록 새로고침</button></div>
+            <p class="file-hint">추가된 관리자는 로그인 화면에서 이메일 아이디와 비밀번호로 로그인합니다. 저장소가 연결되지 않은 경우 이 기능은 안전하게 비활성화됩니다.</p>
+            <div class="admin-list" id="adminUsersList"></div>
           </div>
 
           <div data-pane="publish" class="hidden">
