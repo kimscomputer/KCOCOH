@@ -1,0 +1,40 @@
+# AGENTS.md — KCOC 운영 에이전트 규칙
+
+이 프로젝트는 Korean Church of Columbus 새 웹사이트(KCOC) 작업 공간이다. 보고와 사용자-facing 문서는 기본적으로 한국어로 작성한다.
+
+## 기본 원칙
+
+- 작업 전 현재 상태를 확인한다: `git status --short`, 관련 문서, 관련 스크립트.
+- 비밀값은 절대 문서, 코드, git, 채팅에 저장하지 않는다.
+- 기존 WordPress 사이트(`mykoreanchurch.org`)는 콘텐츠 참고용으로만 사용한다. 감염/스팸 가능성이 있는 HTML, 테마, 플러그인은 복사하지 않는다.
+- Cloudflare 원격 변경, 배포, DNS 변경, GitHub 원격 생성/푸시는 사용자 승인 또는 이미 설정된 인증 상태가 있을 때만 실행한다.
+
+## 문서 동기화
+
+사이트 기능, 배포 방식, 운영 방식, 백업 방식이 바뀌면 다음 문서를 함께 갱신한다.
+
+1. `docs/USER-MANUAL.md` — 운영자가 따라 하는 사용 방법
+2. `docs/BACKUP-MANUAL.md` — 로컬/GitHub 백업과 복구 절차
+3. `PLAN.md` — 진행 상태와 결정 로그
+4. 영향받는 세부 문서: `PROJECT.md`, `DEPLOY.md`, `HANDOFF.md`, `security/*.md`
+
+## 검증
+
+변경 후 최소 검증:
+
+```bash
+bash scripts/sync-to-deploy.sh
+bash scripts/validate.sh
+```
+
+배포 전에는 Cloudflare Pages 미리보기/실도메인 접속을 브라우저와 curl로 확인한다.
+
+## 완료 보고
+
+완료 보고에는 다음을 포함한다.
+
+- 바뀐 파일/폴더
+- 실행한 검증
+- 생성된 백업 경로
+- GitHub 원격 push 여부
+- 사용자가 다음에 해야 할 일

@@ -1,0 +1,44 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+# KCOC 운영 보호 훅: 기능/운영 변경 시 문서 업데이트 누락 방지
+# 긴급 예외: BYPASS_MANUAL_CHECK=1 git commit ...
+
+if [ "${BYPASS_MANUAL_CHECK:-}" = "1" ]; then
+  exit 0
+fi
+
+STAGED="$(git diff --cached --name-only)"
+[ -z "$STAGED" ] && exit 0
+
+NON_BACKUP="$(printf '%s
+' "$STAGED" | grep -vE '^(backups/github/|\.githooks/|AGENTS\.md$)' || true)"
+[ -z "$NON_BACKUP" ] && exit 0
+
+NEEDS_MANUAL="$(printf '%s
+' "$STAGED" | grep -E '^(site/|backend/|scripts/|security/|DEPLOY\.md$|PROJECT\.md$|HANDOFF\.md$|CLAUDE\.md$)' || true)"
+[ -z "$NEEDS_MANUAL" ] && exit 0
+
+HAS_MANUAL_UPDATE="$(printf '%s
+' "$STAGED" | grep -E '^(docs/USER-MANUAL\.md|docs/BACKUP-MANUAL\.md|PLAN\.md|AGENTS\.md)$' || true)"
+if [ -z "$HAS_MANUAL_UPDATE" ]; then
+  cat >&2 <<'MSG'
+
+KCOC 매뉴얼 보호 훅이 commit을 막았습니다.
+
+site/backend/scripts/security/운영문서 변경이 감지됐지만,
+다음 운영 문서 중 하나가 함께 staged 되어 있지 않습니다.
+
+- docs/USER-MANUAL.md
+- docs/BACKUP-MANUAL.md
+- PLAN.md
+- AGENTS.md
+
+기능이나 운영 방식이 바뀌었다면 매뉴얼을 먼저 업데이트하고 다시 commit하세요.
+문서 변경이 정말 필요 없는 긴급/기계적 변경이면 아래처럼 예외 처리할 수 있습니다.
+
+BYPASS_MANUAL_CHECK=1 git commit -m "..."
+
+MSG
+  exit 1
+fi

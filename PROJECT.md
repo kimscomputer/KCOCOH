@@ -1,0 +1,23 @@
+# KCOC Website Project
+
+## 개요
+
+KCOC는 Korean Church of Columbus / 콜럼버스 한인교회 새 웹사이트 프로젝트다.
+
+- 프로젝트 이니셜: KCOC
+- 작업 도메인: `kcocoh.org`
+- 기준 콘텐츠 참고 사이트: `https://www.mykoreanchurch.org/`
+- 호스팅 목표: Cloudflare Pages
+- 정적 사이트 원본: `site/v1/`
+- 배포 staging: `../kcocoh-deploy/`
+
+## 중요한 결정
+
+1. 기존 WordPress 사이트는 콘텐츠 참고용이다.
+2. 기존 사이트에서 발견된 숨은 스팸/외부 링크 위험 때문에 원본 HTML/테마/플러그인을 그대로 복사하지 않는다.
+3. 새 사이트는 방문자 중심 구조로 설계한다: 예배 시간, 오시는 길, 새가족 안내, 다음세대, 영어부, 한글학교, 말씀/주보/소식.
+
+## 현재 단계
+
+- 운영 하네스/폴더 구조 구성 완료.
+- 다음 단계: 초기 홈페이지 디자인/콘텐츠 설계 및 Cloudflare Pages 프로젝트 생성.

@@ -1,0 +1,13 @@
+# KCOC project ignores
+.DS_Store
+node_modules/
+.wrangler/
+.dev.vars
+.env
+.env.*
+!.env.example
+kcocoh-deploy/
+*.log
+/tmp/
+/dist/
+/backups/local/
