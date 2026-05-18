@@ -178,3 +178,10 @@
 - 방문자 안내 섹션 제목을 `처음 방문하신 분도 주님의 사랑으로 환영합니다`에서 `주님은 오늘 당신에게 사랑한다고 말씀하십니다`로 변경했다.
 - `assets/app.js?v=20260517-1858`로 cache busting을 갱신했다.
 - 로컬 검증: `bash scripts/sync-to-deploy.sh`, `bash scripts/validate.sh`, `node --check site/v1/assets/app.js` 통과.
+
+### 2026-05-17 19:22 PDT
+
+- 다음세대/부서 카드에 주일학교, 중고등부, 청년부, 영어부, 한글교실, 성경공부와 교사반 내용을 더 구체적으로 반영했다.
+- KO/EN/ZH/ES 다국어 문자열을 함께 갱신하고 `assets/app.js?v=20260517-1908`로 cache busting을 적용했다.
+- 로컬 검증: `bash scripts/sync-to-deploy.sh`, `bash scripts/validate.sh`, `node --check site/v1/assets/app.js`, 로컬 브라우저 KO/EN/ZH/ES 언어 전환 확인 통과.
+- 운영 배포 시도는 현재 Hermes Wrangler OAuth가 `Joe@kimscomputer.com` 계정에 연결되어 있고, KCOC Pages 프로젝트가 있는 `466715dac50b40c2422b3d35686a940c` 계정 API 요청이 인증 오류로 거부되어 보류됐다. 해당 계정 토큰이 제공되면 `kcocoh-deploy`에서 Pages 배포 후 custom domain을 검증한다.
