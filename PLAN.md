@@ -195,3 +195,11 @@
 - 로컬 회귀 테스트를 위해 `node --test` 기반 테스트를 추가했고, `npm test`, `node --check`, `scripts/sync-to-deploy.sh`, `scripts/validate.sh`로 검증한다.
 - 운영 배포와 실제 저장 검증은 Cloudflare Pages production secret `OPENAI_API_KEY` 설정이 필요하다.
 
+### 2026-05-17 19:53 PDT
+
+- Cloudflare Pages production secret `OPENAI_API_KEY`를 설정하고 자동 번역 코드가 포함된 Pages Functions를 운영 배포했다.
+- 배포 URL은 `https://f349bd1e.kcocoh-site-2im.pages.dev`이다.
+- 운영 로그인과 `/api/admin/content` 저장 경로 호출을 확인했다. 현재 제공된 OpenAI 키는 OpenAI 응답 기준 quota/billing 초과 상태라 실제 번역 저장은 `translation_failed`로 막힌다.
+- OpenAI 계정 결제/크레딧 문제를 해결하거나 사용 가능한 API 키로 `OPENAI_API_KEY` secret을 교체하면 같은 코드로 자동 번역 저장이 동작한다.
+- Cloudflare가 502 응답을 edge 오류 페이지로 바꾸지 않도록 번역 실패 응답을 JSON `424 translation_failed`로 조정했다.
+

@@ -186,7 +186,7 @@ export async function onRequestPut({ env, request }) {
   try {
     translatedPayload = await applyAutoTranslations(payload, { env });
   } catch (error) {
-    return json({ ok: false, error: error.message || 'Automatic translation failed.' }, { status: 502 });
+    return json({ ok: false, error: error.message || 'Automatic translation failed.', code: 'translation_failed' }, { status: 424 });
   }
   const content = { ...translatedPayload, updatedAt: new Date().toISOString(), updatedBy: actor };
   const store = await writeContent(env, content);
