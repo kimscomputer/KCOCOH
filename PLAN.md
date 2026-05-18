@@ -252,3 +252,12 @@
 - `assets/app.js?v=20260518-youtube-thumb`로 cache busting을 갱신했다.
 - 로컬/운영 검증: `node --check site/v1/assets/app.js`, `bash scripts/validate.sh`, 운영 `/api/youtube/latest` JSON 응답, custom domain의 새 HTML/JS marker, 390px 모바일 CDP viewport에서 `Sermons & Media`/사진 카드/최신 영상 카드 overflow 없음 확인.
 - 운영 Pages Functions 포함 배포 URL은 `https://518582e0.kcocoh-site-2im.pages.dev`이다.
+
+### 2026-05-18 04:24 PDT
+
+- 사용자 모바일 캡처 기준으로 상단 메뉴가 일부만 보이고 뒤에 더 있는지 알 수 없는 문제를 확인했다.
+- 모바일 내비게이션을 가로 스크롤/클리핑 방식에서 4열 × 2줄 그리드로 바꿔 8개 메뉴가 모두 한 화면에 보이도록 수정했다.
+- `주님은 오늘 당신에게 사랑한다고 말씀하십니다` 제목이 `사/랑`처럼 음절 단위로 깨지지 않도록 모바일 제목/헤딩에 `word-break: keep-all`, `overflow-wrap: normal`, `text-wrap: balance`를 적용하고 섹션 제목 크기를 소폭 낮췄다.
+- 모바일 앵커 이동 시 sticky header가 섹션 제목을 가리는 문제를 막기 위해 모바일 `scroll-margin-top`을 조정했다.
+- 검증: `bash scripts/sync-to-deploy.sh`, `bash scripts/validate.sh`, 운영 `https://kcocoh.org/` HTML marker 확인, 390px CDP 모바일 viewport에서 메뉴 8개 전체 노출/가로 overflow 없음/방문 섹션 제목 2줄 렌더링을 확인했다.
+- 운영 배포 URL은 `https://16897d72.kcocoh-site-2im.pages.dev`이다.

@@ -556,8 +556,27 @@
       body { font-size: 16px; overflow-x: hidden; }
       main { overflow-x: clip; }
       .nav-wrap, .section, .info-strip, .footer-inner { width: min(100% - 24px, 1180px); }
-      .nav-wrap { overflow: hidden; }
-      nav { max-width: 100%; }
+      .nav-wrap { overflow: visible; }
+      nav { max-width: 100%; overflow: visible; padding-bottom: 0; }
+      nav ul {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 6px;
+      }
+      nav li { min-width: 0; }
+      nav a {
+        width: 100%;
+        min-height: 38px;
+        justify-content: center;
+        padding: 8px 5px;
+        border-radius: 14px;
+        font-size: clamp(12px, 3.15vw, 14px);
+        letter-spacing: -.04em;
+        white-space: normal;
+        word-break: keep-all;
+        line-height: 1.18;
+        text-align: center;
+      }
       .brand-logo { height: 44px; max-width: min(250px, 58vw); }
       .header-actions { width: 100%; min-width: 0; justify-content: space-between; gap: 8px; }
       .watch-link { flex: 1 1 auto; justify-content: center; min-width: 0; }
@@ -572,16 +591,18 @@
       }
       .hero-inner { min-height: auto; grid-template-columns: 1fr; padding: 30px 20px; gap: 28px; }
       h1 { font-size: clamp(26px, 7.4vw, 33px); }
-      h1, h2, h3, p, .lead, .section-head p, .card p, .video-copy p, .ministry-detail { max-width: 100%; overflow-wrap: anywhere; word-break: normal; }
+      h1, h2, h3, p, .lead, .section-head p, .card p, .video-copy p, .ministry-detail { max-width: 100%; overflow-wrap: break-word; word-break: normal; }
+      h1, h2, h3, .section-head h2, .visit-step h3 { word-break: keep-all; overflow-wrap: normal; text-wrap: balance; }
       .section *, .card, .video-card, .ministry-card, .staff-card { min-width: 0; }
-      h2 { font-size: clamp(22px, 6.5vw, 28px); }
+      h2 { font-size: clamp(22px, 6vw, 27px); }
       .hero .lead { font-size: 15.5px; line-height: 1.66; }
       .hero-actions, .actions { display: grid; grid-template-columns: 1fr; gap: 9px; }
       .btn { width: 100%; min-height: 46px; }
       .service-row { grid-template-columns: 1fr; gap: 4px; }
       .service-panel { justify-self: stretch; width: 100%; background: rgba(255,253,248,.66); }
       .info-strip { grid-template-columns: 1fr; margin-top: 14px; }
-      .section { padding: 54px 0; }
+      .section { padding: 54px 0; scroll-margin-top: 235px; }
+      .hero { scroll-margin-top: 235px; }
       .section-head { display: block; }
       .grid-2, .grid-3 { grid-template-columns: 1fr; }
       .staff-grid { grid-template-columns: 1fr; }
