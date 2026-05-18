@@ -26,7 +26,8 @@
         'cta.map': 'Google 지도에서 보기',
         'cta.contact': '교회에 문의하기',
         'cta.call': '전화하기',
-        'cta.email': '이메일 보내기',
+        'cta.email': '이메일 주소 복사',
+        'cta.gmail': 'Gmail에서 작성',
         'panel.title': '이번 주 예배',
         'panel.korean': '주일 장년 예배',
         'panel.koreanSub': '한국어 예배',
@@ -148,8 +149,8 @@
         'news.item1': '2026년 5월 17일 주보 정보 반영',
         'news.label2': 'Sermon',
         'news.item2': '사랑의 복음이 충만한 가정',
-        'news.label3': 'Reading',
-        'news.item3': '에베소서 5:21–28',
+        'news.label3': 'Contact',
+        'news.item3': '교회 문의와 방문 안내',
         'news.staff': '섬기는 사람들',
         'news.staffText': '정지웅 담임 목사, 이성영 목사, Jedi Yi 전도사, Simon Baik 전도사가 각 사역을 섬기고 있습니다.',
         'contact.kicker': 'Visit Us',
@@ -161,6 +162,7 @@
         'contact.emailLabel': 'Email',
         'contact.mapTitle': '2825 Snouffer Rd, Columbus, OH 43235',
         'contact.mapText': '주일 예배와 방문 안내가 필요하시면 언제든 문의해 주세요.',
+        'contact.emailCopied': '이메일 주소가 복사되었습니다: help@mykoreanchurch.org',
         'bulletin.emptyTitle': '최근 주보 뷰어',
         'bulletin.emptyText': '관리 페이지에서 PDF 또는 이미지 주보를 올리면 이곳에서 주일예배 주보를 바로 볼 수 있습니다.',
         'bulletin.note': '업로드된 주보는 웹 뷰어와 다운로드 링크를 함께 제공합니다.',
@@ -206,7 +208,8 @@
         'cta.map': 'Open in Google Maps',
         'cta.contact': 'Contact us',
         'cta.call': 'Call the church',
-        'cta.email': 'Send email',
+        'cta.email': 'Copy email address',
+        'cta.gmail': 'Compose in Gmail',
         'panel.title': 'This Sunday',
         'panel.korean': 'Korean Worship',
         'panel.koreanSub': 'Korean-language service',
@@ -328,8 +331,8 @@
         'news.item1': 'May 17, 2026 bulletin information added',
         'news.label2': 'Sermon',
         'news.item2': 'A Family Filled with the Gospel and Love',
-        'news.label3': 'Reading',
-        'news.item3': 'Ephesians 5:21–28',
+        'news.label3': 'Contact',
+        'news.item3': 'Church questions and visit help',
         'news.staff': 'Serving Staff',
         'news.staffText': 'Rev. Jiwong Chung, Rev. Sungyoung Lee, Evangelist Jedi Yi, and Evangelist Simon Baik serve the ministries of the church.',
         'contact.kicker': 'Visit Us',
@@ -341,6 +344,7 @@
         'contact.emailLabel': 'Email',
         'contact.mapTitle': '2825 Snouffer Rd, Columbus, OH 43235',
         'contact.mapText': 'Contact us anytime if you need guidance for Sunday worship or your first visit.',
+        'contact.emailCopied': 'Email address copied: help@mykoreanchurch.org',
         'bulletin.emptyTitle': 'Recent bulletin viewer',
         'bulletin.emptyText': 'Upload a PDF or image bulletin in the admin page and it can be viewed here on the website.',
         'bulletin.note': 'Uploaded bulletins include both an onsite viewer and a download link.',
@@ -386,7 +390,8 @@
         'cta.map': '在 Google 地图中打开',
         'cta.contact': '联系我们',
         'cta.call': '致电教会',
-        'cta.email': '发送电子邮件',
+        'cta.email': '复制电子邮件地址',
+        'cta.gmail': '在 Gmail 中撰写',
         'panel.title': '本周礼拜',
         'panel.korean': '主日成人礼拜',
         'panel.koreanSub': '韩语礼拜',
@@ -508,8 +513,8 @@
         'news.item1': '已加入 2026 年 5 月 17 日周报信息',
         'news.label2': 'Sermon',
         'news.item2': '充满福音与爱的家庭',
-        'news.label3': 'Reading',
-        'news.item3': '以弗所书 5:21–28',
+        'news.label3': 'Contact',
+        'news.item3': '教会咨询与来访说明',
         'news.staff': '服事同工',
         'news.staffText': '郑智雄主任牧师、李成英牧师、Jedi Yi 传道、Simon Baik 传道一起服事教会各项事工。',
         'contact.kicker': 'Visit Us',
@@ -521,6 +526,7 @@
         'contact.emailLabel': '电子邮件',
         'contact.mapTitle': '2825 Snouffer Rd, Columbus, OH 43235',
         'contact.mapText': '若您需要主日礼拜或首次来访说明，欢迎随时联系。',
+        'contact.emailCopied': '电子邮件地址已复制：help@mykoreanchurch.org',
         'bulletin.emptyTitle': '最近周报查看器',
         'bulletin.emptyText': '在管理页面上传 PDF 或图片周报后，可在这里直接查看。',
         'bulletin.note': '上传的周报会同时提供网页查看和下载链接。',
@@ -566,7 +572,8 @@
         'cta.map': 'Abrir en Google Maps',
         'cta.contact': 'Contáctanos',
         'cta.call': 'Llamar a la iglesia',
-        'cta.email': 'Enviar correo',
+        'cta.email': 'Copiar correo',
+        'cta.gmail': 'Redactar en Gmail',
         'panel.title': 'Este domingo',
         'panel.korean': 'Culto en coreano',
         'panel.koreanSub': 'Servicio en coreano',
@@ -688,8 +695,8 @@
         'news.item1': 'Información del boletín del 17 de mayo de 2026 agregada',
         'news.label2': 'Sermon',
         'news.item2': 'Una familia llena del evangelio y del amor',
-        'news.label3': 'Reading',
-        'news.item3': 'Efesios 5:21–28',
+        'news.label3': 'Contact',
+        'news.item3': 'Preguntas y ayuda para visitas',
         'news.staff': 'Equipo de servicio',
         'news.staffText': 'Rev. Jiwong Chung, Rev. Sungyoung Lee, evangelista Jedi Yi y evangelista Simon Baik sirven los ministerios de la iglesia.',
         'contact.kicker': 'Visit Us',
@@ -701,6 +708,7 @@
         'contact.emailLabel': 'Correo',
         'contact.mapTitle': '2825 Snouffer Rd, Columbus, OH 43235',
         'contact.mapText': 'Contáctanos cuando necesites orientación para el culto dominical o tu primera visita.',
+        'contact.emailCopied': 'Correo copiado: help@mykoreanchurch.org',
         'bulletin.emptyTitle': 'Visor de boletines recientes',
         'bulletin.emptyText': 'Sube un PDF o imagen del boletín desde la página de administración y se podrá ver aquí.',
         'bulletin.note': 'Los boletines subidos ofrecen visor web y enlace de descarga.',
@@ -954,6 +962,39 @@
     renderBulletins();
     try { localStorage.setItem('kcoc-lang', lang); } catch (_) {}
   }
+
+  const setCopyStatus = (message) => {
+    document.querySelectorAll('[data-copy-status]').forEach((status) => { status.textContent = message; });
+  };
+
+  const copyText = async (text) => {
+    if (navigator.clipboard && window.isSecureContext) {
+      await navigator.clipboard.writeText(text);
+      return true;
+    }
+    const textarea = document.createElement('textarea');
+    textarea.value = text;
+    textarea.setAttribute('readonly', '');
+    textarea.style.position = 'fixed';
+    textarea.style.left = '-9999px';
+    document.body.appendChild(textarea);
+    textarea.select();
+    const ok = document.execCommand('copy');
+    textarea.remove();
+    return ok;
+  };
+
+  document.querySelectorAll('[data-copy-email]').forEach((button) => {
+    button.addEventListener('click', async () => {
+      const email = button.dataset.copyEmail || 'help@mykoreanchurch.org';
+      try {
+        await copyText(email);
+        setCopyStatus(translations[state.lang]?.text['contact.emailCopied'] || `Email address copied: ${email}`);
+      } catch (_) {
+        setCopyStatus(email);
+      }
+    });
+  });
 
   buttons.forEach((button) => button.addEventListener('click', () => setLang(button.dataset.lang)));
   let saved = 'ko';

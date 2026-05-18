@@ -513,6 +513,8 @@
     .contact-lines { display: grid; gap: 12px; margin-top: 26px; }
     .contact-line { padding: 16px 0; border-top: 1px solid var(--line); font-weight: 830; }
     .contact-line span { display: block; color: var(--quiet); font-size: 12px; font-weight: 900; letter-spacing: .14em; text-transform: uppercase; }
+    .copy-link { appearance: none; border: 0; padding: 0; background: transparent; color: var(--bronze-dark); font: inherit; font-weight: 900; text-decoration: underline; cursor: pointer; }
+    .contact-status { margin-top: 12px; color: var(--bronze-dark); font-size: 14px; font-weight: 850; min-height: 1.4em; }
     .map-box {
       min-height: 430px;
       display: grid;
@@ -667,7 +669,7 @@
     <div class="info-strip" aria-label="Quick church information">
       <div class="info-item"><span data-i18n="strip.addressLabel">주소</span><strong data-i18n="address.full">2825 Snouffer Rd, Columbus, OH 43235</strong></div>
       <div class="info-item"><span data-i18n="strip.phoneLabel">전화</span><strong><a href="tel:+16147261022">(614) 726-1022</a></strong></div>
-      <div class="info-item"><span data-i18n="strip.emailLabel">이메일</span><strong><a href="mailto:help@mykoreanchurch.org">help@mykoreanchurch.org</a></strong></div>
+      <div class="info-item"><span data-i18n="strip.emailLabel">이메일</span><strong><button class="copy-link" type="button" data-copy-email="help@mykoreanchurch.org" aria-label="Copy church email address">help@mykoreanchurch.org</button></strong></div>
     </div>
 
     <section class="section compact" id="visit" aria-labelledby="visit-title">
@@ -816,7 +818,7 @@
         </div>
       </div>
       <div class="grid grid-2" style="margin-top:18px">
-        <div class="card"><h3 data-i18n="news.sermonTitle">이번 주 말씀</h3><ul class="news-list"><li><a href="https://www.youtube.com/@KoreanChurchofColumbus" target="_blank" rel="noopener"><span data-i18n="news.label2">Sermon</span><span data-i18n="news.item2">사랑의 복음이 충만한 가정</span></a></li><li><a href="mailto:help@mykoreanchurch.org"><span data-i18n="news.label3">Reading</span><span data-i18n="news.item3">에베소서 5:21–28</span></a></li></ul></div>
+        <div class="card"><h3 data-i18n="news.sermonTitle">이번 주 말씀</h3><ul class="news-list"><li><a href="https://www.youtube.com/@KoreanChurchofColumbus" target="_blank" rel="noopener"><span data-i18n="news.label2">Sermon</span><span data-i18n="news.item2">사랑의 복음이 충만한 가정</span></a></li><li><a href="#contact"><span data-i18n="news.label3">Contact</span><span data-i18n="news.item3">교회 문의와 방문 안내</span></a></li></ul></div>
         <div class="card subtle"><h3 data-i18n="news.staff">섬기는 사람들</h3><p data-i18n="news.staffText">정지웅 담임 목사, 이성영 목사, Jedi Yi 전도사, Simon Baik 전도사가 각 사역을 섬기고 있습니다.</p></div>
       </div>
     </section>
@@ -824,7 +826,7 @@
     <section class="section" id="contact" aria-labelledby="contact-title">
       <article class="card contact-card">
         <div class="contact-inner">
-          <div class="contact-copy"><p class="kicker" data-i18n="contact.kicker">Visit Us</p><h2 id="contact-title" data-i18n="contact.title">오시는 길</h2><p class="lead" data-i18n="contact.lead">예배 방문, 새가족 안내, 자녀 교육과 사역 문의가 필요하시면 연락해 주세요.</p><div class="contact-lines"><div class="contact-line"><span data-i18n="contact.churchLabel">Church</span>Korean Church of Columbus</div><div class="contact-line"><span data-i18n="contact.addressLabel">Address</span><span data-i18n="address.full">2825 Snouffer Rd, Columbus, OH 43235</span></div><div class="contact-line"><span data-i18n="contact.phoneLabel">Phone</span><a href="tel:+16147261022">(614) 726-1022</a></div><div class="contact-line"><span data-i18n="contact.emailLabel">Email</span><a href="mailto:help@mykoreanchurch.org">help@mykoreanchurch.org</a></div></div><div class="actions" style="margin-top:22px"><a class="btn btn-dark" href="tel:+16147261022" data-i18n="cta.call">전화하기</a><a class="btn btn-light" href="mailto:help@mykoreanchurch.org" data-i18n="cta.email">이메일 보내기</a></div></div>
+          <div class="contact-copy"><p class="kicker" data-i18n="contact.kicker">Visit Us</p><h2 id="contact-title" data-i18n="contact.title">오시는 길</h2><p class="lead" data-i18n="contact.lead">예배 방문, 새가족 안내, 자녀 교육과 사역 문의가 필요하시면 연락해 주세요.</p><div class="contact-lines"><div class="contact-line"><span data-i18n="contact.churchLabel">Church</span>Korean Church of Columbus</div><div class="contact-line"><span data-i18n="contact.addressLabel">Address</span><span data-i18n="address.full">2825 Snouffer Rd, Columbus, OH 43235</span></div><div class="contact-line"><span data-i18n="contact.phoneLabel">Phone</span><a href="tel:+16147261022">(614) 726-1022</a></div><div class="contact-line"><span data-i18n="contact.emailLabel">Email</span><button class="copy-link" type="button" data-copy-email="help@mykoreanchurch.org" aria-label="Copy church email address">help@mykoreanchurch.org</button></div></div><div class="actions" style="margin-top:22px"><a class="btn btn-dark" href="tel:+16147261022" data-i18n="cta.call">전화하기</a><button class="btn btn-light" type="button" data-copy-email="help@mykoreanchurch.org" data-i18n="cta.email">이메일 주소 복사</button><a class="btn btn-light" href="https://mail.google.com/mail/?view=cm&fs=1&to=help@mykoreanchurch.org" target="_blank" rel="noopener" data-i18n="cta.gmail">Gmail에서 작성</a></div><p class="contact-status" data-copy-status aria-live="polite"></p></div>
           <div class="map-box" aria-label="Church address"><div><strong data-i18n="contact.mapTitle">2825 Snouffer Rd<br>Columbus, OH 43235</strong><p data-i18n="contact.mapText">주일 예배와 방문 안내가 필요하시면 언제든 문의해 주세요.</p><div class="actions"><a class="btn btn-primary" href="https://maps.google.com/?q=2825+Snouffer+Rd,+Columbus,+OH+43235" rel="noopener" data-i18n="cta.map">Google 지도에서 보기</a></div></div></div>
         </div>
       </article>
@@ -834,6 +836,6 @@
   <footer class="site-footer">
     <div class="footer-inner"><div><strong>KCOC · Korean Church of Columbus</strong><br><span data-i18n="footer.tagline">콜럼버스 한인교회 공식 웹사이트</span></div><div><span data-i18n="footer.domainLabel">Domain</span>: <a href="https://kcocoh.org/">kcocoh.org</a><br><a class="admin-foot-link" href="admin/">관리 페이지</a></div></div>
   </footer>
-  <script src="assets/app.js?v=20260517-2117" defer></script>
+  <script src="assets/app.js?v=20260517-2140" defer></script>
 </body>
 </html>
