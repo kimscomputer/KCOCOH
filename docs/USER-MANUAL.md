@@ -22,7 +22,9 @@
 
 ## Cloudflare 계정/토큰 관리
 
-여러 Cloudflare 계정을 혼동하지 않도록 계정별 프로필을 사용한다. KCOC 운영 프로필 이름은 `kcoc`이다. 프로필에는 Account ID, Pages project, Zone 이름처럼 비밀이 아닌 값만 저장하고, API 토큰은 macOS Keychain에 저장한다.
+여러 Cloudflare 계정을 혼동하지 않도록 계정별 프로필을 사용한다. KCOC 운영 프로필 이름은 `kcoc`이다. 프로필에는 Account ID, Pages project, Zone 이름처럼 비밀이 아닌 값만 저장한다.
+
+장기 대책은 Cloudflare 사용자 권한을 정리하는 것이다. Hermes/Wrangler가 로그인한 Cloudflare 사용자에게 KCOC, OWBCC 등 운영에 필요한 모든 Cloudflare 계정 권한을 부여하면, 작업할 때마다 새 토큰을 받을 필요가 없다. 계정별 API 토큰은 그 권한 정리가 안 된 계정에 한해서만 macOS Keychain에 한 번 저장하는 보조 수단으로 사용한다.
 
 KCOC 프로필 상태 확인:
 
@@ -30,7 +32,13 @@ KCOC 프로필 상태 확인:
 scripts/cloudflare-profile.sh show kcoc
 ```
 
-처음 한 번만 Cloudflare 토큰을 Keychain에 저장:
+OAuth 로그인 권한으로 실행 가능한지 확인:
+
+```bash
+scripts/cloudflare-profile.sh run kcoc -- wrangler whoami
+```
+
+OAuth 권한이 부족한 계정에 한해서만 Cloudflare 토큰을 Keychain에 저장:
 
 ```bash
 scripts/cloudflare-profile.sh token kcoc

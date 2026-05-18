@@ -100,14 +100,16 @@ EOF
     if [[ -z "$profile" || $# -eq 0 ]]; then usage >&2; exit 2; fi
     require_profile "$profile"
     token="$(get_token "$profile")"
-    if [[ -z "$token" ]]; then
-      echo "Keychain에 토큰이 없습니다: $profile" >&2
-      echo "먼저 실행: scripts/cloudflare-profile.sh token $profile" >&2
-      exit 1
-    fi
     export CLOUDFLARE_ACCOUNT_ID
-    export CLOUDFLARE_API_TOKEN="$token"
-    unset token
+    if [[ -n "$token" ]]; then
+      export CLOUDFLARE_API_TOKEN="$token"
+      unset token
+    else
+      # 토큰이 없으면 Wrangler OAuth 로그인 상태를 사용한다.
+      # 즉, 해당 macOS 사용자가 이미 모든 필요한 Cloudflare 계정 권한을 갖고 있으면
+      # 계정별 API 토큰 없이도 실행된다. OAuth 권한이 부족한 계정만 Keychain 토큰을 추가한다.
+      unset CLOUDFLARE_API_TOKEN
+    fi
     "$@"
     ;;
 
