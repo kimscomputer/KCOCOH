@@ -163,3 +163,11 @@
 - 주보 미리보기 영역을 더 크게 조정하고, 오른쪽 주보 목록 카드는 프레임과 같은 높이로 맞췄다. 목록 항목은 더 작게 압축했고, 60개 주보는 목록 카드 내부에서 마우스 휠/트랙패드로 스크롤해 이전 주보를 볼 수 있다.
 - `assets/app.js?v=20260517-2058`로 cache busting을 갱신했다.
 - 운영 검증: `https://kcocoh.org/#bulletins`에서 PDF canvas 표시, `주보 다운로드` 링크 표시, 다운로드 응답 `200 application/pdf` 및 `Content-Disposition: attachment`를 확인했다.
+
+### 2026-05-17 18:35 PDT
+
+- 주보 PDF 미리보기를 두 페이지 동시 표시에서 한 페이지씩 크게 보는 방식으로 변경했다.
+- 첫 페이지를 먼저 보여주고, 오른쪽 영역/`다음 페이지` 버튼을 누르면 2페이지로 전환되며 왼쪽 영역/`이전 페이지` 버튼으로 돌아오도록 했다.
+- KO/EN/ZH/ES 안내 문구와 운영자 매뉴얼을 새 동작에 맞게 갱신했다.
+- 로컬 검증: `bash scripts/sync-to-deploy.sh`, `bash scripts/validate.sh`, `node --check site/v1/assets/app.js` 통과.
+- 운영 배포는 현재 Cloudflare OAuth가 KCOC Pages 계정 `466715dac50b40c2422b3d35686a940c`에 인증되지 않아 임시 API 토큰이 필요하다.

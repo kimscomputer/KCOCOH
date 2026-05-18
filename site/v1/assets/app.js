@@ -160,9 +160,13 @@
         'bulletin.emptyTitle': '최근 주보 뷰어',
         'bulletin.emptyText': '관리 페이지에서 PDF 또는 이미지 주보를 올리면 이곳에서 주일예배 주보를 바로 볼 수 있습니다.',
         'bulletin.note': '업로드된 주보는 웹 뷰어와 다운로드 링크를 함께 제공합니다.',
-        'bulletin.previewLabel': '두 페이지 미리보기',
+        'bulletin.previewLabel': '한 페이지씩 보기',
         'bulletin.pageLabel': '페이지',
-        'bulletin.loading': '주보 두 페이지 미리보기를 준비 중입니다.',
+        'bulletin.nextPage': '다음 페이지',
+        'bulletin.prevPage': '이전 페이지',
+        'bulletin.pageStatus': '페이지 {page} / {total}',
+        'bulletin.clickHint': '오른쪽을 누르면 다음 페이지, 왼쪽을 누르면 이전 페이지가 열립니다.',
+        'bulletin.loading': '주보 미리보기를 준비 중입니다.',
         'bulletin.fallback': '웹 미리보기를 불러오지 못했습니다. 아래 다운로드 버튼으로 주보를 열어 주세요.',
         'bulletin.download': '주보 다운로드',
         'news.sermonTitle': '이번 주 말씀',
@@ -332,9 +336,13 @@
         'bulletin.emptyTitle': 'Recent bulletin viewer',
         'bulletin.emptyText': 'Upload a PDF or image bulletin in the admin page and it can be viewed here on the website.',
         'bulletin.note': 'Uploaded bulletins include both an onsite viewer and a download link.',
-        'bulletin.previewLabel': 'Two-page preview',
+        'bulletin.previewLabel': 'One page at a time',
         'bulletin.pageLabel': 'Page',
-        'bulletin.loading': 'Preparing a two-page bulletin preview.',
+        'bulletin.nextPage': 'Next page',
+        'bulletin.prevPage': 'Previous page',
+        'bulletin.pageStatus': 'Page {page} of {total}',
+        'bulletin.clickHint': 'Click the right side for the next page, or the left side for the previous page.',
+        'bulletin.loading': 'Preparing the bulletin preview.',
         'bulletin.fallback': 'The web preview could not be loaded. Please open the bulletin with the download button below.',
         'bulletin.download': 'Download bulletin',
         'news.sermonTitle': 'This Week’s Message',
@@ -504,9 +512,13 @@
         'bulletin.emptyTitle': '最近周报查看器',
         'bulletin.emptyText': '在管理页面上传 PDF 或图片周报后，可在这里直接查看。',
         'bulletin.note': '上传的周报会同时提供网页查看和下载链接。',
-        'bulletin.previewLabel': '双页预览',
+        'bulletin.previewLabel': '单页查看',
         'bulletin.pageLabel': '页',
-        'bulletin.loading': '正在准备双页周报预览。',
+        'bulletin.nextPage': '下一页',
+        'bulletin.prevPage': '上一页',
+        'bulletin.pageStatus': '第 {page} / {total} 页',
+        'bulletin.clickHint': '点击右侧查看下一页，点击左侧返回上一页。',
+        'bulletin.loading': '正在准备周报预览。',
         'bulletin.fallback': '网页预览无法载入。请使用下方下载按钮打开周报。',
         'bulletin.download': '下载周报',
         'news.sermonTitle': '本周讲道',
@@ -676,9 +688,13 @@
         'bulletin.emptyTitle': 'Visor de boletines recientes',
         'bulletin.emptyText': 'Sube un PDF o imagen del boletín desde la página de administración y se podrá ver aquí.',
         'bulletin.note': 'Los boletines subidos ofrecen visor web y enlace de descarga.',
-        'bulletin.previewLabel': 'Vista previa de dos páginas',
+        'bulletin.previewLabel': 'Una página a la vez',
         'bulletin.pageLabel': 'Página',
-        'bulletin.loading': 'Preparando una vista previa de dos páginas del boletín.',
+        'bulletin.nextPage': 'Página siguiente',
+        'bulletin.prevPage': 'Página anterior',
+        'bulletin.pageStatus': 'Página {page} de {total}',
+        'bulletin.clickHint': 'Haz clic en el lado derecho para la página siguiente, o en el izquierdo para volver.',
+        'bulletin.loading': 'Preparando la vista previa del boletín.',
         'bulletin.fallback': 'No se pudo cargar la vista previa web. Abre el boletín con el botón de descarga abajo.',
         'bulletin.download': 'Descargar boletín',
         'news.sermonTitle': 'Mensaje de esta semana',
@@ -723,6 +739,10 @@
 
   let pdfjsPromise;
   const bulletinText = (key, fallback) => translations[state.lang]?.text[key] || translations.ko.text[key] || fallback;
+  const formatBulletinText = (key, fallback, values = {}) => Object.entries(values).reduce(
+    (text, [name, value]) => text.replaceAll(`{${name}}`, value),
+    bulletinText(key, fallback)
+  );
   const renderPdfPreview = async (viewer, pdfUrl, title, downloadHtml = '') => {
     const token = `${Date.now()}-${Math.random().toString(36).slice(2)}`;
     viewer.dataset.pdfToken = token;
@@ -735,11 +755,35 @@
       const pdfjs = await pdfjsPromise;
       const pdf = await pdfjs.getDocument({ url: pdfUrl, withCredentials: false }).promise;
       const pageCount = Math.min(2, pdf.numPages || 1);
-      const targetWidth = Math.min(620, Math.max(390, viewer.clientWidth * (pageCount > 1 ? 0.64 : 1.12)));
-      const pages = [];
-      for (let pageNumber = 1; pageNumber <= pageCount; pageNumber += 1) {
+      const wrap = document.createElement('div');
+      wrap.className = 'bulletin-canvas-wrap';
+      const view = document.createElement('div');
+      view.className = 'bulletin-page-view';
+      const badge = document.createElement('div');
+      badge.className = 'bulletin-preview-badge';
+      const stage = document.createElement('div');
+      stage.className = 'bulletin-page-stage';
+      const controls = document.createElement('div');
+      controls.className = 'bulletin-page-controls';
+      const prevButton = document.createElement('button');
+      prevButton.type = 'button';
+      prevButton.className = 'bulletin-page-button';
+      const nextButton = document.createElement('button');
+      nextButton.type = 'button';
+      nextButton.className = 'bulletin-page-button';
+      const hint = document.createElement('p');
+      hint.className = 'bulletin-page-hint';
+      hint.textContent = bulletinText('bulletin.clickHint', 'Click the right side for the next page, or the left side for the previous page.');
+      const renderPage = async (pageNumber) => {
+        if (viewer.dataset.pdfToken !== token) return;
+        view.dataset.page = String(pageNumber);
+        badge.textContent = pageCount > 1
+          ? formatBulletinText('bulletin.pageStatus', 'Page {page} of {total}', { page: String(pageNumber), total: String(pageCount) })
+          : `${bulletinText('bulletin.pageLabel', 'Page')} 1`;
+        stage.innerHTML = `<div class="bulletin-paper"><span class="paper-date">PDF</span><h3>${escapeHtml(title)}</h3><p>${escapeHtml(bulletinText('bulletin.loading', 'Preparing bulletin preview.'))}</p></div>`;
         const page = await pdf.getPage(pageNumber);
         const baseViewport = page.getViewport({ scale: 1 });
+        const targetWidth = Math.min(900, Math.max(560, viewer.clientWidth * 1.08));
         const viewport = page.getViewport({ scale: targetWidth / baseViewport.width });
         const canvas = document.createElement('canvas');
         const context = canvas.getContext('2d');
@@ -748,28 +792,32 @@
         canvas.className = 'bulletin-canvas';
         canvas.setAttribute('aria-label', `${title} ${bulletinText('bulletin.pageLabel', 'Page')} ${pageNumber}`);
         await page.render({ canvasContext: context, viewport }).promise;
-        const shell = document.createElement('figure');
-        shell.className = 'bulletin-page-shell';
-        const label = document.createElement('figcaption');
-        label.className = 'bulletin-page-label';
-        label.textContent = `${bulletinText('bulletin.pageLabel', 'Page')} ${pageNumber}`;
-        shell.appendChild(label);
-        shell.appendChild(canvas);
-        pages.push(shell);
-      }
+        if (viewer.dataset.pdfToken !== token || view.dataset.page !== String(pageNumber)) return;
+        stage.innerHTML = '';
+        stage.appendChild(canvas);
+        prevButton.disabled = pageNumber <= 1;
+        nextButton.disabled = pageNumber >= pageCount;
+        prevButton.textContent = bulletinText('bulletin.prevPage', 'Previous page');
+        nextButton.textContent = bulletinText('bulletin.nextPage', 'Next page');
+      };
+      const changePage = (delta) => {
+        const current = Number(view.dataset.page || '1');
+        const next = Math.min(pageCount, Math.max(1, current + delta));
+        if (next !== current) renderPage(next);
+      };
+      prevButton.addEventListener('click', () => changePage(-1));
+      nextButton.addEventListener('click', () => changePage(1));
+      stage.addEventListener('click', (event) => {
+        const rect = stage.getBoundingClientRect();
+        changePage(event.clientX > rect.left + rect.width / 2 ? 1 : -1);
+      });
+      controls.append(prevButton, nextButton);
+      view.append(badge, stage, controls, hint);
+      wrap.appendChild(view);
       if (viewer.dataset.pdfToken !== token) return;
-      const wrap = document.createElement('div');
-      wrap.className = 'bulletin-canvas-wrap';
-      const spread = document.createElement('div');
-      spread.className = `bulletin-spread ${pageCount > 1 ? 'two-pages' : 'one-page'}`;
-      const badge = document.createElement('div');
-      badge.className = 'bulletin-preview-badge';
-      badge.textContent = pageCount > 1 ? bulletinText('bulletin.previewLabel', 'Two-page preview') : `${bulletinText('bulletin.pageLabel', 'Page')} 1`;
-      spread.appendChild(badge);
-      pages.forEach((page) => spread.appendChild(page));
-      wrap.appendChild(spread);
       viewer.innerHTML = '';
       viewer.appendChild(wrap);
+      await renderPage(1);
       if (downloadHtml) viewer.insertAdjacentHTML('beforeend', downloadHtml);
     } catch (error) {
       if (viewer.dataset.pdfToken !== token) return;

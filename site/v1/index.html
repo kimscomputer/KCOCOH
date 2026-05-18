@@ -455,15 +455,20 @@
     .bulletin-layout { display: grid; grid-template-columns: minmax(0, 1.52fr) minmax(260px, .48fr); gap: 18px; align-items: start; }
     .bulletin-viewer { min-height: 700px; overflow: hidden; border: 1px solid var(--line); border-radius: var(--radius-xl); background: #fff; box-shadow: var(--shadow-soft); }
     .bulletin-frame, .bulletin-image { width: 100%; height: 700px; display: block; border: 0; object-fit: contain; background: #f5efe7; }
-    .bulletin-canvas-wrap { min-height: 700px; display: grid; place-items: start stretch; padding: 20px; background: #f5efe7; overflow: auto; }
-    .bulletin-spread { position: relative; width: 100%; display: flex; gap: 18px; align-items: flex-start; justify-content: center; padding-top: 38px; }
-    .bulletin-spread.one-page .bulletin-page-shell { flex: 0 1 min(100%, 740px); }
-    .bulletin-spread.two-pages .bulletin-page-shell { flex: 0 1 calc((100% - 18px) / 2); max-width: 540px; }
-    .bulletin-page-shell { margin: 0; display: grid; gap: 10px; min-width: 0; }
-    .bulletin-page-label, .bulletin-preview-badge { color: var(--bronze-dark); font-size: 12px; font-weight: 900; letter-spacing: .12em; text-transform: uppercase; }
-    .bulletin-preview-badge { position: absolute; top: 0; left: 50%; transform: translateX(-50%); padding: 7px 12px; border: 1px solid rgba(183,119,61,.28); border-radius: 999px; background: rgba(255,255,255,.82); white-space: nowrap; box-shadow: 0 10px 26px rgba(82,58,34,.08); }
-    .bulletin-page-label { text-align: center; }
-    .bulletin-canvas { width: 100%; height: auto; display: block; border-radius: 8px; background: #fff; box-shadow: 0 14px 36px rgba(82,58,34,.16); }
+    .bulletin-canvas-wrap { min-height: 700px; display: grid; place-items: start center; padding: 20px; background: #f5efe7; overflow: auto; }
+    .bulletin-page-view { width: min(100%, 900px); display: grid; gap: 14px; justify-items: center; }
+    .bulletin-preview-badge { display: inline-flex; align-items: center; justify-content: center; min-height: 34px; padding: 7px 14px; border: 1px solid rgba(183,119,61,.28); border-radius: 999px; background: rgba(255,255,255,.86); color: var(--bronze-dark); font-size: 12px; font-weight: 900; letter-spacing: .12em; text-transform: uppercase; white-space: nowrap; box-shadow: 0 10px 26px rgba(82,58,34,.08); }
+    .bulletin-page-stage { position: relative; width: 100%; display: grid; place-items: start center; cursor: pointer; }
+    .bulletin-page-stage::before, .bulletin-page-stage::after { content: ""; position: absolute; top: 0; bottom: 0; width: 50%; pointer-events: none; opacity: 0; transition: opacity .18s ease; }
+    .bulletin-page-stage::before { left: 0; background: linear-gradient(90deg, rgba(183,119,61,.10), transparent); }
+    .bulletin-page-stage::after { right: 0; background: linear-gradient(270deg, rgba(183,119,61,.10), transparent); }
+    .bulletin-page-stage:hover::before, .bulletin-page-stage:hover::after { opacity: 1; }
+    .bulletin-page-controls { width: min(100%, 620px); display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+    .bulletin-page-button { min-height: 44px; border: 1px solid rgba(183,119,61,.32); border-radius: 999px; background: #fffaf2; color: var(--ink); font-weight: 900; cursor: pointer; }
+    .bulletin-page-button:not(:disabled):hover, .bulletin-page-button:not(:disabled):focus-visible { background: #fff0dd; border-color: rgba(183,119,61,.55); }
+    .bulletin-page-button:disabled { opacity: .42; cursor: not-allowed; }
+    .bulletin-page-hint { margin: 0; color: var(--quiet); font-size: 13px; font-weight: 750; text-align: center; }
+    .bulletin-canvas { width: min(100%, 900px); height: auto; display: block; border-radius: 8px; background: #fff; box-shadow: 0 14px 36px rgba(82,58,34,.16); }
     .bulletin-empty { min-height: 520px; display: grid; place-items: center; padding: 28px; text-align: center; color: var(--muted); background: #fffaf2; }
     .bulletin-paper { width: min(420px, 86%); margin: 0 auto; padding: 34px 30px; border: 1px solid #e3d8c8; border-radius: 18px; background: linear-gradient(180deg,#fff,#fffaf3); color: var(--ink); box-shadow: 0 18px 46px rgba(82,58,34,.10); text-align: left; }
     .bulletin-paper .paper-date { color: var(--bronze-dark); font-size: 13px; font-weight: 900; letter-spacing: .10em; text-transform: uppercase; }
@@ -558,9 +563,9 @@
       .bulletin-viewer { min-height: 520px; }
       .bulletin-side-card { height: 520px; padding: 18px; }
       .bulletin-canvas-wrap { min-height: 520px; max-height: 72vh; padding: 14px; }
-      .bulletin-spread { flex-direction: column; gap: 18px; padding-top: 34px; }
-      .bulletin-spread.one-page .bulletin-page-shell, .bulletin-spread.two-pages .bulletin-page-shell { flex: 0 0 auto; width: 100%; max-width: none; }
       .bulletin-preview-badge { font-size: 11px; }
+      .bulletin-page-controls { width: 100%; }
+      .bulletin-page-hint { font-size: 12px; }
       .bulletin-canvas { width: 100%; }
       .visit-step { padding-left: 28px; }
       .visit-step::before { left: 0; top: 30px; }
@@ -809,6 +814,6 @@
   <footer class="site-footer">
     <div class="footer-inner"><div><strong>KCOC · Korean Church of Columbus</strong><br><span data-i18n="footer.tagline">콜럼버스 한인교회 공식 웹사이트</span></div><div><span data-i18n="footer.domainLabel">Domain</span>: <a href="https://kcocoh.org/">kcocoh.org</a><br><a class="admin-foot-link" href="admin/">관리 페이지</a></div></div>
   </footer>
-  <script src="assets/app.js?v=20260517-2110" defer></script>
+  <script src="assets/app.js?v=20260517-2140" defer></script>
 </body>
 </html>
