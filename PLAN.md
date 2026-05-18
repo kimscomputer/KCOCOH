@@ -184,4 +184,5 @@
 - 다음세대/부서 카드에 주일학교, 중고등부, 청년부, 영어부, 한글교실, 성경공부와 교사반 내용을 더 구체적으로 반영했다.
 - KO/EN/ZH/ES 다국어 문자열을 함께 갱신하고 `assets/app.js?v=20260517-1908`로 cache busting을 적용했다.
 - 로컬 검증: `bash scripts/sync-to-deploy.sh`, `bash scripts/validate.sh`, `node --check site/v1/assets/app.js`, 로컬 브라우저 KO/EN/ZH/ES 언어 전환 확인 통과.
-- 운영 배포 시도는 현재 Hermes Wrangler OAuth가 `Joe@kimscomputer.com` 계정에 연결되어 있고, KCOC Pages 프로젝트가 있는 `466715dac50b40c2422b3d35686a940c` 계정 API 요청이 인증 오류로 거부되어 보류됐다. 해당 계정 토큰이 제공되면 `kcocoh-deploy`에서 Pages 배포 후 custom domain을 검증한다.
+- 운영 배포 완료: 제공된 KCOC Cloudflare 계정 토큰으로 `kcocoh-deploy`에서 Pages Functions 포함 배포를 실행했고, 배포 URL은 `https://e45c3f11.kcocoh-site-2im.pages.dev`이다.
+- 라이브 검증: `https://kcocoh.org/`, `https://www.kcocoh.org/`, Pages preview 모두 HTTP 200, `assets/app.js?v=20260517-1908` 반영, 다음세대 한국어 문구 반영, KO/EN/ZH/ES 브라우저 언어 전환 및 콘솔 오류 없음 확인.
