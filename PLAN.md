@@ -126,3 +126,11 @@
 - 운영 `https://kcocoh.org/admin/` 검증 결과 `/api/admin/users`가 `store: kv`, `writable: true`로 전환됐다.
 - 라이브에서 초기 관리자 로그인, 임시 관리자 등록, 새 관리자 이메일 로그인, 권한 변경(editor → owner), 삭제까지 모두 성공 확인했다. 검증용 임시 관리자는 삭제되어 운영 관리자 목록에 남아 있지 않다.
 - 주의: 관리자 계정 관리 저장소는 활성화됐지만 사진/주보 실제 파일 업로드에는 별도 R2 `KCOC_MEDIA` 바인딩과 `KCOC_MEDIA_PUBLIC_URL` 설정이 추가로 필요하다.
+
+### 2026-05-17 17:13 PDT
+
+- Cloudflare R2를 활성화한 뒤 `kcoc-media` bucket을 생성하고 `media.kcocoh.org` custom domain을 연결했다.
+- Pages 프로젝트 `kcocoh-site` production/preview에 R2 바인딩 `KCOC_MEDIA`와 환경변수 `KCOC_MEDIA_PUBLIC_URL=https://media.kcocoh.org`를 추가했다.
+- 최종 배포 URL: `https://7bd9f173.kcocoh-site-2im.pages.dev`.
+- 운영 검증: 초기 관리자 로그인 후 사진 PNG 업로드, 주보 PDF 업로드, 공개 API `/api/media/gallery`, `/api/bulletins` 반영, R2 공개 URL의 `image/png`/`application/pdf` 응답까지 확인했다.
+- 검증용 임시 사진/주보 객체와 KV metadata는 삭제했고, 공개 API는 업로드 전 seed fallback 상태로 복구했다.

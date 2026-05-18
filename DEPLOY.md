@@ -18,6 +18,8 @@ bash scripts/validate.sh
 - Pages project: `kcocoh-site`
 - Pages subdomain: `https://kcocoh-site-2im.pages.dev`
 - KV binding: `KCOC_CONTENT` — 관리자 계정 관리 저장소
+- R2 bucket/binding: `kcoc-media` / `KCOC_MEDIA` — 사진·주보 파일 저장소
+- R2 public media domain: `https://media.kcocoh.org`
 - Production domains:
   - `https://kcocoh.org`
   - `https://www.kcocoh.org`
