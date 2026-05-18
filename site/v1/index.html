@@ -341,9 +341,15 @@
     .video-card { overflow: hidden; border-radius: var(--radius-lg); background: #1b1f24; color: #fff; box-shadow: var(--shadow-soft); }
     .video-frame { position: relative; aspect-ratio: 16 / 9; background: linear-gradient(135deg, #27211c, #111315); }
     .video-frame iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+    .video-frame a { position: absolute; inset: 0; display: block; }
+    .video-frame img { width: 100%; height: 100%; display: block; object-fit: cover; filter: saturate(1.05) brightness(.92); }
+    .video-frame::after { content: ""; position: absolute; inset: 0; pointer-events: none; background: linear-gradient(180deg, rgba(17,19,21,.05), rgba(17,19,21,.44)); }
+    .video-play-badge { position: absolute; left: 50%; top: 50%; z-index: 1; width: 66px; height: 66px; display: grid; place-items: center; border-radius: 50%; transform: translate(-50%, -50%); background: rgba(255,255,255,.92); color: var(--charcoal); box-shadow: 0 18px 44px rgba(0,0,0,.24); font-size: 25px; line-height: 1; }
     .video-copy { padding: 24px; }
     .video-copy h3 { color: #fff; }
     .video-copy p { color: #d8d2c7; }
+    .video-meta { display: block; margin-top: 10px; color: #bfb7aa; font-size: 13px; font-weight: 800; }
+    .video-status { margin-top: 10px; color: #bfb7aa; font-size: 13px; }
     .video-links { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 18px; }
     .video-links a { min-height: 42px; display: inline-flex; align-items: center; padding: 0 14px; border: 1px solid rgba(255,255,255,.22); border-radius: 999px; color: #fff; text-decoration: none; font-weight: 850; }
     .photo-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
@@ -566,6 +572,8 @@
       }
       .hero-inner { min-height: auto; grid-template-columns: 1fr; padding: 30px 20px; gap: 28px; }
       h1 { font-size: clamp(26px, 7.4vw, 33px); }
+      h1, h2, h3, p, .lead, .section-head p, .card p, .video-copy p, .ministry-detail { max-width: 100%; overflow-wrap: anywhere; word-break: normal; }
+      .section *, .card, .video-card, .ministry-card, .staff-card { min-width: 0; }
       h2 { font-size: clamp(22px, 6.5vw, 28px); }
       .hero .lead { font-size: 15.5px; line-height: 1.66; }
       .hero-actions, .actions { display: grid; grid-template-columns: 1fr; gap: 9px; }
@@ -746,9 +754,9 @@
           <figcaption class="photo-caption"><strong data-i18n="media.photoTitle">예배와 교제 안에서 세워지는 믿음의 공동체</strong><span data-i18n="media.photoText">교회 사진은 대표 이미지와 썸네일로 정돈되어 예배, 교제, 다음세대의 순간을 품격 있게 보여줍니다.</span></figcaption>
         </figure>
         <div class="media-stack">
-          <article class="video-card">
-            <div class="video-frame"><iframe title="Korean Church of Columbus YouTube playlist" src="https://www.youtube.com/embed/videoseries?list=PLuzUYNV8E-aTJhoS5FhvO8s3F0GNBeDWU" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe></div>
-            <div class="video-copy"><p class="kicker" data-i18n="media.videoKicker">Latest Teaching</p><h3 data-i18n="media.videoTitle">수요예배 말씀 다시보기</h3><p data-i18n="media.videoText">재생목록에서 최근 말씀을 이어서 볼 수 있습니다.</p><div class="video-links"><a href="https://www.youtube.com/playlist?list=PLuzUYNV8E-aTJhoS5FhvO8s3F0GNBeDWU" target="_blank" rel="noopener" data-i18n="media.playlist">수요예배 영상</a><a href="https://www.youtube.com/@KoreanChurchofColumbus" target="_blank" rel="noopener" data-i18n="media.channelShort">공식 채널</a></div></div>
+          <article class="video-card" data-youtube-card>
+            <div class="video-frame" data-youtube-frame><iframe title="Korean Church of Columbus YouTube playlist" src="https://www.youtube.com/embed/videoseries?list=PLuzUYNV8E-aTJhoS5FhvO8s3F0GNBeDWU" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe></div>
+            <div class="video-copy"><p class="kicker" data-i18n="media.videoKicker">Latest Teaching</p><h3 data-i18n="media.videoTitle" data-youtube-title>수요예배 말씀 다시보기</h3><span class="video-meta" data-youtube-meta></span><p data-i18n="media.videoText" data-youtube-text>재생목록에서 최근 말씀을 이어서 볼 수 있습니다.</p><p class="video-status" data-youtube-status></p><div class="video-links"><a href="https://www.youtube.com/playlist?list=PLuzUYNV8E-aTJhoS5FhvO8s3F0GNBeDWU" target="_blank" rel="noopener" data-i18n="media.playlist" data-youtube-primary>수요예배 영상</a><a href="https://www.youtube.com/@KoreanChurchofColumbus" target="_blank" rel="noopener" data-i18n="media.channelShort">공식 채널</a></div></div>
           </article>
           <div class="photo-grid" aria-label="KCOC photo gallery">
             <div class="photo-tile"><img src="media/existing-home/DSCF9332-1500x630.jpg" alt="KCOC church community" loading="eager" decoding="async"></div>
@@ -836,6 +844,6 @@
   <footer class="site-footer">
     <div class="footer-inner"><div><strong>KCOC · Korean Church of Columbus</strong><br><span data-i18n="footer.tagline">콜럼버스 한인교회 공식 웹사이트</span></div><div><span data-i18n="footer.domainLabel">Domain</span>: <a href="https://kcocoh.org/">kcocoh.org</a><br><a class="admin-foot-link" href="admin/">관리 페이지</a></div></div>
   </footer>
-  <script src="assets/app.js?v=20260517-2140" defer></script>
+  <script src="assets/app.js?v=20260518-youtube-thumb" defer></script>
 </body>
 </html>

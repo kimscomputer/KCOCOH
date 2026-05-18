@@ -114,6 +114,12 @@ scripts/cloudflare-profile.sh run kcoc -- wrangler whoami
 
 저장소가 연결되기 전에는 원격 쓰기 요청이 안전하게 실패하도록 설계되어 있다. 현재 관리자 계정 저장소와 사진/주보 파일 저장소가 모두 연결되어 있다.
 
+## 말씀 영상 / YouTube 운영
+
+- 공개 홈페이지 `말씀과 사진` 섹션은 `/api/youtube/latest` Pages Function을 통해 공식 YouTube 채널 `@KoreanChurchofColumbus`의 최신 영상을 자동으로 표시한다.
+- YouTube RSS가 실패하면 채널 `/videos` 페이지를 읽어 최신 영상 제목/썸네일/링크를 표시하고, 둘 다 실패하면 공식 채널 링크로 안전하게 fallback한다.
+- 영상 카드가 갱신되지 않는 경우 먼저 `https://kcocoh.org/api/youtube/latest`가 JSON으로 응답하는지 확인하고, 새 프론트엔드 변경 후에는 `assets/app.js?v=...` cache busting 값을 갱신한다.
+
 ## 사진/주보 운영
 
 - 사진은 관리자 페이지의 `사진 업로드` 탭에서 올린다. 제목과 설명을 입력하고 이미지 파일을 선택한 뒤 업로드하면 R2 `kcoc-media` bucket에 저장되고 공개 갤러리 목록에 반영된다.

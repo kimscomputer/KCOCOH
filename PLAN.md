@@ -243,3 +243,12 @@
 - `assets/app.js?v=20260517-2117`로 cache busting을 갱신했다.
 - 운영 배포 URL은 `https://5efe6e48.kcocoh-site-2im.pages.dev`이다.
 - 라이브 검증: `교회에 문의하기` href `#contact`, `전화하기` href `tel:+16147261022`, `이메일 보내기` href `mailto:help@mykoreanchurch.org`, 새 app.js 버전 반영, 브라우저 콘솔 오류 없음 확인.
+
+### 2026-05-18 YouTube 최신 영상 카드
+
+- `#media` 섹션의 고정 수요예배 playlist iframe을 최신 YouTube 영상 카드로 바꿨다.
+- 새 Pages Function `/api/youtube/latest`는 KCOC 공식 채널 `@KoreanChurchofColumbus`의 최신 영상을 가져온다. YouTube RSS를 먼저 시도하고, 실패하면 채널 `/videos` 페이지 파싱으로 fallback한다.
+- 프론트엔드는 최신 영상 제목, 썸네일, 상대 시간, `최신 영상 보기`, `공식 채널` 링크를 표시한다. headless/일부 브라우저 검증에서 YouTube iframe이 검은 박스로 보일 수 있어 썸네일 우선 카드 패턴을 사용한다.
+- `assets/app.js?v=20260518-youtube-thumb`로 cache busting을 갱신했다.
+- 로컬/운영 검증: `node --check site/v1/assets/app.js`, `bash scripts/validate.sh`, 운영 `/api/youtube/latest` JSON 응답, custom domain의 새 HTML/JS marker, 390px 모바일 CDP viewport에서 `Sermons & Media`/사진 카드/최신 영상 카드 overflow 없음 확인.
+- 운영 Pages Functions 포함 배포 URL은 `https://518582e0.kcocoh-site-2im.pages.dev`이다.

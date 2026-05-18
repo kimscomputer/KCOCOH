@@ -745,7 +745,14 @@
       { id: 'seed-bulletin', title: { ko: '2026년 5월 17일 주보', en: 'May 17, 2026 Bulletin', zh: '2026年5月17日周报', es: 'Boletín del 17 de mayo de 2026' }, date: '2026-05-17', type: 'note', url: '', downloadUrl: '', summary: { ko: '관리 페이지에서 PDF 또는 이미지 주보를 업로드하면 웹 뷰어와 다운로드 링크가 이 자리에 표시됩니다.', en: 'Upload a PDF or image bulletin from the admin page and the viewer and download link will appear here.', zh: '从管理页面上传 PDF 或图片周报后，查看器和下载链接会显示在这里。', es: 'Sube un PDF o imagen del boletín desde administración y aparecerán aquí el visor y la descarga.' } }
     ],
     selectedPhoto: 0,
-    selectedBulletin: 0
+    selectedBulletin: 0,
+    youtube: {
+      channel: { url: 'https://www.youtube.com/@KoreanChurchofColumbus' },
+      items: [
+        { id: 'PLuzUYNV8E-aTJhoS5FhvO8s3F0GNBeDWU', title: 'Korean Church of Columbus YouTube Channel', url: 'https://www.youtube.com/@KoreanChurchofColumbus', embedUrl: 'https://www.youtube.com/embed/videoseries?list=PLuzUYNV8E-aTJhoS5FhvO8s3F0GNBeDWU', thumbnail: 'media/existing-home/DSC06622-1500x630.jpg', relativeTime: '' }
+      ],
+      fallback: true
+    }
   };
 
   const localized = (value, fallback = '') => {
@@ -876,6 +883,41 @@
     }));
   };
 
+  const youtubeCopy = () => ({
+    ko: { status: '최신 YouTube 영상을 불러와 자동으로 업데이트합니다.', open: '최신 영상 보기', fallback: '최신 영상을 불러오지 못해 공식 채널로 연결합니다.' },
+    en: { status: 'The latest YouTube video updates here automatically.', open: 'Watch latest video', fallback: 'Could not load the latest video; opening the official channel.' },
+    zh: { status: '最新 YouTube 视频会自动显示在这里。', open: '观看最新视频', fallback: '无法载入最新视频，将连接到官方频道。' },
+    es: { status: 'El video más reciente de YouTube se actualiza aquí automáticamente.', open: 'Ver video reciente', fallback: 'No se pudo cargar el video reciente; se abre el canal oficial.' }
+  }[state.lang] || { status: 'The latest YouTube video updates here automatically.', open: 'Watch latest video', fallback: 'Could not load the latest video; opening the official channel.' });
+
+  const renderYoutube = () => {
+    const frame = document.querySelector('[data-youtube-frame]');
+    const title = document.querySelector('[data-youtube-title]');
+    const text = document.querySelector('[data-youtube-text]');
+    const meta = document.querySelector('[data-youtube-meta]');
+    const status = document.querySelector('[data-youtube-status]');
+    const primary = document.querySelector('[data-youtube-primary]');
+    if (!frame || !title || !text || !primary) return;
+    const copy = youtubeCopy();
+    const item = (state.youtube.items || []).find((entry) => safeUrl(entry.url || entry.embedUrl)) || state.youtube.items?.[0];
+    if (!item) return;
+    const watchUrl = safeUrl(item.url) || safeUrl(state.youtube.channel?.url) || 'https://www.youtube.com/@KoreanChurchofColumbus';
+    const embedUrl = safeUrl(item.embedUrl);
+    const thumbnail = safeUrl(item.thumbnail);
+    const isSingleVideo = item.id && String(item.id).length === 11;
+    title.textContent = item.title || (translations[state.lang]?.text['media.videoTitle'] || 'Latest teaching');
+    text.textContent = copy.status;
+    if (meta) meta.textContent = item.relativeTime || item.published?.slice(0, 10) || '';
+    if (status) status.textContent = state.youtube.fallback ? copy.fallback : '';
+    primary.href = watchUrl;
+    primary.textContent = isSingleVideo ? copy.open : (translations[state.lang]?.text['media.playlist'] || 'Watch videos');
+    if (thumbnail) {
+      frame.innerHTML = `<a href="${watchUrl}" target="_blank" rel="noopener" aria-label="${escapeAttr(item.title || 'KCOC YouTube')}"><img src="${thumbnail}" alt="${escapeAttr(item.title || 'KCOC YouTube')}" loading="lazy" decoding="async"><span class="video-play-badge" aria-hidden="true">▶</span></a>`;
+    } else if (embedUrl && !state.youtube.fallback) {
+      frame.innerHTML = `<iframe title="${escapeAttr(item.title || 'KCOC YouTube video')}" src="${embedUrl}" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>`;
+    }
+  };
+
   const renderBulletins = () => {
     const list = document.querySelector('[data-bulletin-list]');
     const viewer = document.querySelector('[data-bulletin-viewer]');
@@ -919,9 +961,10 @@
 
   const loadPublicContent = async () => {
     try {
-      const [galleryRes, bulletinRes] = await Promise.allSettled([
+      const [galleryRes, bulletinRes, youtubeRes] = await Promise.allSettled([
         fetch('/api/media/gallery', { headers: { accept: 'application/json' } }),
-        fetch('/api/bulletins', { headers: { accept: 'application/json' } })
+        fetch('/api/bulletins', { headers: { accept: 'application/json' } }),
+        fetch('/api/youtube/latest', { headers: { accept: 'application/json' } })
       ]);
       if (galleryRes.status === 'fulfilled' && galleryRes.value.ok) {
         const data = await galleryRes.value.json();
@@ -931,9 +974,16 @@
         const data = await bulletinRes.value.json();
         if (Array.isArray(data.items) && data.items.length) state.bulletins = data.items;
       }
+      if (youtubeRes.status === 'fulfilled' && youtubeRes.value.ok) {
+        const data = await youtubeRes.value.json();
+        if (Array.isArray(data.items) && data.items.length) {
+          state.youtube = { channel: data.channel || state.youtube.channel, items: data.items, fallback: Boolean(data.fallback) };
+        }
+      }
     } catch (_) {}
     renderGallery();
     renderBulletins();
+    renderYoutube();
   };
 
   function setLang(lang) {
@@ -960,6 +1010,7 @@
 
     renderGallery();
     renderBulletins();
+    renderYoutube();
     try { localStorage.setItem('kcoc-lang', lang); } catch (_) {}
   }
 
