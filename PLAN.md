@@ -134,3 +134,10 @@
 - 최종 배포 URL: `https://7bd9f173.kcocoh-site-2im.pages.dev`.
 - 운영 검증: 초기 관리자 로그인 후 사진 PNG 업로드, 주보 PDF 업로드, 공개 API `/api/media/gallery`, `/api/bulletins` 반영, R2 공개 URL의 `image/png`/`application/pdf` 응답까지 확인했다.
 - 검증용 임시 사진/주보 객체와 KV metadata는 삭제했고, 공개 API는 업로드 전 seed fallback 상태로 복구했다.
+
+### 2026-05-17 17:21 PDT
+
+- 기존 사이트 `https://www.mykoreanchurch.org/weekly_news/weekly`의 주보 페이지 1~18을 확인했고, PDF로 연결된 주보 60개를 추출했다.
+- 관리자 API를 통해 2025-03-09부터 2026-05-17까지 주보 PDF 60개를 KCOC 운영 사이트에 업로드했다.
+- 공개 API `/api/bulletins` 검증 결과 `fallback: false`, `items: 60`, 최신 `2026-05-17`, 가장 오래된 항목 `2025-03-09`로 확인했다.
+- 대표 PDF URL 5개를 직접 열어 `200 application/pdf`와 `%PDF-` 서명을 확인했고, 브라우저에서 `https://kcocoh.org/#bulletins` 주보 목록 반영을 확인했다.
