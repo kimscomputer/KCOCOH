@@ -210,3 +210,11 @@
 - 응답 확인: `put status 200`, `translation.provider=openai`, `source=ko`, `targets=en,zh,es`.
 - 현재 KCOC 운영 사이트의 관리자 Hero 자동 번역 기능은 활성 상태이다.
 
+### 2026-05-17 20:14 PDT
+
+- 사용자가 제공한 기존 사이트 다음세대 공개 페이지 4개(주일학교, 중고등부, 청년부, 영어부)의 내용을 `#nextgen` 섹션에 상세 카드로 반영했다.
+- 주일학교는 유치부/초등부 시간과 Gospel Light/복음 중심 성경공부 설명을 추가했고, 중고등부는 주일 10:30 예배와 금요일 7시 성경공부/소그룹 흐름을 반영했다.
+- 청년부는 요한복음 4:23 기반의 “영과 진리” 예배 문구, 금요일 예배와 주일 기도회 시간을 반영했다.
+- 영어부에는 KCCEM 설명과 영어권 스트리밍 `https://www.youtube.com/@kcc.english/streams`, EM 웹사이트 링크를 추가했다.
+- 다음세대 카드 6개 모두 사진형 카드로 균형을 맞추고, KO/EN/ZH/ES 번역 키와 `assets/app.js?v=20260517-2004` 캐시 버전을 갱신했다.
+- 로컬 동기화, `node --check site/v1/assets/app.js`, `bash scripts/validate.sh`, 브라우저 언어 전환/이미지/링크 확인을 완료했다.

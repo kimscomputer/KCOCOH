@@ -349,8 +349,15 @@
     .photo-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
     .photo-tile { min-height: 160px; overflow: hidden; border-radius: 20px; background: #ddd4c7; }
 
-    .ministry-card { min-height: 240px; display: flex; flex-direction: column; justify-content: space-between; }
-    .ministry-card .meta-line { margin-top: 26px; padding-top: 16px; border-top: 1px solid var(--line); color: var(--bronze-dark); font-weight: 850; }
+    .ministry-card { min-height: 100%; display: flex; flex-direction: column; justify-content: space-between; overflow: hidden; padding: 0; }
+    .ministry-photo { position: relative; aspect-ratio: 16 / 9; overflow: hidden; background: #ddd4c7; }
+    .ministry-photo img { width: 100%; height: 100%; display: block; object-fit: cover; filter: saturate(1.04) brightness(1.06); transition: transform .35s ease; }
+    .ministry-card:hover .ministry-photo img { transform: scale(1.025); }
+    .ministry-body { padding: 22px 22px 0; }
+    .ministry-detail { color: var(--muted); font-size: 15.5px; line-height: 1.68; }
+    .ministry-links { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 16px; }
+    .ministry-link { min-height: 34px; display: inline-flex; align-items: center; padding: 0 11px; border: 1px solid var(--line); border-radius: 999px; color: var(--bronze-dark); background: rgba(255,255,255,.56); text-decoration: none; font-size: 13px; font-weight: 850; }
+    .ministry-card .meta-line { margin: 22px 22px 0; padding: 15px 0 20px; border-top: 1px solid var(--line); color: var(--bronze-dark); font-weight: 850; }
 
     .about-card {
       overflow: hidden;
@@ -767,13 +774,13 @@
         <div><p class="kicker" data-i18n="next.kicker">Next Generation</p><h2 id="nextgen-title" data-i18n="next.title">다음세대를 세우는 교회</h2></div>
         <p class="lead" data-i18n="next.lead">어린이와 청소년, 청년과 영어권 성도가 말씀 안에서 자라고 교회의 다음 세대로 세워지도록 섬깁니다.</p>
       </div>
-      <div class="grid grid-3">
-        <article class="card ministry-card"><div><span class="meta" data-i18n="next.card1Meta">Sunday School</span><h3 data-i18n="next.card1Title">주일학교 (Sunday School)</h3><p data-i18n="next.card1Text">어린이들이 예배와 말씀, 찬양과 활동을 통해 하나님의 사랑을 배우고 믿음 안에서 자라도록 돕습니다.</p></div><div class="meta-line" data-i18n="next.card1Time">주일 11:00 AM · 어린이 예배와 교육</div></article>
-        <article class="card ministry-card"><div><span class="meta" data-i18n="next.card2Meta">Youth Group</span><h3 data-i18n="next.card2Title">중고등부 (Youth Group)</h3><p data-i18n="next.card2Text">청소년들이 말씀과 기도, 또래 공동체 안에서 복음의 정체성을 세우고 삶으로 믿음을 배워갑니다.</p></div><div class="meta-line" data-i18n="next.card2Time">금요일 7:00 PM · 주일 모임</div></article>
-        <article class="card ministry-card"><div><span class="meta" data-i18n="next.card3Meta">Young Adults</span><h3 data-i18n="next.card3Title">청년부</h3><p data-i18n="next.card3Text">대학생과 청년들이 예배, 말씀, 소그룹과 교제 가운데 신앙과 삶의 방향을 함께 세워갑니다.</p></div><div class="meta-line" data-i18n="next.card3Time">금요일 7:00 PM · 소그룹과 교제</div></article>
-        <article class="card ministry-card"><div><span class="meta" data-i18n="next.card4Meta">English Ministry</span><h3 data-i18n="next.card4Title">영어부 (English Ministry)</h3><p data-i18n="next.card4Text">영어권 성도와 가정, 학생들이 함께 예배하고 말씀 안에서 자라며 공동체 안에서 섬기고 연결됩니다.</p></div><div class="meta-line" data-i18n="next.card4Time">Sunday 9:00 / 11:00 AM</div></article>
-        <article class="card ministry-card" id="school"><div><span class="meta" data-i18n="next.card5Meta">Korean School</span><h3 data-i18n="next.card5Title">한글교실 · KCC Korean School</h3><p data-i18n="next.card5Text">한국어와 한국 문화를 다음 세대에 전하며, 자녀들이 뿌리와 정체성을 기쁨으로 배워가도록 돕습니다.</p></div><div class="meta-line" data-i18n="next.card5Time">등록 및 일정 문의</div></article>
-        <article class="card ministry-card"><div><span class="meta" data-i18n="next.card6Meta">Bible Study & Teachers</span><h3 data-i18n="next.card6Title">성경공부와 교사반</h3><p data-i18n="next.card6Text">청년부, 영어부, 중고등부 교사반 등 각 부서가 말씀 안에서 배우고 섬김을 준비하는 모임입니다.</p></div><div class="meta-line" data-i18n="next.card6Time">부서별 주중 모임</div></article>
+      <div class="grid grid-3 nextgen-grid">
+        <article class="card ministry-card"><figure class="ministry-photo"><img src="media/nextgen/sunday-school.jpg" alt="주일학교 어린이 사역" loading="lazy" decoding="async"></figure><div class="ministry-body"><span class="meta" data-i18n="next.card1Meta">Sunday School</span><h3 data-i18n="next.card1Title">주일학교 (Sunday School)</h3><p class="ministry-detail" data-i18n="next.card1Text">유치부와 초등부가 예배와 점심, 성경 수업을 통해 예수님의 복음을 배우는 어린이 사역입니다. 유치부는 구관 지하에서 Gospel Light 교재로 예수님과 예배를 배우고, 초등부는 소예배실 예배 후 친교와 성경공부로 이어집니다.</p></div><div class="meta-line" data-i18n="next.card1Time">유치부 10:30–12:00 · 초등부 10:30–12:45</div></article>
+        <article class="card ministry-card"><figure class="ministry-photo"><img src="media/nextgen/youth-group.jpg" alt="중고등부 Youth Group" loading="lazy" decoding="async"></figure><div class="ministry-body"><span class="meta" data-i18n="next.card2Meta">Youth Group</span><h3 data-i18n="next.card2Title">중고등부 (Youth Group)</h3><p class="ministry-detail" data-i18n="next.card2Text">6–12학년 학생들이 함께 예배하고 말씀을 배우는 공동체입니다. 주일에는 다목적 체육관에서 예배드리고, 금요일 밤에는 찬양과 예배로 시작해 소그룹 성경공부와 나눔, 기도로 이어집니다.</p></div><div class="meta-line" data-i18n="next.card2Time">주일 10:30 AM · 금요일 7:00 PM EM 성전</div></article>
+        <article class="card ministry-card"><figure class="ministry-photo"><img src="media/nextgen/young-adults.jpg" alt="청년부 예배와 공동체" loading="lazy" decoding="async"></figure><div class="ministry-body"><span class="meta" data-i18n="next.card3Meta">Young Adults</span><h3 data-i18n="next.card3Title">청년부</h3><p class="ministry-detail" data-i18n="next.card3Text">“영과 진리로 참되게 예배하는 청년부”를 지향하며, 요한복음 4장 23절의 말씀처럼 하나님께서 찾으시는 예배자로 세워지기를 소망합니다. 예배와 기도, 교제를 통해 청년들의 믿음과 삶을 함께 세워갑니다.</p></div><div class="meta-line" data-i18n="next.card3Time">청년부 예배 금요일 7:00 PM 소예배실 · 기도회 주일 7:00 PM 본당</div></article>
+        <article class="card ministry-card"><figure class="ministry-photo"><img src="media/nextgen/english-ministry.jpg" alt="English Ministry worship community" loading="lazy" decoding="async"></figure><div class="ministry-body"><span class="meta" data-i18n="next.card4Meta">English Ministry</span><h3 data-i18n="next.card4Title">영어부 (English Ministry)</h3><p class="ministry-detail" data-i18n="next.card4Text">KCCEM은 다양한 민족과 배경의 사람들이 함께 모여 하나님을 예배하고 말씀을 배우는 영어권 공동체입니다. 영어권 성도와 가정, 학생들이 예배와 교제 안에서 함께 자라도록 섬깁니다.</p><div class="ministry-links"><a class="ministry-link" href="https://www.youtube.com/@kcc.english/streams" target="_blank" rel="noopener" data-i18n="next.card4Stream">영어권 스트리밍</a><a class="ministry-link" href="https://em.mykoreanchurch.org/" target="_blank" rel="noopener" data-i18n="next.card4Site">EM 웹사이트</a></div></div><div class="meta-line" data-i18n="next.card4Time">English Ministry · Sunday streams</div></article>
+        <article class="card ministry-card" id="school"><figure class="ministry-photo"><img src="media/existing-home/5W2A1213_cropped-1500x630.jpg" alt="한글교실과 다음세대 교육" loading="lazy" decoding="async"></figure><div class="ministry-body"><span class="meta" data-i18n="next.card5Meta">Korean School</span><h3 data-i18n="next.card5Title">한글교실 · KCC Korean School</h3><p class="ministry-detail" data-i18n="next.card5Text">한국어와 한국 문화를 다음 세대에 전하며, 자녀들이 뿌리와 정체성을 기쁨으로 배워가도록 돕습니다.</p></div><div class="meta-line" data-i18n="next.card5Time">등록 및 일정 문의</div></article>
+        <article class="card ministry-card"><figure class="ministry-photo"><img src="media/existing-home/VL6D2190-3-1500x630.jpg" alt="성경공부와 교사반 사역" loading="lazy" decoding="async"></figure><div class="ministry-body"><span class="meta" data-i18n="next.card6Meta">Bible Study & Teachers</span><h3 data-i18n="next.card6Title">성경공부와 교사반</h3><p class="ministry-detail" data-i18n="next.card6Text">청년부, 영어부, 중고등부 교사반 등 각 부서가 말씀 안에서 배우고 섬김을 준비하는 모임입니다.</p></div><div class="meta-line" data-i18n="next.card6Time">부서별 주중 모임</div></article>
       </div>
     </section>
 
@@ -818,6 +825,6 @@
   <footer class="site-footer">
     <div class="footer-inner"><div><strong>KCOC · Korean Church of Columbus</strong><br><span data-i18n="footer.tagline">콜럼버스 한인교회 공식 웹사이트</span></div><div><span data-i18n="footer.domainLabel">Domain</span>: <a href="https://kcocoh.org/">kcocoh.org</a><br><a class="admin-foot-link" href="admin/">관리 페이지</a></div></div>
   </footer>
-  <script src="assets/app.js?v=20260517-1908" defer></script>
+  <script src="assets/app.js?v=20260517-2004" defer></script>
 </body>
 </html>
