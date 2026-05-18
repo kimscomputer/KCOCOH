@@ -170,4 +170,5 @@
 - 첫 페이지를 먼저 보여주고, 오른쪽 영역/`다음 페이지` 버튼을 누르면 2페이지로 전환되며 왼쪽 영역/`이전 페이지` 버튼으로 돌아오도록 했다.
 - KO/EN/ZH/ES 안내 문구와 운영자 매뉴얼을 새 동작에 맞게 갱신했다.
 - 로컬 검증: `bash scripts/sync-to-deploy.sh`, `bash scripts/validate.sh`, `node --check site/v1/assets/app.js` 통과.
-- 운영 배포는 현재 Cloudflare OAuth가 KCOC Pages 계정 `466715dac50b40c2422b3d35686a940c`에 인증되지 않아 임시 API 토큰이 필요하다.
+- 운영 배포 완료: `https://f8ebc622.kcocoh-site-2im.pages.dev`가 production으로 배포되어 `https://kcocoh.org/#bulletins`에 반영됐다.
+- 라이브 검증: custom domain의 `assets/app.js?v=20260517-2140` 반영, 새 `.bulletin-page-stage` CSS 반영, 기존 `.bulletin-spread` 제거, 주보 목록 60개 유지, 최신 주보 1페이지 canvas 1개 표시, `다음 페이지` 클릭 후 `페이지 2 / 2` 전환 확인.
