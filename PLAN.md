@@ -203,3 +203,10 @@
 - OpenAI 계정 결제/크레딧 문제를 해결하거나 사용 가능한 API 키로 `OPENAI_API_KEY` secret을 교체하면 같은 코드로 자동 번역 저장이 동작한다.
 - Cloudflare가 502 응답을 edge 오류 페이지로 바꾸지 않도록 번역 실패 응답을 JSON `424 translation_failed`로 조정했다.
 
+### 2026-05-17 20:00 PDT
+
+- OpenAI Platform 결제 반영 후 운영 관리자 저장 API를 다시 검증했다.
+- `https://kcocoh.org/api/admin/content`에 기존 한국어 Hero 콘텐츠를 재저장했고, OpenAI 자동 번역이 정상 동작해 영어/중국어/스페인어 번역이 함께 저장됐다.
+- 응답 확인: `put status 200`, `translation.provider=openai`, `source=ko`, `targets=en,zh,es`.
+- 현재 KCOC 운영 사이트의 관리자 Hero 자동 번역 기능은 활성 상태이다.
+
