@@ -706,7 +706,7 @@
   };
 
   let pdfjsPromise;
-  const renderPdfPreview = async (viewer, pdfUrl, title) => {
+  const renderPdfPreview = async (viewer, pdfUrl, title, downloadHtml = '') => {
     const token = `${Date.now()}-${Math.random().toString(36).slice(2)}`;
     viewer.dataset.pdfToken = token;
     viewer.innerHTML = `<div class="bulletin-canvas-wrap"><div class="bulletin-paper"><span class="paper-date">PDF</span><h3>${escapeHtml(title)}</h3><p>주보를 불러오는 중입니다.</p></div></div>`;
@@ -734,9 +734,11 @@
       wrap.appendChild(canvas);
       viewer.innerHTML = '';
       viewer.appendChild(wrap);
+      if (downloadHtml) viewer.insertAdjacentHTML('beforeend', downloadHtml);
     } catch (error) {
       if (viewer.dataset.pdfToken !== token) return;
       viewer.innerHTML = `<div class="bulletin-empty"><div class="bulletin-paper"><span class="paper-date">PDF</span><h3>${escapeHtml(title)}</h3><p>웹 미리보기를 불러오지 못했습니다. 아래 다운로드 버튼으로 주보를 열어 주세요.</p></div></div>`;
+      if (downloadHtml) viewer.insertAdjacentHTML('beforeend', downloadHtml);
       console.warn('PDF preview failed', error);
     }
   };
@@ -784,17 +786,23 @@
     if (!selected) return;
     const url = safeUrl(selected.url || selected.downloadUrl);
     const download = safeUrl(selected.downloadUrl || selected.url);
+    const proxiedPdfUrl = url && (selected.mime || '').includes('pdf')
+      ? `${window.location.origin}/api/bulletins/view?src=${encodeURIComponent(url)}`
+      : '';
+    const downloadHref = download ? (proxiedPdfUrl ? `${proxiedPdfUrl}&download=1` : download) : '';
+    const downloadHtml = downloadHref
+      ? `<div class="bulletin-actions bulletin-download-bar" style="padding:0 22px 22px"><a class="btn btn-dark" href="${downloadHref}" rel="noopener" download>${escapeHtml(translations[state.lang]?.text['bulletin.download'] || 'Download bulletin')}</a></div>`
+      : '';
     if (url && (selected.mime || '').includes('pdf')) {
-      const viewerUrl = `${window.location.origin}/api/bulletins/view?src=${encodeURIComponent(url)}`;
-      renderPdfPreview(viewer, viewerUrl, localized(selected.title, 'Church Bulletin'));
+      renderPdfPreview(viewer, proxiedPdfUrl, localized(selected.title, 'Church Bulletin'), downloadHtml);
     } else if (url) {
       viewer.innerHTML = `<img class="bulletin-image" src="${url}" alt="${escapeAttr(localized(selected.title, 'Church Bulletin'))}" loading="lazy" decoding="async">`;
     } else {
       viewer.innerHTML = `<div class="bulletin-empty"><div class="bulletin-paper"><span class="paper-date">${escapeHtml(selected.date || 'Bulletin')}</span><h3>${escapeHtml(localized(selected.title, 'Church Bulletin'))}</h3><p>${escapeHtml(localized(selected.summary, translations[state.lang]?.text['bulletin.emptyText'] || 'Upload a bulletin to view it here.'))}</p><div class="bulletin-actions"><a class="btn btn-dark" href="admin/">주보 업로드 준비</a></div></div></div>`;
     }
-    if (download) {
+    if (download && !proxiedPdfUrl) {
       const existing = viewer.querySelector('.bulletin-download-bar');
-      if (!existing) viewer.insertAdjacentHTML('beforeend', `<div class="bulletin-actions" style="padding:0 18px 18px"><a class="btn btn-dark" href="${download}" target="_blank" rel="noopener" download>${escapeHtml(translations[state.lang]?.text['bulletin.download'] || 'Download bulletin')}</a></div>`);
+      if (!existing) viewer.insertAdjacentHTML('beforeend', downloadHtml);
     }
   };
 

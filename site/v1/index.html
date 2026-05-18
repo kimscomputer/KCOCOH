@@ -448,11 +448,11 @@
     .gallery-thumb:hover img, .gallery-thumb:focus-visible img { transform: scale(1.035); }
     .gallery-thumb.is-active { outline: 3px solid rgba(183,119,61,.55); outline-offset: 3px; }
     .gallery-thumb-label { position: absolute; left: 12px; right: 12px; bottom: 12px; padding: 8px 10px; border-radius: 999px; color: #fff; background: rgba(17,19,21,.72); font-size: 13px; font-weight: 850; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-    .bulletin-layout { display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(320px, .95fr); gap: 18px; align-items: start; }
-    .bulletin-viewer { min-height: 520px; overflow: hidden; border: 1px solid var(--line); border-radius: var(--radius-xl); background: #fff; box-shadow: var(--shadow-soft); }
-    .bulletin-frame, .bulletin-image { width: 100%; height: 520px; display: block; border: 0; object-fit: contain; background: #f5efe7; }
-    .bulletin-canvas-wrap { min-height: 520px; display: grid; place-items: start center; padding: 18px; background: #f5efe7; overflow: auto; }
-    .bulletin-canvas { width: min(100%, 460px); height: auto; display: block; border-radius: 8px; background: #fff; box-shadow: 0 14px 36px rgba(82,58,34,.16); }
+    .bulletin-layout { display: grid; grid-template-columns: minmax(0, 1.52fr) minmax(260px, .48fr); gap: 18px; align-items: start; }
+    .bulletin-viewer { min-height: 700px; overflow: hidden; border: 1px solid var(--line); border-radius: var(--radius-xl); background: #fff; box-shadow: var(--shadow-soft); }
+    .bulletin-frame, .bulletin-image { width: 100%; height: 700px; display: block; border: 0; object-fit: contain; background: #f5efe7; }
+    .bulletin-canvas-wrap { min-height: 700px; display: grid; place-items: start center; padding: 20px; background: #f5efe7; overflow: auto; }
+    .bulletin-canvas { width: min(100%, 740px); height: auto; display: block; border-radius: 8px; background: #fff; box-shadow: 0 14px 36px rgba(82,58,34,.16); }
     .bulletin-empty { min-height: 520px; display: grid; place-items: center; padding: 28px; text-align: center; color: var(--muted); background: #fffaf2; }
     .bulletin-paper { width: min(420px, 86%); margin: 0 auto; padding: 34px 30px; border: 1px solid #e3d8c8; border-radius: 18px; background: linear-gradient(180deg,#fff,#fffaf3); color: var(--ink); box-shadow: 0 18px 46px rgba(82,58,34,.10); text-align: left; }
     .bulletin-paper .paper-date { color: var(--bronze-dark); font-size: 13px; font-weight: 900; letter-spacing: .10em; text-transform: uppercase; }
@@ -462,10 +462,14 @@
     .paper-lines span { display:block; height: 10px; border-radius: 999px; background: #eadfce; }
     .paper-lines span:nth-child(2) { width: 76%; }
     .paper-lines span:nth-child(3) { width: 58%; }
-    .bulletin-list { display: grid; gap: 10px; }
-    .bulletin-item { width: 100%; min-height: 82px; display: grid; gap: 4px; padding: 16px 18px; border: 1px solid var(--line); border-radius: 18px; background: rgba(255,255,255,.72); color: var(--ink); text-align: left; cursor: pointer; }
-    .bulletin-item strong { font-size: 18px; line-height: 1.25; }
-    .bulletin-item span { color: var(--quiet); font-size: 13px; font-weight: 850; }
+    .bulletin-side-card { height: 700px; display: flex; flex-direction: column; overflow: hidden; padding: 22px; }
+    .bulletin-list { flex: 1 1 auto; min-height: 0; display: grid; align-content: start; gap: 8px; margin: 12px -6px 0 0; padding: 0 6px 2px 0; overflow-y: auto; overscroll-behavior: contain; scrollbar-width: thin; scrollbar-color: rgba(183,119,61,.55) rgba(245,239,231,.75); }
+    .bulletin-list::-webkit-scrollbar { width: 9px; }
+    .bulletin-list::-webkit-scrollbar-track { background: rgba(245,239,231,.75); border-radius: 999px; }
+    .bulletin-list::-webkit-scrollbar-thumb { background: rgba(183,119,61,.55); border-radius: 999px; }
+    .bulletin-item { width: 100%; min-height: 62px; display: grid; gap: 2px; padding: 11px 13px; border: 1px solid var(--line); border-radius: 14px; background: rgba(255,255,255,.72); color: var(--ink); text-align: left; cursor: pointer; }
+    .bulletin-item strong { font-size: 15px; line-height: 1.22; }
+    .bulletin-item span { color: var(--quiet); font-size: 12px; font-weight: 850; }
     .bulletin-item[aria-pressed="true"] { border-color: rgba(183,119,61,.55); background: #fff7ec; box-shadow: 0 12px 28px rgba(82,58,34,.08); }
     .bulletin-actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 14px; }
 
@@ -540,7 +544,10 @@
       .photo-feature { min-height: 360px; }
       .photo-grid, .gallery-thumbs { grid-template-columns: 1fr; }
       .gallery-feature, .bulletin-frame, .bulletin-image, .bulletin-empty { min-height: 360px; height: 360px; }
-      .bulletin-canvas-wrap { min-height: 360px; max-height: 520px; }
+      .bulletin-viewer { min-height: 520px; }
+      .bulletin-side-card { height: 520px; padding: 18px; }
+      .bulletin-canvas-wrap { min-height: 520px; max-height: 72vh; padding: 14px; }
+      .bulletin-canvas { width: min(100%, 620px); }
       .visit-step { padding-left: 28px; }
       .visit-step::before { left: 0; top: 30px; }
       .news-list a { grid-template-columns: 1fr; gap: 6px; }
@@ -762,7 +769,7 @@
         <div class="bulletin-viewer" data-bulletin-viewer>
           <div class="bulletin-empty"><div><h3 data-i18n="bulletin.emptyTitle">최근 주보 뷰어</h3><p data-i18n="bulletin.emptyText">관리 페이지에서 PDF 또는 이미지 주보를 올리면 이곳에서 주일예배 주보를 바로 볼 수 있습니다.</p></div></div>
         </div>
-        <div class="card">
+        <div class="card bulletin-side-card">
           <h3 data-i18n="news.latest">최근 교회소식</h3>
           <div class="bulletin-list" data-bulletin-list aria-label="Church bulletins"></div>
           <div class="bulletin-actions"><a class="btn btn-dark" href="mailto:help@mykoreanchurch.org" data-i18n="cta.contact">교회에 문의하기</a></div>
@@ -788,6 +795,6 @@
   <footer class="site-footer">
     <div class="footer-inner"><div><strong>KCOC · Korean Church of Columbus</strong><br><span data-i18n="footer.tagline">콜럼버스 한인교회 공식 웹사이트</span></div><div><span data-i18n="footer.domainLabel">Domain</span>: <a href="https://kcocoh.org/">kcocoh.org</a><br><a class="admin-foot-link" href="admin/">관리 페이지</a></div></div>
   </footer>
-  <script src="assets/app.js?v=20260517-1748" defer></script>
+  <script src="assets/app.js?v=20260517-2058" defer></script>
 </body>
 </html>

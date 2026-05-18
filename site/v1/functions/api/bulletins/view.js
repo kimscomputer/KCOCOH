@@ -11,6 +11,7 @@ const badRequest = (message, status = 400) => new Response(message, {
 export async function onRequestGet({ request }) {
   const { searchParams } = new URL(request.url);
   const src = searchParams.get('src') || '';
+  const disposition = searchParams.get('download') === '1' ? 'attachment' : 'inline';
 
   let target;
   try {
@@ -40,11 +41,15 @@ export async function onRequestGet({ request }) {
     return badRequest('Bulletin file is not a PDF.', 415);
   }
 
+  const filename = decodeURIComponent(target.pathname.split('/').pop() || 'kcoc-bulletin.pdf')
+    .replace(/[\\"\r\n]/g, '')
+    .replace(/[^\w.()\- ]+/g, '-') || 'kcoc-bulletin.pdf';
+
   return new Response(upstream.body, {
     status: 200,
     headers: {
       'content-type': 'application/pdf',
-      'content-disposition': 'inline; filename="kcoc-bulletin.pdf"',
+      'content-disposition': `${disposition}; filename="${filename}"`,
       'cache-control': 'public, max-age=3600, stale-while-revalidate=86400',
       'x-content-type-options': 'nosniff'
     }

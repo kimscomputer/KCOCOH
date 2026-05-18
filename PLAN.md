@@ -156,3 +156,10 @@
 - 주보 PDF iframe이 일부 브라우저에서 빈 화면/깨진 아이콘으로 보이는 문제를 수정했다: `/api/bulletins/view` same-origin PDF proxy와 로컬 PDF.js canvas preview(`assets/vendor/pdf.mjs`, `pdf.worker.mjs`)를 추가했다.
 - CSP `frame-src/connect-src`에 `media.kcocoh.org`를 명시해 주보 파일 접근을 안전하게 허용했다.
 - 운영 사이트 `https://kcocoh.org/#bulletins`에서 최신 주보가 canvas로 렌더링되는 것과 KO/EN/ZH/ES 교회소개 문구 전환을 브라우저로 확인했다.
+
+### 2026-05-17 17:58 PDT
+
+- 주보 다운로드 버튼이 PDF.js 미리보기 렌더링 후 사라질 수 있는 문제를 수정했다. PDF 다운로드는 `/api/bulletins/view?src=...&download=1` same-origin proxy를 사용하며 `Content-Disposition: attachment` 헤더로 내려받기 동작을 명시한다.
+- 주보 미리보기 영역을 더 크게 조정하고, 오른쪽 주보 목록 카드는 프레임과 같은 높이로 맞췄다. 목록 항목은 더 작게 압축했고, 60개 주보는 목록 카드 내부에서 마우스 휠/트랙패드로 스크롤해 이전 주보를 볼 수 있다.
+- `assets/app.js?v=20260517-2058`로 cache busting을 갱신했다.
+- 운영 검증: `https://kcocoh.org/#bulletins`에서 PDF canvas 표시, `주보 다운로드` 링크 표시, 다운로드 응답 `200 application/pdf` 및 `Content-Disposition: attachment`를 확인했다.
