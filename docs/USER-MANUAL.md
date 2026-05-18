@@ -67,16 +67,20 @@
 - 관리 API 스캐폴드: `site/v1/functions/api/admin/content.js`
 - 접속 경로: `/admin/`
 
-현재 관리 페이지는 Hero 문구, 예배 시간, 주보/소식, 사진 업로드, 주보 업로드, 연락처를 입력하고 JSON으로 내보낼 수 있다. Cloudflare Pages Functions는 `/api/admin/content`, `/api/admin/media`, `/api/admin/bulletins`, `/api/media/gallery`, `/api/bulletins` 경로로 준비되어 있으며, 실제 원격 저장은 다음 조건이 충족되면 활성화한다.
+현재 관리 페이지는 Hero 문구, 예배 시간, 주보/소식, 사진 업로드, 주보 업로드, 연락처를 입력하고 JSON으로 내보낼 수 있다. Cloudflare Pages Functions는 `/api/admin/content`, `/api/admin/users`, `/api/admin/media`, `/api/admin/bulletins`, `/api/media/gallery`, `/api/bulletins` 경로로 준비되어 있다.
+
+관리자 계정 관리는 운영에서 활성화되어 있다. `/admin/` 로그인 후 `관리자 / Users` 탭에서 최고 관리자(owner)가 새 관리자 이메일 아이디를 등록하고, 권한을 `owner` 또는 `editor`로 지정하며, 비밀번호 변경, 활성/비활성, 삭제를 처리할 수 있다. 등록된 관리자는 로그인 화면의 `관리자 이메일 아이디`와 비밀번호로 접속한다. 기존 초기 관리자 비밀번호는 백업/초기 owner 로그인으로 유지한다.
+
+사진/주보 업로드와 같은 파일 저장 기능은 다음 조건이 모두 충족되면 활성화한다.
 
 1. Cloudflare Access로 관리자 경로 보호
 2. `ADMIN_ACCESS_ENFORCED=true` 설정
 3. 허용 이메일 `ADMIN_ALLOWED_EMAILS` 설정
-4. D1 `DB` 또는 KV `KCOC_CONTENT` 바인딩 연결
+4. KV `KCOC_CONTENT` 바인딩 연결 — 완료, 관리자 계정 저장에 사용 중
 5. 사진/주보 파일 저장용 R2 `KCOC_MEDIA` 바인딩 연결
 6. 공개 파일 URL용 `KCOC_MEDIA_PUBLIC_URL` 설정
 
-Access와 저장소가 연결되기 전에는 원격 쓰기 요청이 안전하게 실패하도록 설계되어 있다.
+저장소가 연결되기 전에는 원격 쓰기 요청이 안전하게 실패하도록 설계되어 있다. 현재 관리자 계정 저장소는 연결되어 있으며, 파일 업로드 저장소는 아직 R2 연결이 필요하다.
 
 ## 사진/주보 운영
 

@@ -17,6 +17,7 @@ bash scripts/validate.sh
 - Zone ID: `0815ce475c65b46b3dc0ec76b7033d14`
 - Pages project: `kcocoh-site`
 - Pages subdomain: `https://kcocoh-site-2im.pages.dev`
+- KV binding: `KCOC_CONTENT` — 관리자 계정 관리 저장소
 - Production domains:
   - `https://kcocoh.org`
   - `https://www.kcocoh.org`

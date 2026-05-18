@@ -118,3 +118,11 @@
 - 현재 운영 `/api/admin/users` 응답은 `store: not_configured`, `writable: false`이다. 즉 UI와 API는 배포됐지만 실제 관리자 추가 저장은 아직 비활성이다.
 - 원인: 현재 `/tmp/kcocoh_cf_token` 토큰은 Pages 프로젝트 조회/배포에는 성공하지만 KV/D1 list/create API에서 `Authentication error`가 발생한다. `KCOC_CONTENT` KV namespace 생성/바인딩을 위해서는 KV Storage Edit 또는 D1 Edit 권한이 포함된 Joe@solisenginc.com 계정 토큰이 필요하다.
 - 배포 후 `/tmp/kcocoh_cf_token` 삭제 완료.
+
+### 2026-05-17 17:00 PDT
+
+- 새 Cloudflare API 토큰으로 `KCOC_CONTENT` KV namespace를 생성하고 Pages 프로젝트 `kcocoh-site` production/preview에 바인딩했다.
+- 최종 배포 URL: `https://6d4b5fc3.kcocoh-site-2im.pages.dev`.
+- 운영 `https://kcocoh.org/admin/` 검증 결과 `/api/admin/users`가 `store: kv`, `writable: true`로 전환됐다.
+- 라이브에서 초기 관리자 로그인, 임시 관리자 등록, 새 관리자 이메일 로그인, 권한 변경(editor → owner), 삭제까지 모두 성공 확인했다. 검증용 임시 관리자는 삭제되어 운영 관리자 목록에 남아 있지 않다.
+- 주의: 관리자 계정 관리 저장소는 활성화됐지만 사진/주보 실제 파일 업로드에는 별도 R2 `KCOC_MEDIA` 바인딩과 `KCOC_MEDIA_PUBLIC_URL` 설정이 추가로 필요하다.
