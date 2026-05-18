@@ -20,6 +20,30 @@
 5. `https://kcocoh.org`에서 브라우저 검증
 6. git commit/push
 
+## Cloudflare 계정/토큰 관리
+
+여러 Cloudflare 계정을 혼동하지 않도록 계정별 프로필을 사용한다. KCOC 운영 프로필 이름은 `kcoc`이다. 프로필에는 Account ID, Pages project, Zone 이름처럼 비밀이 아닌 값만 저장하고, API 토큰은 macOS Keychain에 저장한다.
+
+KCOC 프로필 상태 확인:
+
+```bash
+scripts/cloudflare-profile.sh show kcoc
+```
+
+처음 한 번만 Cloudflare 토큰을 Keychain에 저장:
+
+```bash
+scripts/cloudflare-profile.sh token kcoc
+```
+
+배포 또는 Cloudflare 명령 실행 시에는 `run kcoc --` 뒤에 실제 명령을 붙인다.
+
+```bash
+scripts/cloudflare-profile.sh run kcoc -- wrangler whoami
+```
+
+이 방식은 `/tmp/kcocoh_cf_token` 같은 임시 파일을 계속 만들지 않고, 계정별로 안전하게 분리해서 관리하기 위한 표준 방식이다.
+
 ## 콘텐츠 원칙
 
 - 기존 WordPress의 공개 콘텐츠는 참고하되 그대로 복사하지 않는다.

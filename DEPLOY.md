@@ -24,14 +24,34 @@ bash scripts/validate.sh
   - `https://kcocoh.org`
   - `https://www.kcocoh.org`
 
-### 배포 명령
+### Cloudflare 계정 프로필 관리
 
-운영 배포는 `kcocoh.org` Zone이 있는 `Joe@solisenginc.com's Account` 기준으로 진행한다. 임시 API 토큰을 사용할 때는 토큰을 채팅/문서에 남기지 말고 파일 또는 환경변수로만 전달한 뒤 작업 후 폐기한다.
+운영 배포는 `kcocoh.org` Zone이 있는 `Joe@solisenginc.com's Account` 기준으로 진행한다. 여러 Cloudflare 계정을 섞어 쓰지 않도록 계정별 프로필을 사용한다. 비밀 토큰은 macOS Keychain에 저장하고, 프로젝트/계정 ID 같은 비밀이 아닌 값만 로컬 프로필 파일에 둔다.
+
+KCOC 프로필은 다음 값으로 초기화되어 있다.
+
+```bash
+scripts/cloudflare-profile.sh show kcoc
+```
+
+처음 한 번만 토큰을 Keychain에 저장한다. 토큰은 채팅/문서/깃에 남기지 않는다.
+
+```bash
+scripts/cloudflare-profile.sh token kcoc
+```
+
+저장된 프로필 목록 확인:
+
+```bash
+scripts/cloudflare-profile.sh list
+```
+
+### 배포 명령
 
 ```bash
 bash scripts/sync-to-deploy.sh
 cd "/Users/soliscrew/Library/Mobile Documents/com~apple~CloudDocs/kcocoh-deploy"
-CLOUDFLARE_API_TOKEN="$(cat /tmp/kcocoh_cf_token)" wrangler pages deploy . --project-name=kcocoh-site --commit-dirty=true --branch=main
+"/Users/soliscrew/Library/Mobile Documents/com~apple~CloudDocs/kcocoh/scripts/cloudflare-profile.sh" run kcoc -- wrangler pages deploy . --project-name=kcocoh-site --commit-dirty=true --branch=main
 ```
 
 ### 도메인
