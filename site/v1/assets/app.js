@@ -774,6 +774,23 @@
     (text, [name, value]) => text.replaceAll(`{${name}}`, value),
     bulletinText(key, fallback)
   );
+  const syncBulletinSideHeight = () => {
+    const layout = document.querySelector('.bulletin-layout');
+    const viewer = document.querySelector('[data-bulletin-viewer]');
+    const side = document.querySelector('.bulletin-side-card');
+    if (!layout || !viewer || !side) return;
+    const isStacked = window.matchMedia('(max-width: 1120px)').matches;
+    if (isStacked) {
+      side.style.height = '';
+      side.style.minHeight = '';
+      return;
+    }
+    const height = Math.ceil(viewer.getBoundingClientRect().height);
+    if (height > 0) {
+      side.style.height = `${height}px`;
+      side.style.minHeight = `${height}px`;
+    }
+  };
   const renderPdfPreview = async (viewer, pdfUrl, title, downloadHtml = '') => {
     const token = `${Date.now()}-${Math.random().toString(36).slice(2)}`;
     viewer.dataset.pdfToken = token;
@@ -944,15 +961,18 @@
       ? `<div class="bulletin-actions bulletin-download-bar" style="padding:0 22px 22px"><a class="btn btn-dark" href="${downloadHref}" rel="noopener" download>${escapeHtml(translations[state.lang]?.text['bulletin.download'] || 'Download bulletin')}</a></div>`
       : '';
     if (url && (selected.mime || '').includes('pdf')) {
-      renderPdfPreview(viewer, proxiedPdfUrl, localized(selected.title, 'Church Bulletin'), downloadHtml);
+      renderPdfPreview(viewer, proxiedPdfUrl, localized(selected.title, 'Church Bulletin'), downloadHtml).finally(syncBulletinSideHeight);
     } else if (url) {
       viewer.innerHTML = `<img class="bulletin-image" src="${url}" alt="${escapeAttr(localized(selected.title, 'Church Bulletin'))}" loading="lazy" decoding="async">`;
+      syncBulletinSideHeight();
     } else {
       viewer.innerHTML = `<div class="bulletin-empty"><div class="bulletin-paper"><span class="paper-date">${escapeHtml(selected.date || 'Bulletin')}</span><h3>${escapeHtml(localized(selected.title, 'Church Bulletin'))}</h3><p>${escapeHtml(localized(selected.summary, translations[state.lang]?.text['bulletin.emptyText'] || 'Upload a bulletin to view it here.'))}</p><div class="bulletin-actions"><a class="btn btn-dark" href="admin/">주보 업로드 준비</a></div></div></div>`;
+      syncBulletinSideHeight();
     }
     if (download && !proxiedPdfUrl) {
       const existing = viewer.querySelector('.bulletin-download-bar');
       if (!existing) viewer.insertAdjacentHTML('beforeend', downloadHtml);
+      syncBulletinSideHeight();
     }
   };
 
@@ -1048,6 +1068,7 @@
   });
 
   buttons.forEach((button) => button.addEventListener('click', () => setLang(button.dataset.lang)));
+  window.addEventListener('resize', syncBulletinSideHeight);
   let saved = 'ko';
   try { saved = localStorage.getItem('kcoc-lang') || 'ko'; } catch (_) {}
   setLang(translations[saved] ? saved : 'ko');
