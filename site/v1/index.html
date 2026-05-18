@@ -451,6 +451,8 @@
     .bulletin-layout { display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(320px, .95fr); gap: 18px; align-items: start; }
     .bulletin-viewer { min-height: 520px; overflow: hidden; border: 1px solid var(--line); border-radius: var(--radius-xl); background: #fff; box-shadow: var(--shadow-soft); }
     .bulletin-frame, .bulletin-image { width: 100%; height: 520px; display: block; border: 0; object-fit: contain; background: #f5efe7; }
+    .bulletin-canvas-wrap { min-height: 520px; display: grid; place-items: start center; padding: 18px; background: #f5efe7; overflow: auto; }
+    .bulletin-canvas { width: min(100%, 460px); height: auto; display: block; border-radius: 8px; background: #fff; box-shadow: 0 14px 36px rgba(82,58,34,.16); }
     .bulletin-empty { min-height: 520px; display: grid; place-items: center; padding: 28px; text-align: center; color: var(--muted); background: #fffaf2; }
     .bulletin-paper { width: min(420px, 86%); margin: 0 auto; padding: 34px 30px; border: 1px solid #e3d8c8; border-radius: 18px; background: linear-gradient(180deg,#fff,#fffaf3); color: var(--ink); box-shadow: 0 18px 46px rgba(82,58,34,.10); text-align: left; }
     .bulletin-paper .paper-date { color: var(--bronze-dark); font-size: 13px; font-weight: 900; letter-spacing: .10em; text-transform: uppercase; }
@@ -538,6 +540,7 @@
       .photo-feature { min-height: 360px; }
       .photo-grid, .gallery-thumbs { grid-template-columns: 1fr; }
       .gallery-feature, .bulletin-frame, .bulletin-image, .bulletin-empty { min-height: 360px; height: 360px; }
+      .bulletin-canvas-wrap { min-height: 360px; max-height: 520px; }
       .visit-step { padding-left: 28px; }
       .visit-step::before { left: 0; top: 30px; }
       .news-list a { grid-template-columns: 1fr; gap: 6px; }
@@ -640,7 +643,7 @@
       <article class="card about-card">
         <div class="about-intro">
           <div class="about-copy">
-            <p class="kicker" data-i18n="about.kicker">About KCOC</p>
+            <p class="kicker" data-i18n="about.kicker">교회소개</p>
             <h2 id="about-title" data-i18n="about.title">콜럼버스 한인교회를 소개합니다</h2>
             <p class="lead" data-i18n="about.lead">콜럼버스 한인교회는 예배와 말씀, 기도와 공동체 안에서 성도를 세우고 다음 세대와 지역을 복음으로 섬기는 교회입니다.</p>
             <ul class="about-values" aria-label="Church ministry values">
@@ -653,7 +656,7 @@
         </div>
       </article>
       <div class="section-head" style="margin-top:34px">
-        <div><p class="kicker" data-i18n="staff.kicker">Serving Staff</p><h2 data-i18n="staff.title">섬기는 사람들</h2></div>
+        <div><p class="kicker" data-i18n="staff.kicker">섬기는 사람들</p><h2 data-i18n="staff.title">섬기는 사람들</h2></div>
         <p class="lead" data-i18n="staff.lead">각 사역을 맡은 교역자들이 예배, 다음세대, 교육과 돌봄의 자리에서 성도와 가정을 섬깁니다.</p>
       </div>
       <div class="staff-grid">
@@ -785,6 +788,6 @@
   <footer class="site-footer">
     <div class="footer-inner"><div><strong>KCOC · Korean Church of Columbus</strong><br><span data-i18n="footer.tagline">콜럼버스 한인교회 공식 웹사이트</span></div><div><span data-i18n="footer.domainLabel">Domain</span>: <a href="https://kcocoh.org/">kcocoh.org</a><br><a class="admin-foot-link" href="admin/">관리 페이지</a></div></div>
   </footer>
-  <script src="assets/app.js" defer></script>
+  <script src="assets/app.js?v=20260517-1748" defer></script>
 </body>
 </html>

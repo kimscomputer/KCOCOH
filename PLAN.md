@@ -149,3 +149,10 @@
 - 사진은 일관된 카드 비율, 배경 블러, 부드러운 명암 보정, 모바일 1열/태블릿 2열/데스크톱 4열 반응형 레이아웃으로 구성했다.
 - KO/EN/ZH/ES 다국어 문자열과 상단 `교회소개` 내비게이션을 추가했다.
 - `https://kcocoh.org/#about`에서 섹션/사진 URL이 정상 로드되는 것을 검증했고, 브라우저 시각 점검에서 큰 레이아웃 문제 없이 premium/clean으로 보이는 것을 확인했다.
+
+### 2026-05-17 17:49 PDT
+
+- 교회소개 섹션의 overline/kicker 문구가 KO/EN/ZH/ES 각 언어로 바뀌도록 보완하고, `assets/app.js?v=20260517-1748`로 cache busting을 적용했다.
+- 주보 PDF iframe이 일부 브라우저에서 빈 화면/깨진 아이콘으로 보이는 문제를 수정했다: `/api/bulletins/view` same-origin PDF proxy와 로컬 PDF.js canvas preview(`assets/vendor/pdf.mjs`, `pdf.worker.mjs`)를 추가했다.
+- CSP `frame-src/connect-src`에 `media.kcocoh.org`를 명시해 주보 파일 접근을 안전하게 허용했다.
+- 운영 사이트 `https://kcocoh.org/#bulletins`에서 최신 주보가 canvas로 렌더링되는 것과 KO/EN/ZH/ES 교회소개 문구 전환을 브라우저로 확인했다.

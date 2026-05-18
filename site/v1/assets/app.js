@@ -51,7 +51,7 @@
         'visit.step2Text': '교회학교와 Youth가 복음 안에서 자라고, 가정과 교회가 함께 다음세대를 세워갑니다.',
         'visit.step3Title': '새가족과 교제의 자리',
         'visit.step3Text': '처음 오신 분도 예배와 공동체에 자연스럽게 연결되도록 새가족 안내와 교제를 돕겠습니다.',
-        'about.kicker': 'About KCOC',
+        'about.kicker': '교회소개',
         'about.title': '콜럼버스 한인교회를 소개합니다',
         'about.lead': '콜럼버스 한인교회는 예배와 말씀, 기도와 공동체 안에서 성도를 세우고 다음 세대와 지역을 복음으로 섬기는 교회입니다.',
         'about.value1': '말씀과 성령으로 사역하는 교회',
@@ -59,7 +59,7 @@
         'about.value3': '한 영혼과 열방, 다음 세대를 섬기는 교회',
         'about.photoTitle': '주의 사랑 안에서 함께 걷는 믿음의 공동체',
         'about.photoText': '처음 방문하신 분도 예배와 교제 가운데 자연스럽게 연결되도록 섬기겠습니다.',
-        'staff.kicker': 'Serving Staff',
+        'staff.kicker': '섬기는 사람들',
         'staff.title': '섬기는 사람들',
         'staff.lead': '각 사역을 맡은 교역자들이 예배, 다음세대, 교육과 돌봄의 자리에서 성도와 가정을 섬깁니다.',
         'staff.jung.name': '정지웅',
@@ -387,7 +387,7 @@
         'visit.step2Text': '主日学校和 Youth 说明帮助孩子和学生安心敬拜与学习。',
         'visit.step3Title': '找到教会地址',
         'visit.step3Text': '请前往 2825 Snouffer Rd。首次来访前若有问题，欢迎联系我们。',
-        'about.kicker': 'About KCOC',
+        'about.kicker': '教会介绍',
         'about.title': '哥伦布韩人教会介绍',
         'about.lead': '哥伦布韩人教会在礼拜、圣经话语、祷告与共同体中建立信徒，并以福音服事下一代和地区。',
         'about.value1': '以圣经话语和圣灵服事的教会',
@@ -395,7 +395,7 @@
         'about.value3': '服事一个灵魂、万民与下一代的教会',
         'about.photoTitle': '在主爱中同行的信仰共同体',
         'about.photoText': '我们帮助首次来访者自然连接到礼拜与团契。',
-        'staff.kicker': 'Serving Staff',
+        'staff.kicker': '服事同工',
         'staff.title': '服事同工',
         'staff.lead': '教牧同工在礼拜、下一代、教育与关怀中服事会众和家庭。',
         'staff.jung.name': '郑智雄',
@@ -555,7 +555,7 @@
         'visit.step2Text': 'La Escuela Dominical y Youth ayudan a niños y estudiantes a adorar y aprender con confianza.',
         'visit.step3Title': 'Encuentra la ubicación',
         'visit.step3Text': 'Visítanos en 2825 Snouffer Rd. Si vienes por primera vez, contáctanos y te ayudaremos a prepararte.',
-        'about.kicker': 'About KCOC',
+        'about.kicker': 'Acerca de KCOC',
         'about.title': 'Conoce Korean Church of Columbus',
         'about.lead': 'Korean Church of Columbus edifica a los creyentes por medio del culto, la Palabra, la oración y la comunidad, sirviendo a la próxima generación y al vecindario con el evangelio.',
         'about.value1': 'Servir por la Palabra y el Espíritu',
@@ -563,7 +563,7 @@
         'about.value3': 'Servir a un alma, a las naciones y a la próxima generación',
         'about.photoTitle': 'Una comunidad de fe que camina unida en el amor de Cristo',
         'about.photoText': 'Ayudamos a los visitantes a conectarse naturalmente por medio del culto, la comunión y el cuidado.',
-        'staff.kicker': 'Serving Staff',
+        'staff.kicker': 'Equipo de servicio',
         'staff.title': 'Equipo de servicio',
         'staff.lead': 'Nuestros pastores y líderes sirven a las familias en el culto, la próxima generación, la educación y el cuidado pastoral.',
         'staff.jung.name': 'Jiwong Chung',
@@ -705,6 +705,42 @@
     } catch (_) { return ''; }
   };
 
+  let pdfjsPromise;
+  const renderPdfPreview = async (viewer, pdfUrl, title) => {
+    const token = `${Date.now()}-${Math.random().toString(36).slice(2)}`;
+    viewer.dataset.pdfToken = token;
+    viewer.innerHTML = `<div class="bulletin-canvas-wrap"><div class="bulletin-paper"><span class="paper-date">PDF</span><h3>${escapeHtml(title)}</h3><p>주보를 불러오는 중입니다.</p></div></div>`;
+    try {
+      pdfjsPromise ||= import('/assets/vendor/pdf.mjs').then((pdfjs) => {
+        pdfjs.GlobalWorkerOptions.workerSrc = '/assets/vendor/pdf.worker.mjs';
+        return pdfjs;
+      });
+      const pdfjs = await pdfjsPromise;
+      const pdf = await pdfjs.getDocument({ url: pdfUrl, withCredentials: false }).promise;
+      const page = await pdf.getPage(1);
+      const baseViewport = page.getViewport({ scale: 1 });
+      const targetWidth = Math.min(920, Math.max(560, viewer.clientWidth * 1.72));
+      const viewport = page.getViewport({ scale: targetWidth / baseViewport.width });
+      const canvas = document.createElement('canvas');
+      const context = canvas.getContext('2d');
+      canvas.width = Math.floor(viewport.width);
+      canvas.height = Math.floor(viewport.height);
+      canvas.className = 'bulletin-canvas';
+      canvas.setAttribute('aria-label', title);
+      await page.render({ canvasContext: context, viewport }).promise;
+      if (viewer.dataset.pdfToken !== token) return;
+      const wrap = document.createElement('div');
+      wrap.className = 'bulletin-canvas-wrap';
+      wrap.appendChild(canvas);
+      viewer.innerHTML = '';
+      viewer.appendChild(wrap);
+    } catch (error) {
+      if (viewer.dataset.pdfToken !== token) return;
+      viewer.innerHTML = `<div class="bulletin-empty"><div class="bulletin-paper"><span class="paper-date">PDF</span><h3>${escapeHtml(title)}</h3><p>웹 미리보기를 불러오지 못했습니다. 아래 다운로드 버튼으로 주보를 열어 주세요.</p></div></div>`;
+      console.warn('PDF preview failed', error);
+    }
+  };
+
   const renderGallery = () => {
     const feature = document.querySelector('[data-gallery-feature]');
     const thumbs = document.querySelector('[data-gallery-thumbs]');
@@ -749,7 +785,8 @@
     const url = safeUrl(selected.url || selected.downloadUrl);
     const download = safeUrl(selected.downloadUrl || selected.url);
     if (url && (selected.mime || '').includes('pdf')) {
-      viewer.innerHTML = `<iframe class="bulletin-frame" title="${escapeAttr(localized(selected.title, 'Church Bulletin'))}" src="${url}"></iframe>`;
+      const viewerUrl = `${window.location.origin}/api/bulletins/view?src=${encodeURIComponent(url)}`;
+      renderPdfPreview(viewer, viewerUrl, localized(selected.title, 'Church Bulletin'));
     } else if (url) {
       viewer.innerHTML = `<img class="bulletin-image" src="${url}" alt="${escapeAttr(localized(selected.title, 'Church Bulletin'))}" loading="lazy" decoding="async">`;
     } else {
