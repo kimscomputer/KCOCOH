@@ -43,7 +43,7 @@
         'strip.emailLabel': '이메일',
         'address.full': '2825 Snouffer Rd, Columbus, OH 43235',
         'visit.kicker': 'New Here',
-        'visit.title': '처음 방문하신 분도 주님의 사랑으로 환영합니다',
+        'visit.title': '주님은 오늘 당신에게 사랑한다고 말씀하십니다',
         'visit.lead': '예배 시간과 자녀 예배, 새가족 안내와 오시는 길을 한눈에 보실 수 있도록 준비했습니다. 낯선 방문이 아니라 믿음의 여정이 시작되는 자리로 초대합니다.',
         'visit.step1Title': '예배의 자리로 초대합니다',
         'visit.step1Text': '주일예배와 영어예배 가운데 말씀과 찬양, 기도로 하나님께 나아갑니다.',

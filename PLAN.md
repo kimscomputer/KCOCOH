@@ -172,3 +172,9 @@
 - 로컬 검증: `bash scripts/sync-to-deploy.sh`, `bash scripts/validate.sh`, `node --check site/v1/assets/app.js` 통과.
 - 운영 배포 완료: `https://f8ebc622.kcocoh-site-2im.pages.dev`가 production으로 배포되어 `https://kcocoh.org/#bulletins`에 반영됐다.
 - 라이브 검증: custom domain의 `assets/app.js?v=20260517-2140` 반영, 새 `.bulletin-page-stage` CSS 반영, 기존 `.bulletin-spread` 제거, 주보 목록 60개 유지, 최신 주보 1페이지 canvas 1개 표시, `다음 페이지` 클릭 후 `페이지 2 / 2` 전환 확인.
+
+### 2026-05-17 18:58 PDT
+
+- 방문자 안내 섹션 제목을 `처음 방문하신 분도 주님의 사랑으로 환영합니다`에서 `주님은 오늘 당신에게 사랑한다고 말씀하십니다`로 변경했다.
+- `assets/app.js?v=20260517-1858`로 cache busting을 갱신했다.
+- 로컬 검증: `bash scripts/sync-to-deploy.sh`, `bash scripts/validate.sh`, `node --check site/v1/assets/app.js` 통과.
