@@ -234,3 +234,12 @@
 - 수정: `.staff-photo`를 flex 중앙 정렬과 `object-fit: contain` 중심으로 고정하고, 중간 폭 2열 구간에서는 사진 영역 높이를 `clamp(420px, 44vw, 560px)`로 키웠다. 실제 사진은 잘리지 않게 보여주고, 남는 좌우/상하 공간은 같은 이미지의 blur background로 자연스럽게 채우도록 했다.
 - 운영 배포 URL은 `https://75120769.kcocoh-site-2im.pages.dev`이다.
 - 검증: 로컬 `sync-to-deploy`, `validate.sh`, staff CSS marker 확인 통과. 라이브 `https://kcocoh.org/`에서 `max-width: min(100%, 520px)`, `object-fit: contain`, 2열 staff 높이 marker 반영과 브라우저 computed style/콘솔 오류 없음 확인.
+
+### 2026-05-17 21:17 PDT
+
+- 사용자 제보: 주보 섹션의 `교회에 문의하기` 버튼이 클릭해도 명확한 이동/링크 동작이 없는 것처럼 보였다.
+- 수정: 해당 버튼을 `mailto:` 직접 실행에서 `#contact` 연락처 섹션 이동으로 변경해 모든 브라우저에서 확실히 동작하게 했다.
+- 연락처 섹션에 별도 `전화하기`와 `이메일 보내기` 버튼을 추가했고, KO/EN/ZH/ES 번역 키를 추가했다.
+- `assets/app.js?v=20260517-2117`로 cache busting을 갱신했다.
+- 운영 배포 URL은 `https://5efe6e48.kcocoh-site-2im.pages.dev`이다.
+- 라이브 검증: `교회에 문의하기` href `#contact`, `전화하기` href `tel:+16147261022`, `이메일 보내기` href `mailto:help@mykoreanchurch.org`, 새 app.js 버전 반영, 브라우저 콘솔 오류 없음 확인.
