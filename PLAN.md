@@ -218,3 +218,11 @@
 - 영어부에는 KCCEM 설명과 영어권 스트리밍 `https://www.youtube.com/@kcc.english/streams`, EM 웹사이트 링크를 추가했다.
 - 다음세대 카드 6개 모두 사진형 카드로 균형을 맞추고, KO/EN/ZH/ES 번역 키와 `assets/app.js?v=20260517-2004` 캐시 버전을 갱신했다.
 - 로컬 동기화, `node --check site/v1/assets/app.js`, `bash scripts/validate.sh`, 브라우저 언어 전환/이미지/링크 확인을 완료했다.
+
+### 2026-05-17 20:54 PDT
+
+- `joe@kimscomputer.com`에 부여된 KCOC Cloudflare 운영 계정 권한이 기존 OAuth 토큰에 바로 보이지 않아 Wrangler OAuth를 재로그인했다.
+- 재로그인 후 `wrangler whoami`가 `joe@solisenginc.com` / account `466715dac50b40c2422b3d35686a940c`를 표시했고, `scripts/cloudflare-profile.sh run kcoc -- wrangler pages project list`에서 `kcocoh-site` 접근을 확인했다.
+- 다음세대 상세 카드 변경분을 다시 `kcocoh-deploy`로 동기화하고 `bash scripts/validate.sh`, `node --check site/v1/assets/app.js`를 통과한 뒤 운영 배포했다.
+- 배포 URL은 `https://09f6600d.kcocoh-site-2im.pages.dev`이다.
+- 라이브 검증: `https://kcocoh.org/`, `https://www.kcocoh.org/` HTTP 200, `assets/app.js?v=20260517-2004` 반영, `#nextgen`의 Sunday School/Youth/Young Adults/KCCEM 상세 문구와 영어 전환 표시, 브라우저 콘솔 오류 없음 확인.
