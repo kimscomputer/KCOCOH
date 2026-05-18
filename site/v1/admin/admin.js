@@ -110,6 +110,7 @@
       if (res.status === 401) location.replace(data.loginUrl || '/admin/login/');
       if (!res.ok) throw new Error(data.error || `HTTP ${res.status}`);
       setStatus('ok', '저장 완료', data.message || '관리 백엔드에 저장했습니다.');
+      if (data.content) fill(data.content);
       renderFacts(data);
     } catch (error) {
       setStatus('error', '저장하지 못했습니다', `${error.message}. Cloudflare Access와 D1/KV 저장소 연결이 필요할 수 있습니다.`);

@@ -67,7 +67,7 @@
 - 관리 API 스캐폴드: `site/v1/functions/api/admin/content.js`
 - 접속 경로: `/admin/`
 
-현재 관리 페이지는 Hero 문구, 예배 시간, 주보/소식, 사진 업로드, 주보 업로드, 연락처를 입력하고 JSON으로 내보낼 수 있다. Cloudflare Pages Functions는 `/api/admin/content`, `/api/admin/users`, `/api/admin/media`, `/api/admin/bulletins`, `/api/media/gallery`, `/api/bulletins` 경로로 준비되어 있다.
+현재 관리 페이지는 Hero 문구, 예배 시간, 주보/소식, 사진 업로드, 주보 업로드, 연락처를 입력하고 JSON으로 내보낼 수 있다. Hero 문구는 한국어 제목/소개를 기준으로 저장 시 OpenAI가 영어, 중국어, 스페인어를 자동 번역해 `hero.title.en/zh/es`, `hero.lead.en/zh/es`에 저장한다. 운영에서 이 기능을 사용하려면 Cloudflare Pages secret `OPENAI_API_KEY`가 설정되어 있어야 한다. 선택적으로 `OPENAI_TRANSLATION_MODEL`을 지정하지 않으면 기본 모델은 `gpt-4o-mini`이다. Cloudflare Pages Functions는 `/api/admin/content`, `/api/admin/users`, `/api/admin/media`, `/api/admin/bulletins`, `/api/media/gallery`, `/api/bulletins` 경로로 준비되어 있다.
 
 관리자 계정 관리는 운영에서 활성화되어 있다. `/admin/` 로그인 후 `관리자 / Users` 탭에서 최고 관리자(owner)가 새 관리자 이메일 아이디를 등록하고, 권한을 `owner` 또는 `editor`로 지정하며, 비밀번호 변경, 활성/비활성, 삭제를 처리할 수 있다. 등록된 관리자는 로그인 화면의 `관리자 이메일 아이디`와 비밀번호로 접속한다. 기존 초기 관리자 비밀번호는 백업/초기 owner 로그인으로 유지한다.
 

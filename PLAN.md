@@ -186,3 +186,12 @@
 - 로컬 검증: `bash scripts/sync-to-deploy.sh`, `bash scripts/validate.sh`, `node --check site/v1/assets/app.js`, 로컬 브라우저 KO/EN/ZH/ES 언어 전환 확인 통과.
 - 운영 배포 완료: 제공된 KCOC Cloudflare 계정 토큰으로 `kcocoh-deploy`에서 Pages Functions 포함 배포를 실행했고, 배포 URL은 `https://e45c3f11.kcocoh-site-2im.pages.dev`이다.
 - 라이브 검증: `https://kcocoh.org/`, `https://www.kcocoh.org/`, Pages preview 모두 HTTP 200, `assets/app.js?v=20260517-1908` 반영, 다음세대 한국어 문구 반영, KO/EN/ZH/ES 브라우저 언어 전환 및 콘솔 오류 없음 확인.
+
+### 2026-05-17 19:42 PDT
+
+- 관리자 페이지 Hero 문구 저장 흐름에 OpenAI 자동 번역을 추가했다.
+- 운영자가 한국어 제목/소개를 입력하고 저장하면 `OPENAI_API_KEY` secret을 사용해 영어, 중국어, 스페인어 번역을 생성해 함께 저장한다.
+- 자동 번역 필드는 관리자 화면에서 읽기 전용으로 표시하고, 저장 응답으로 돌아온 번역 결과를 즉시 다시 채우도록 했다.
+- 로컬 회귀 테스트를 위해 `node --test` 기반 테스트를 추가했고, `npm test`, `node --check`, `scripts/sync-to-deploy.sh`, `scripts/validate.sh`로 검증한다.
+- 운영 배포와 실제 저장 검증은 Cloudflare Pages production secret `OPENAI_API_KEY` 설정이 필요하다.
+
