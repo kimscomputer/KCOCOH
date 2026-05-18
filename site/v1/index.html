@@ -396,30 +396,38 @@
       box-shadow: 0 18px 46px rgba(20,20,18,.06);
     }
     .staff-photo {
-      height: clamp(260px, 24vw, 340px);
+      height: clamp(300px, 28vw, 390px);
       position: relative;
       overflow: hidden;
       background: #e6dccd;
-      display: grid;
-      place-items: center;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
     .staff-photo::before {
       content: "";
       position: absolute;
-      inset: -18px;
-      background: var(--staff-image) center / cover no-repeat;
-      filter: blur(18px) saturate(1.02) brightness(.96);
-      transform: scale(1.08);
-      opacity: .45;
+      inset: -22px;
+      background: var(--staff-image) center 26% / cover no-repeat;
+      filter: blur(22px) saturate(1.02) brightness(.93);
+      transform: scale(1.1);
+      opacity: .42;
+    }
+    .staff-photo::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.02));
+      z-index: 1;
+      pointer-events: none;
     }
     .staff-photo img {
       position: relative;
-      z-index: 1;
-      width: auto;
-      max-width: 100%;
-      height: 100%;
-      margin: 0 auto;
+      z-index: 2;
       display: block;
+      width: auto;
+      height: 100%;
+      max-width: min(100%, 520px);
       object-fit: contain;
       object-position: center center;
       filter: saturate(.96) brightness(.98) contrast(.96);
@@ -534,6 +542,7 @@
       .media-layout, .church-gallery, .bulletin-layout, .contact-inner, .about-intro { grid-template-columns: 1fr; }
       .grid-3 { grid-template-columns: repeat(2, minmax(0,1fr)); }
       .staff-grid { grid-template-columns: repeat(2, minmax(0,1fr)); }
+      .staff-photo { height: clamp(420px, 44vw, 560px); }
     }
     @media (max-width: 760px) {
       body { font-size: 16px; overflow-x: hidden; }

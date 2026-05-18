@@ -226,3 +226,11 @@
 - 다음세대 상세 카드 변경분을 다시 `kcocoh-deploy`로 동기화하고 `bash scripts/validate.sh`, `node --check site/v1/assets/app.js`를 통과한 뒤 운영 배포했다.
 - 배포 URL은 `https://09f6600d.kcocoh-site-2im.pages.dev`이다.
 - 라이브 검증: `https://kcocoh.org/`, `https://www.kcocoh.org/` HTTP 200, `assets/app.js?v=20260517-2004` 반영, `#nextgen`의 Sunday School/Youth/Young Adults/KCCEM 상세 문구와 영어 전환 표시, 브라우저 콘솔 오류 없음 확인.
+
+### 2026-05-17 21:07 PDT
+
+- 사용자 제보: 화면 폭이 줄어 `섬기는 사람들` 카드가 2열처럼 넓어질 때 교역자 사진이 카드 안에서 위/아래로 심하게 잘려 얼굴이 반만 보이는 문제가 있었다.
+- 원인: 교역자 사진 영역이 폭 변화 대비 낮은 높이와 cover성 배경/이미지 처리에 취약해, 중간 폭 카드에서 인물 사진이 잘려 보일 수 있었다.
+- 수정: `.staff-photo`를 flex 중앙 정렬과 `object-fit: contain` 중심으로 고정하고, 중간 폭 2열 구간에서는 사진 영역 높이를 `clamp(420px, 44vw, 560px)`로 키웠다. 실제 사진은 잘리지 않게 보여주고, 남는 좌우/상하 공간은 같은 이미지의 blur background로 자연스럽게 채우도록 했다.
+- 운영 배포 URL은 `https://75120769.kcocoh-site-2im.pages.dev`이다.
+- 검증: 로컬 `sync-to-deploy`, `validate.sh`, staff CSS marker 확인 통과. 라이브 `https://kcocoh.org/`에서 `max-width: min(100%, 520px)`, `object-fit: contain`, 2열 staff 높이 marker 반영과 브라우저 computed style/콘솔 오류 없음 확인.
