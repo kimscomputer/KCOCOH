@@ -349,6 +349,73 @@
     .ministry-card { min-height: 240px; display: flex; flex-direction: column; justify-content: space-between; }
     .ministry-card .meta-line { margin-top: 26px; padding-top: 16px; border-top: 1px solid var(--line); color: var(--bronze-dark); font-weight: 850; }
 
+    .about-card {
+      overflow: hidden;
+      padding: 0;
+      background: rgba(255,255,255,.78);
+    }
+    .about-intro {
+      display: grid;
+      grid-template-columns: minmax(0, .95fr) minmax(320px, 1.05fr);
+      gap: 0;
+      align-items: stretch;
+    }
+    .about-copy { padding: clamp(30px, 5vw, 54px); }
+    .about-photo {
+      min-height: 430px;
+      position: relative;
+      display: grid;
+      place-items: end start;
+      padding: 32px;
+      color: #fff;
+      background:
+        linear-gradient(180deg, rgba(17,19,21,.05) 15%, rgba(17,19,21,.72) 100%),
+        url("media/existing-home/XE1A9331-1-1500x630.jpg") center / cover no-repeat;
+    }
+    .about-photo strong { display: block; max-width: 440px; font-size: clamp(24px, 3vw, 34px); line-height: 1.12; letter-spacing: -.038em; }
+    .about-photo span { display: block; margin-top: 12px; max-width: 440px; color: #efe8dc; }
+    .about-values { display: grid; gap: 12px; margin: 26px 0 0; padding: 0; list-style: none; }
+    .about-values li { padding: 13px 0; border-top: 1px solid var(--line); color: var(--ink); font-weight: 820; }
+
+    .staff-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px; margin-top: 22px; }
+    .staff-card {
+      overflow: hidden;
+      border: 1px solid var(--line);
+      border-radius: 24px;
+      background: rgba(255,255,255,.78);
+      box-shadow: 0 18px 46px rgba(20,20,18,.06);
+    }
+    .staff-photo {
+      height: 250px;
+      position: relative;
+      overflow: hidden;
+      background: #e6dccd;
+    }
+    .staff-photo::before {
+      content: "";
+      position: absolute;
+      inset: -18px;
+      background: var(--staff-image) center / cover no-repeat;
+      filter: blur(18px) saturate(1.02) brightness(.96);
+      transform: scale(1.08);
+      opacity: .45;
+    }
+    .staff-photo img {
+      position: relative;
+      z-index: 1;
+      width: 100%;
+      height: 100%;
+      display: block;
+      object-fit: cover;
+      object-position: center 24%;
+      filter: saturate(.96) brightness(.98) contrast(.96);
+      transform: scale(.97);
+    }
+    .staff-body { padding: 18px; }
+    .staff-body h3 { font-size: 21px; }
+    .staff-role { margin-top: 8px; color: var(--bronze-dark); font-size: 13px; font-weight: 900; letter-spacing: .08em; text-transform: uppercase; }
+    .staff-body p { margin-top: 10px; color: var(--muted); font-size: 15px; line-height: 1.62; }
+
     .vision-band {
       padding: clamp(34px, 6vw, 64px);
       border-radius: var(--radius-xl);
@@ -432,8 +499,9 @@
       .header-actions { margin-left: auto; }
       .hero-inner { grid-template-columns: 1fr; align-items: end; }
       .service-panel { max-width: 620px; }
-      .media-layout, .church-gallery, .bulletin-layout, .contact-inner { grid-template-columns: 1fr; }
+      .media-layout, .church-gallery, .bulletin-layout, .contact-inner, .about-intro { grid-template-columns: 1fr; }
       .grid-3 { grid-template-columns: repeat(2, minmax(0,1fr)); }
+      .staff-grid { grid-template-columns: repeat(2, minmax(0,1fr)); }
     }
     @media (max-width: 760px) {
       body { font-size: 16px; overflow-x: hidden; }
@@ -464,6 +532,9 @@
       .section { padding: 54px 0; }
       .section-head { display: block; }
       .grid-2, .grid-3 { grid-template-columns: 1fr; }
+      .staff-grid { grid-template-columns: 1fr; }
+      .about-photo { min-height: 340px; }
+      .staff-photo { height: 300px; }
       .photo-feature { min-height: 360px; }
       .photo-grid, .gallery-thumbs { grid-template-columns: 1fr; }
       .gallery-feature, .bulletin-frame, .bulletin-image, .bulletin-empty { min-height: 360px; height: 360px; }
@@ -488,6 +559,7 @@
       <nav aria-label="Primary navigation">
         <ul>
           <li><a href="#visit" data-i18n="nav.visit">처음 오셨나요</a></li>
+          <li><a href="#about" data-i18n="nav.about">교회소개</a></li>
           <li><a href="#worship" data-i18n="nav.worship">예배</a></li>
           <li><a href="#media" data-i18n="nav.media">말씀과 사진</a></li>
           <li><a href="#bulletins" data-i18n="nav.bulletins">주보</a></li>
@@ -561,6 +633,34 @@
         <article class="card visit-step"><h3 data-i18n="visit.step1Title">예배의 자리로 초대합니다</h3><p data-i18n="visit.step1Text">주일예배와 영어예배 가운데 말씀과 찬양, 기도로 하나님께 나아갑니다.</p></article>
         <article class="card visit-step"><h3 data-i18n="visit.step2Title">자녀와 다음세대를 세웁니다</h3><p data-i18n="visit.step2Text">교회학교와 Youth가 복음 안에서 자라고, 가정과 교회가 함께 다음세대를 세워갑니다.</p></article>
         <article class="card visit-step"><h3 data-i18n="visit.step3Title">새가족과 교제의 자리</h3><p data-i18n="visit.step3Text">처음 오신 분도 예배와 공동체에 자연스럽게 연결되도록 새가족 안내와 교제를 돕겠습니다.</p></article>
+      </div>
+    </section>
+
+    <section class="section" id="about" aria-labelledby="about-title">
+      <article class="card about-card">
+        <div class="about-intro">
+          <div class="about-copy">
+            <p class="kicker" data-i18n="about.kicker">About KCOC</p>
+            <h2 id="about-title" data-i18n="about.title">콜럼버스 한인교회를 소개합니다</h2>
+            <p class="lead" data-i18n="about.lead">콜럼버스 한인교회는 예배와 말씀, 기도와 공동체 안에서 성도를 세우고 다음 세대와 지역을 복음으로 섬기는 교회입니다.</p>
+            <ul class="about-values" aria-label="Church ministry values">
+              <li data-i18n="about.value1">말씀과 성령으로 사역하는 교회</li>
+              <li data-i18n="about.value2">예배와 소그룹 공동체로 함께 세워지는 교회</li>
+              <li data-i18n="about.value3">한 영혼과 열방, 다음 세대를 섬기는 교회</li>
+            </ul>
+          </div>
+          <div class="about-photo"><div><strong data-i18n="about.photoTitle">주의 사랑 안에서 함께 걷는 믿음의 공동체</strong><span data-i18n="about.photoText">처음 방문하신 분도 예배와 교제 가운데 자연스럽게 연결되도록 섬기겠습니다.</span></div></div>
+        </div>
+      </article>
+      <div class="section-head" style="margin-top:34px">
+        <div><p class="kicker" data-i18n="staff.kicker">Serving Staff</p><h2 data-i18n="staff.title">섬기는 사람들</h2></div>
+        <p class="lead" data-i18n="staff.lead">각 사역을 맡은 교역자들이 예배, 다음세대, 교육과 돌봄의 자리에서 성도와 가정을 섬깁니다.</p>
+      </div>
+      <div class="staff-grid">
+        <article class="staff-card"><div class="staff-photo" style="--staff-image:url('media/ministers/jung-jiwoong.jpg')"><img src="media/ministers/jung-jiwoong.jpg" alt="정지웅 담임목사" loading="lazy" decoding="async"></div><div class="staff-body"><h3 data-i18n="staff.jung.name">정지웅</h3><div class="staff-role" data-i18n="staff.jung.role">담임목사</div><p data-i18n="staff.jung.text">말씀과 예배, 교회의 비전과 목양을 섬깁니다.</p></div></article>
+        <article class="staff-card"><div class="staff-photo" style="--staff-image:url('media/ministers/lee-sungyoung.jpg')"><img src="media/ministers/lee-sungyoung.jpg" alt="이성영 목사" loading="lazy" decoding="async"></div><div class="staff-body"><h3 data-i18n="staff.lee.name">이성영</h3><div class="staff-role" data-i18n="staff.lee.role">목사 · 어린이, 에녹회</div><p data-i18n="staff.lee.text">어린이 사역과 에녹회를 돌보며 세대를 잇는 신앙을 섬깁니다.</p></div></article>
+        <article class="staff-card"><div class="staff-photo" style="--staff-image:url('media/ministers/simon-baik.jpg')"><img src="media/ministers/simon-baik.jpg" alt="Simon Baik 전도사" loading="lazy" decoding="async"></div><div class="staff-body"><h3 data-i18n="staff.simon.name">Simon Baik</h3><div class="staff-role" data-i18n="staff.simon.role">전도사</div><p data-i18n="staff.simon.text">교회 공동체와 사역의 자리에서 성도들을 섬깁니다.</p></div></article>
+        <article class="staff-card"><div class="staff-photo" style="--staff-image:url('media/ministers/jed-yi.jpg')"><img src="media/ministers/jed-yi.jpg" alt="Jed Yi 전도사" loading="lazy" decoding="async"></div><div class="staff-body"><h3 data-i18n="staff.jed.name">Jed Yi</h3><div class="staff-role" data-i18n="staff.jed.role">전도사 · 청소년</div><p data-i18n="staff.jed.text">청소년들이 말씀 안에서 믿음과 정체성을 세워가도록 섬깁니다.</p></div></article>
       </div>
     </section>
 

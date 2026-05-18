@@ -141,3 +141,11 @@
 - 관리자 API를 통해 2025-03-09부터 2026-05-17까지 주보 PDF 60개를 KCOC 운영 사이트에 업로드했다.
 - 공개 API `/api/bulletins` 검증 결과 `fallback: false`, `items: 60`, 최신 `2026-05-17`, 가장 오래된 항목 `2025-03-09`로 확인했다.
 - 대표 PDF URL 5개를 직접 열어 `200 application/pdf`와 `%PDF-` 서명을 확인했고, 브라우저에서 `https://kcocoh.org/#bulletins` 주보 목록 반영을 확인했다.
+
+### 2026-05-17 17:29 PDT
+
+- `https://www.mykoreanchurch.org/about/minister` 교역자 소개 페이지에서 교역자 사진 4장을 가져와 `site/v1/media/ministers/`에 최적화 JPG로 정리했다.
+- 메인 사이트에 `#about` 교회소개 섹션과 `섬기는 사람들` 교역자 카드 4개(정지웅, 이성영, Simon Baik, Jed Yi)를 추가했다.
+- 사진은 일관된 카드 비율, 배경 블러, 부드러운 명암 보정, 모바일 1열/태블릿 2열/데스크톱 4열 반응형 레이아웃으로 구성했다.
+- KO/EN/ZH/ES 다국어 문자열과 상단 `교회소개` 내비게이션을 추가했다.
+- `https://kcocoh.org/#about`에서 섹션/사진 URL이 정상 로드되는 것을 검증했고, 브라우저 시각 점검에서 큰 레이아웃 문제 없이 premium/clean으로 보이는 것을 확인했다.
