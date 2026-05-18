@@ -386,10 +386,12 @@
       box-shadow: 0 18px 46px rgba(20,20,18,.06);
     }
     .staff-photo {
-      height: 250px;
+      height: clamp(260px, 24vw, 340px);
       position: relative;
       overflow: hidden;
       background: #e6dccd;
+      display: grid;
+      place-items: center;
     }
     .staff-photo::before {
       content: "";
@@ -403,13 +405,15 @@
     .staff-photo img {
       position: relative;
       z-index: 1;
-      width: 100%;
+      width: auto;
+      max-width: 100%;
       height: 100%;
+      margin: 0 auto;
       display: block;
-      object-fit: cover;
-      object-position: center 24%;
+      object-fit: contain;
+      object-position: center center;
       filter: saturate(.96) brightness(.98) contrast(.96);
-      transform: scale(.97);
+      transform: none;
     }
     .staff-body { padding: 18px; }
     .staff-body h3 { font-size: 21px; }
@@ -451,8 +455,15 @@
     .bulletin-layout { display: grid; grid-template-columns: minmax(0, 1.52fr) minmax(260px, .48fr); gap: 18px; align-items: start; }
     .bulletin-viewer { min-height: 700px; overflow: hidden; border: 1px solid var(--line); border-radius: var(--radius-xl); background: #fff; box-shadow: var(--shadow-soft); }
     .bulletin-frame, .bulletin-image { width: 100%; height: 700px; display: block; border: 0; object-fit: contain; background: #f5efe7; }
-    .bulletin-canvas-wrap { min-height: 700px; display: grid; place-items: start center; padding: 20px; background: #f5efe7; overflow: auto; }
-    .bulletin-canvas { width: min(100%, 740px); height: auto; display: block; border-radius: 8px; background: #fff; box-shadow: 0 14px 36px rgba(82,58,34,.16); }
+    .bulletin-canvas-wrap { min-height: 700px; display: grid; place-items: start stretch; padding: 20px; background: #f5efe7; overflow: auto; }
+    .bulletin-spread { position: relative; width: 100%; display: flex; gap: 18px; align-items: flex-start; justify-content: center; padding-top: 38px; }
+    .bulletin-spread.one-page .bulletin-page-shell { flex: 0 1 min(100%, 740px); }
+    .bulletin-spread.two-pages .bulletin-page-shell { flex: 0 1 calc((100% - 18px) / 2); max-width: 540px; }
+    .bulletin-page-shell { margin: 0; display: grid; gap: 10px; min-width: 0; }
+    .bulletin-page-label, .bulletin-preview-badge { color: var(--bronze-dark); font-size: 12px; font-weight: 900; letter-spacing: .12em; text-transform: uppercase; }
+    .bulletin-preview-badge { position: absolute; top: 0; left: 50%; transform: translateX(-50%); padding: 7px 12px; border: 1px solid rgba(183,119,61,.28); border-radius: 999px; background: rgba(255,255,255,.82); white-space: nowrap; box-shadow: 0 10px 26px rgba(82,58,34,.08); }
+    .bulletin-page-label { text-align: center; }
+    .bulletin-canvas { width: 100%; height: auto; display: block; border-radius: 8px; background: #fff; box-shadow: 0 14px 36px rgba(82,58,34,.16); }
     .bulletin-empty { min-height: 520px; display: grid; place-items: center; padding: 28px; text-align: center; color: var(--muted); background: #fffaf2; }
     .bulletin-paper { width: min(420px, 86%); margin: 0 auto; padding: 34px 30px; border: 1px solid #e3d8c8; border-radius: 18px; background: linear-gradient(180deg,#fff,#fffaf3); color: var(--ink); box-shadow: 0 18px 46px rgba(82,58,34,.10); text-align: left; }
     .bulletin-paper .paper-date { color: var(--bronze-dark); font-size: 13px; font-weight: 900; letter-spacing: .10em; text-transform: uppercase; }
@@ -540,14 +551,17 @@
       .grid-2, .grid-3 { grid-template-columns: 1fr; }
       .staff-grid { grid-template-columns: 1fr; }
       .about-photo { min-height: 340px; }
-      .staff-photo { height: 300px; }
+      .staff-photo { height: clamp(430px, 76vw, 620px); }
       .photo-feature { min-height: 360px; }
       .photo-grid, .gallery-thumbs { grid-template-columns: 1fr; }
       .gallery-feature, .bulletin-frame, .bulletin-image, .bulletin-empty { min-height: 360px; height: 360px; }
       .bulletin-viewer { min-height: 520px; }
       .bulletin-side-card { height: 520px; padding: 18px; }
       .bulletin-canvas-wrap { min-height: 520px; max-height: 72vh; padding: 14px; }
-      .bulletin-canvas { width: min(100%, 620px); }
+      .bulletin-spread { flex-direction: column; gap: 18px; padding-top: 34px; }
+      .bulletin-spread.one-page .bulletin-page-shell, .bulletin-spread.two-pages .bulletin-page-shell { flex: 0 0 auto; width: 100%; max-width: none; }
+      .bulletin-preview-badge { font-size: 11px; }
+      .bulletin-canvas { width: 100%; }
       .visit-step { padding-left: 28px; }
       .visit-step::before { left: 0; top: 30px; }
       .news-list a { grid-template-columns: 1fr; gap: 6px; }
@@ -795,6 +809,6 @@
   <footer class="site-footer">
     <div class="footer-inner"><div><strong>KCOC · Korean Church of Columbus</strong><br><span data-i18n="footer.tagline">콜럼버스 한인교회 공식 웹사이트</span></div><div><span data-i18n="footer.domainLabel">Domain</span>: <a href="https://kcocoh.org/">kcocoh.org</a><br><a class="admin-foot-link" href="admin/">관리 페이지</a></div></div>
   </footer>
-  <script src="assets/app.js?v=20260517-2058" defer></script>
+  <script src="assets/app.js?v=20260517-2110" defer></script>
 </body>
 </html>

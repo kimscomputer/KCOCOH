@@ -160,6 +160,10 @@
         'bulletin.emptyTitle': '최근 주보 뷰어',
         'bulletin.emptyText': '관리 페이지에서 PDF 또는 이미지 주보를 올리면 이곳에서 주일예배 주보를 바로 볼 수 있습니다.',
         'bulletin.note': '업로드된 주보는 웹 뷰어와 다운로드 링크를 함께 제공합니다.',
+        'bulletin.previewLabel': '두 페이지 미리보기',
+        'bulletin.pageLabel': '페이지',
+        'bulletin.loading': '주보 두 페이지 미리보기를 준비 중입니다.',
+        'bulletin.fallback': '웹 미리보기를 불러오지 못했습니다. 아래 다운로드 버튼으로 주보를 열어 주세요.',
         'bulletin.download': '주보 다운로드',
         'news.sermonTitle': '이번 주 말씀',
         'gallery.kicker': 'Church Photos',
@@ -328,6 +332,10 @@
         'bulletin.emptyTitle': 'Recent bulletin viewer',
         'bulletin.emptyText': 'Upload a PDF or image bulletin in the admin page and it can be viewed here on the website.',
         'bulletin.note': 'Uploaded bulletins include both an onsite viewer and a download link.',
+        'bulletin.previewLabel': 'Two-page preview',
+        'bulletin.pageLabel': 'Page',
+        'bulletin.loading': 'Preparing a two-page bulletin preview.',
+        'bulletin.fallback': 'The web preview could not be loaded. Please open the bulletin with the download button below.',
         'bulletin.download': 'Download bulletin',
         'news.sermonTitle': 'This Week’s Message',
         'gallery.kicker': 'Church Photos',
@@ -496,6 +504,10 @@
         'bulletin.emptyTitle': '最近周报查看器',
         'bulletin.emptyText': '在管理页面上传 PDF 或图片周报后，可在这里直接查看。',
         'bulletin.note': '上传的周报会同时提供网页查看和下载链接。',
+        'bulletin.previewLabel': '双页预览',
+        'bulletin.pageLabel': '页',
+        'bulletin.loading': '正在准备双页周报预览。',
+        'bulletin.fallback': '网页预览无法载入。请使用下方下载按钮打开周报。',
         'bulletin.download': '下载周报',
         'news.sermonTitle': '本周讲道',
         'gallery.kicker': 'Church Photos',
@@ -664,6 +676,10 @@
         'bulletin.emptyTitle': 'Visor de boletines recientes',
         'bulletin.emptyText': 'Sube un PDF o imagen del boletín desde la página de administración y se podrá ver aquí.',
         'bulletin.note': 'Los boletines subidos ofrecen visor web y enlace de descarga.',
+        'bulletin.previewLabel': 'Vista previa de dos páginas',
+        'bulletin.pageLabel': 'Página',
+        'bulletin.loading': 'Preparando una vista previa de dos páginas del boletín.',
+        'bulletin.fallback': 'No se pudo cargar la vista previa web. Abre el boletín con el botón de descarga abajo.',
         'bulletin.download': 'Descargar boletín',
         'news.sermonTitle': 'Mensaje de esta semana',
         'gallery.kicker': 'Church Photos',
@@ -706,10 +722,11 @@
   };
 
   let pdfjsPromise;
+  const bulletinText = (key, fallback) => translations[state.lang]?.text[key] || translations.ko.text[key] || fallback;
   const renderPdfPreview = async (viewer, pdfUrl, title, downloadHtml = '') => {
     const token = `${Date.now()}-${Math.random().toString(36).slice(2)}`;
     viewer.dataset.pdfToken = token;
-    viewer.innerHTML = `<div class="bulletin-canvas-wrap"><div class="bulletin-paper"><span class="paper-date">PDF</span><h3>${escapeHtml(title)}</h3><p>주보를 불러오는 중입니다.</p></div></div>`;
+    viewer.innerHTML = `<div class="bulletin-canvas-wrap"><div class="bulletin-paper"><span class="paper-date">PDF</span><h3>${escapeHtml(title)}</h3><p>${escapeHtml(bulletinText('bulletin.loading', 'Preparing bulletin preview.'))}</p></div></div>`;
     try {
       pdfjsPromise ||= import('/assets/vendor/pdf.mjs').then((pdfjs) => {
         pdfjs.GlobalWorkerOptions.workerSrc = '/assets/vendor/pdf.worker.mjs';
@@ -717,27 +734,46 @@
       });
       const pdfjs = await pdfjsPromise;
       const pdf = await pdfjs.getDocument({ url: pdfUrl, withCredentials: false }).promise;
-      const page = await pdf.getPage(1);
-      const baseViewport = page.getViewport({ scale: 1 });
-      const targetWidth = Math.min(920, Math.max(560, viewer.clientWidth * 1.72));
-      const viewport = page.getViewport({ scale: targetWidth / baseViewport.width });
-      const canvas = document.createElement('canvas');
-      const context = canvas.getContext('2d');
-      canvas.width = Math.floor(viewport.width);
-      canvas.height = Math.floor(viewport.height);
-      canvas.className = 'bulletin-canvas';
-      canvas.setAttribute('aria-label', title);
-      await page.render({ canvasContext: context, viewport }).promise;
+      const pageCount = Math.min(2, pdf.numPages || 1);
+      const targetWidth = Math.min(620, Math.max(390, viewer.clientWidth * (pageCount > 1 ? 0.64 : 1.12)));
+      const pages = [];
+      for (let pageNumber = 1; pageNumber <= pageCount; pageNumber += 1) {
+        const page = await pdf.getPage(pageNumber);
+        const baseViewport = page.getViewport({ scale: 1 });
+        const viewport = page.getViewport({ scale: targetWidth / baseViewport.width });
+        const canvas = document.createElement('canvas');
+        const context = canvas.getContext('2d');
+        canvas.width = Math.floor(viewport.width);
+        canvas.height = Math.floor(viewport.height);
+        canvas.className = 'bulletin-canvas';
+        canvas.setAttribute('aria-label', `${title} ${bulletinText('bulletin.pageLabel', 'Page')} ${pageNumber}`);
+        await page.render({ canvasContext: context, viewport }).promise;
+        const shell = document.createElement('figure');
+        shell.className = 'bulletin-page-shell';
+        const label = document.createElement('figcaption');
+        label.className = 'bulletin-page-label';
+        label.textContent = `${bulletinText('bulletin.pageLabel', 'Page')} ${pageNumber}`;
+        shell.appendChild(label);
+        shell.appendChild(canvas);
+        pages.push(shell);
+      }
       if (viewer.dataset.pdfToken !== token) return;
       const wrap = document.createElement('div');
       wrap.className = 'bulletin-canvas-wrap';
-      wrap.appendChild(canvas);
+      const spread = document.createElement('div');
+      spread.className = `bulletin-spread ${pageCount > 1 ? 'two-pages' : 'one-page'}`;
+      const badge = document.createElement('div');
+      badge.className = 'bulletin-preview-badge';
+      badge.textContent = pageCount > 1 ? bulletinText('bulletin.previewLabel', 'Two-page preview') : `${bulletinText('bulletin.pageLabel', 'Page')} 1`;
+      spread.appendChild(badge);
+      pages.forEach((page) => spread.appendChild(page));
+      wrap.appendChild(spread);
       viewer.innerHTML = '';
       viewer.appendChild(wrap);
       if (downloadHtml) viewer.insertAdjacentHTML('beforeend', downloadHtml);
     } catch (error) {
       if (viewer.dataset.pdfToken !== token) return;
-      viewer.innerHTML = `<div class="bulletin-empty"><div class="bulletin-paper"><span class="paper-date">PDF</span><h3>${escapeHtml(title)}</h3><p>웹 미리보기를 불러오지 못했습니다. 아래 다운로드 버튼으로 주보를 열어 주세요.</p></div></div>`;
+      viewer.innerHTML = `<div class="bulletin-empty"><div class="bulletin-paper"><span class="paper-date">PDF</span><h3>${escapeHtml(title)}</h3><p>${escapeHtml(bulletinText('bulletin.fallback', 'The web preview could not be loaded. Please open the bulletin with the download button below.'))}</p></div></div>`;
       if (downloadHtml) viewer.insertAdjacentHTML('beforeend', downloadHtml);
       console.warn('PDF preview failed', error);
     }
