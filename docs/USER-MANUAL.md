@@ -120,6 +120,13 @@ scripts/cloudflare-profile.sh run kcoc -- wrangler whoami
 - YouTube RSS가 실패하면 채널 `/videos` 페이지를 읽어 최신 영상 제목/썸네일/링크를 표시하고, 둘 다 실패하면 공식 채널 링크로 안전하게 fallback한다.
 - 영상 카드가 갱신되지 않는 경우 먼저 `https://kcocoh.org/api/youtube/latest`가 JSON으로 응답하는지 확인하고, 새 프론트엔드 변경 후에는 `assets/app.js?v=...` cache busting 값을 갱신한다.
 
+## 관리자 안내 문서
+
+관리자 페이지 사용법은 별도 한영 문서로 제공한다.
+
+- 빠른 안내: `docs/ADMIN-QUICK-GUIDE-KO-EN.md`, `docs/KCOC-Admin-Quick-Guide-KO-EN.docx`
+- 전체 매뉴얼: `docs/ADMIN-FULL-MANUAL-KO-EN.md`, `docs/KCOC-Admin-Full-Manual-KO-EN.docx`
+
 ## 사진/주보 운영
 
 - 사진은 관리자 페이지의 `사진 업로드` 탭에서 올린다. 제목과 설명을 입력하고 이미지 파일을 선택한 뒤 업로드하면 R2 `kcoc-media` bucket에 저장되고 공개 갤러리 목록에 반영된다.
