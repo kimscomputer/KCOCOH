@@ -261,3 +261,13 @@
 - 모바일 앵커 이동 시 sticky header가 섹션 제목을 가리는 문제를 막기 위해 모바일 `scroll-margin-top`을 조정했다.
 - 검증: `bash scripts/sync-to-deploy.sh`, `bash scripts/validate.sh`, 운영 `https://kcocoh.org/` HTML marker 확인, 390px CDP 모바일 viewport에서 메뉴 8개 전체 노출/가로 overflow 없음/방문 섹션 제목 2줄 렌더링을 확인했다.
 - 운영 배포 URL은 `https://16897d72.kcocoh-site-2im.pages.dev`이다.
+
+### 2026-07-05 최신 공개 자료 반영
+
+- `https://www.mykoreanchurch.org`의 공개 포토 갤러리/이벤트 자료 중 홈페이지에 적합한 최신 항목을 선별해 반영했다: 온세대예배, 2026 ABBA, 새가족반 2기, 주의지 선교사 선교보고, 창립 57주년 예배, 이번주 주보 연결.
+- 공개 이미지 자산은 raw HTML/테마/플러그인을 복사하지 않고 `site/v1/media/latest/` 아래 정적 이미지로만 저장했다.
+- 홈페이지에 `최신 교회소식` 섹션을 추가하고, `교회 앨범` 기본 갤러리를 최신 공개 사진 중심으로 갱신했다. 기존 관리자 API가 seed fallback을 반환할 때는 최신 정적 갤러리를 덮어쓰지 않도록 조정했다.
+- 다음세대 일부 공개 일정 문구를 최신 공개 사이트 기준으로 보정하고, KO/EN/ZH/ES 번역 키와 `assets/app.js?v=20260705-latest-source2` cache busting을 갱신했다.
+- 검증: `node --check site/v1/assets/app.js`, `bash scripts/sync-to-deploy.sh`, `bash scripts/validate.sh`, Cloudflare Pages 운영 배포, `kcocoh.org`/`www.kcocoh.org`/preview URL에서 최신 교회소식 marker와 새 이미지 경로 확인, 브라우저 DOM에서 최신 갤러리 썸네일 5개 및 최신 카드 6개 확인.
+- 운영 배포 URL은 `https://ee142c44.kcocoh-site-2im.pages.dev`이다.
+
