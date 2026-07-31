@@ -270,4 +270,9 @@
 - 다음세대 일부 공개 일정 문구를 최신 공개 사이트 기준으로 보정하고, KO/EN/ZH/ES 번역 키와 `assets/app.js?v=20260705-latest-source2` cache busting을 갱신했다.
 - 검증: `node --check site/v1/assets/app.js`, `bash scripts/sync-to-deploy.sh`, `bash scripts/validate.sh`, Cloudflare Pages 운영 배포, `kcocoh.org`/`www.kcocoh.org`/preview URL에서 최신 교회소식 marker와 새 이미지 경로 확인, 브라우저 DOM에서 최신 갤러리 썸네일 5개 및 최신 카드 6개 확인.
 - 운영 배포 URL은 `https://ee142c44.kcocoh-site-2im.pages.dev`이다.
+### 2026-07-31 관리자 UI/UX 개선
 
+- 관리자 화면을 운영자가 흐름을 바로 이해할 수 있도록 상단 현황 카드, 좌측 메뉴, 중앙 편집 폼, 우측 미리보기/운영 메모 구조로 재배치했다.
+- 버튼/탭 hover/active 피드백, focus outline, sticky 사이드 패널, 모바일 2열/1열 메뉴 반응형을 추가했다.
+- 로그인 화면과 관리자 탭에 “인증번호 방식이 아니라 owner가 먼저 이메일 아이디와 임시 비밀번호를 등록한 뒤 비밀번호로 로그인”한다는 안내를 추가했다.
+- 저스틴처럼 새 관리자가 인증번호를 기다리는 상황은 계정 미등록 또는 잘못된 로그인 흐름으로 판단하며, owner 계정에서 먼저 관리자 등록을 해야 한다.

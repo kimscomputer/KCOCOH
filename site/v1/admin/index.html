@@ -6,14 +6,14 @@
   <title>KCOC 관리 페이지</title>
   <meta name="robots" content="noindex, nofollow">
   <style>
-    :root { color-scheme: light; --paper:#f8f4ec; --panel:#fffdf8; --ink:#1b1a17; --muted:#6d655c; --line:#e6dccf; --bronze:#a96732; --dark:#1f2327; --green:#48684c; --red:#9d3d34; }
+    :root { color-scheme: light; --paper:#f8f4ec; --panel:#fffdf8; --ink:#1b1a17; --muted:#6d655c; --line:#e6dccf; --bronze:#a96732; --dark:#1f2327; --green:#48684c; --red:#9d3d34; --blue:#355f8a; --gold:#d7b06b; }
     * { box-sizing:border-box; }
-    body { margin:0; background:linear-gradient(180deg,#fbf8f2,#f2eadf); color:var(--ink); font-family:ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans KR",sans-serif; font-size:16px; line-height:1.6; }
+    body { margin:0; background:radial-gradient(circle at top left,rgba(215,176,107,.22),transparent 34%),linear-gradient(180deg,#fbf8f2,#f2eadf); color:var(--ink); font-family:ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans KR",sans-serif; font-size:16px; line-height:1.6; }
     a { color:inherit; }
-    .shell { width:min(1180px, calc(100% - 32px)); margin:0 auto; padding:28px 0 56px; }
-    header { display:flex; justify-content:space-between; align-items:center; gap:18px; padding:18px 0 26px; }
+    .shell { width:min(1240px, calc(100% - 32px)); margin:0 auto; padding:28px 0 56px; }
+    header { display:flex; justify-content:space-between; align-items:center; gap:18px; padding:18px 0 22px; }
     .brand { display:flex; align-items:center; gap:14px; text-decoration:none; }
-    .brand img { height:48px; width:auto; padding:3px 6px; border-radius:12px; background:rgba(255,255,255,.78); }
+    .brand img { height:48px; width:auto; padding:3px 6px; border-radius:12px; background:rgba(255,255,255,.82); box-shadow:0 10px 28px rgba(82,58,34,.10); }
     .eyebrow { margin:0 0 8px; color:var(--bronze); font-size:12px; font-weight:900; letter-spacing:.16em; text-transform:uppercase; }
     h1, h2, h3 { margin:0; line-height:1.15; letter-spacing:-.035em; }
     h1 { font-size:clamp(30px,4vw,46px); }
@@ -21,33 +21,49 @@
     h3 { font-size:20px; }
     p { margin:0; color:var(--muted); }
     .top-actions { display:flex; flex-wrap:wrap; gap:10px; }
-    .btn { min-height:44px; display:inline-flex; align-items:center; justify-content:center; padding:0 16px; border:1px solid var(--line); border-radius:999px; background:rgba(255,255,255,.7); color:var(--ink); font-weight:850; text-decoration:none; cursor:pointer; }
+    .btn { min-height:46px; display:inline-flex; align-items:center; justify-content:center; gap:8px; padding:0 16px; border:1px solid var(--line); border-radius:999px; background:rgba(255,255,255,.74); color:var(--ink); font-weight:850; text-decoration:none; cursor:pointer; transition:transform .16s ease, box-shadow .16s ease, background .16s ease; }
+    .btn:hover { transform:translateY(-1px); box-shadow:0 10px 24px rgba(31,35,39,.10); }
+    .btn:active { transform:translateY(0) scale(.99); }
     .btn.primary { border-color:transparent; background:var(--dark); color:#fff; }
-    .btn.bronze { border-color:transparent; background:var(--bronze); color:#fff; }
+    .btn.bronze { border-color:transparent; background:linear-gradient(135deg,#a96732,#8d552a); color:#fff; }
     .btn.danger { border-color:rgba(157,61,52,.2); color:var(--red); }
-    .grid { display:grid; grid-template-columns:280px minmax(0,1fr); gap:18px; align-items:start; }
-    .panel { border:1px solid var(--line); border-radius:24px; background:rgba(255,253,248,.82); box-shadow:0 20px 54px rgba(82,58,34,.10); overflow:hidden; }
+    .dashboard { display:grid; grid-template-columns:1.35fr repeat(3,minmax(0,1fr)); gap:14px; margin:0 0 18px; }
+    .dash-card { min-height:116px; padding:18px; border:1px solid var(--line); border-radius:22px; background:rgba(255,253,248,.88); box-shadow:0 18px 45px rgba(82,58,34,.08); }
+    .dash-card.primary { background:linear-gradient(135deg,#1f2327,#34404a); color:#fff; border-color:transparent; }
+    .dash-card.primary p, .dash-card.primary .dash-label { color:rgba(255,255,255,.76); }
+    .dash-label { color:var(--muted); font-size:12px; font-weight:900; letter-spacing:.12em; text-transform:uppercase; }
+    .dash-value { display:block; margin-top:8px; font-size:22px; font-weight:950; letter-spacing:-.04em; }
+    .dash-card p { margin-top:8px; font-size:14px; }
+    .grid { display:grid; grid-template-columns:292px minmax(0,1fr) 300px; gap:18px; align-items:start; }
+    .panel { border:1px solid var(--line); border-radius:24px; background:rgba(255,253,248,.86); box-shadow:0 20px 54px rgba(82,58,34,.10); overflow:hidden; }
     .panel-pad { padding:24px; }
+    .side-panel { position:sticky; top:16px; }
     .status { margin-bottom:18px; padding:16px 18px; border:1px solid var(--line); border-radius:18px; background:#fff; }
     .status strong { display:block; margin-bottom:4px; }
     .status.ok { border-color:rgba(72,104,76,.28); background:#f4faf3; }
     .status.warn { border-color:rgba(169,103,50,.30); background:#fff7eb; }
     .status.error { border-color:rgba(157,61,52,.26); background:#fff2f0; }
     .tabs { display:grid; gap:8px; padding:10px; }
-    .tab { width:100%; min-height:48px; display:flex; align-items:center; justify-content:space-between; gap:10px; padding:0 14px; border:0; border-radius:16px; background:transparent; color:var(--ink); font-weight:850; text-align:left; cursor:pointer; }
-    .tab[aria-selected="true"] { background:var(--dark); color:#fff; }
+    .tab { width:100%; min-height:52px; display:flex; align-items:center; justify-content:space-between; gap:10px; padding:0 14px; border:0; border-radius:16px; background:transparent; color:var(--ink); font-weight:850; text-align:left; cursor:pointer; }
+    .tab:hover { background:#f3eadf; }
+    .tab[aria-selected="true"] { background:var(--dark); color:#fff; box-shadow:0 14px 28px rgba(31,35,39,.18); }
     .tab span { color:inherit; opacity:.72; font-size:12px; font-weight:900; letter-spacing:.08em; }
+    .quick-help { display:grid; gap:12px; padding:16px; border-top:1px solid var(--line); background:rgba(255,255,255,.48); }
+    .help-step { display:grid; grid-template-columns:28px minmax(0,1fr); gap:10px; align-items:start; color:var(--muted); font-size:14px; }
+    .help-step b { display:grid; place-items:center; width:28px; height:28px; border-radius:999px; background:#efe3d4; color:#714114; }
     form { display:grid; gap:18px; }
     .form-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:16px; }
     label { display:grid; gap:7px; color:#3f3932; font-size:13px; font-weight:900; letter-spacing:.04em; text-transform:uppercase; }
     input, textarea, select { width:100%; border:1px solid var(--line); border-radius:14px; background:#fff; color:var(--ink); padding:12px 13px; font:inherit; line-height:1.45; }
+    input:focus, textarea:focus, select:focus { outline:3px solid rgba(169,103,50,.18); border-color:rgba(169,103,50,.55); }
     textarea { min-height:118px; resize:vertical; }
     .wide { grid-column:1 / -1; }
-    .preview { display:grid; gap:12px; margin-top:20px; padding:18px; border:1px dashed #d6c8b7; border-radius:18px; background:rgba(255,255,255,.56); }
+    .preview { display:grid; gap:12px; }
     .preview-card { padding:16px; border:1px solid var(--line); border-radius:16px; background:#fff; }
     .row { display:flex; flex-wrap:wrap; gap:10px; align-items:center; justify-content:space-between; }
     .list { display:grid; gap:10px; margin-top:14px; }
     .item { padding:14px; border:1px solid var(--line); border-radius:16px; background:#fff; }
+    .notice { margin-top:14px; padding:14px; border:1px solid rgba(53,95,138,.22); border-radius:16px; background:#f1f7fc; color:#27496a; }
     .muted { color:var(--muted); font-size:14px; }
     .hidden { display:none !important; }
 
@@ -63,7 +79,9 @@
     .admin-user-card { display:grid; grid-template-columns:minmax(0,1fr) auto; gap:12px; align-items:center; padding:14px; border:1px solid var(--line); border-radius:16px; background:#fff; }
     .admin-user-card strong { display:block; }
     .badge { display:inline-flex; align-items:center; min-height:24px; padding:0 9px; border-radius:999px; background:#f0e5d8; color:#6b3d17; font-size:12px; font-weight:900; letter-spacing:.04em; }
-    @media (max-width:860px){ header{align-items:flex-start; flex-direction:column;} .grid{grid-template-columns:1fr;} .form-grid,.media-grid{grid-template-columns:1fr;} .top-actions{width:100%;} .btn{flex:1;} }
+    @media (max-width:1080px){ .dashboard{grid-template-columns:repeat(2,minmax(0,1fr));} .grid{grid-template-columns:260px minmax(0,1fr);} .grid > aside:last-child{grid-column:1 / -1;} .side-panel{position:static;} }
+    @media (max-width:860px){ header{align-items:flex-start; flex-direction:column;} .dashboard,.grid{grid-template-columns:1fr;} .form-grid,.media-grid{grid-template-columns:1fr;} .top-actions{width:100%;} .btn{flex:1;} .tabs{grid-template-columns:repeat(2,minmax(0,1fr));} .tab{min-height:48px;} }
+    @media (max-width:520px){ .shell{width:min(100% - 22px,1240px); padding-top:14px;} .tabs{grid-template-columns:1fr;} .panel-pad,.dash-card{padding:16px;} .admin-user-card{grid-template-columns:1fr;} }
   </style>
 </head>
 <body>
@@ -83,13 +101,36 @@
       </div>
     </header>
 
+    <section class="dashboard" aria-label="관리 현황 요약">
+      <article class="dash-card primary">
+        <span class="dash-label">오늘의 관리 흐름</span>
+        <strong class="dash-value">수정 → 미리보기 → 저장</strong>
+        <p>왼쪽에서 영역을 선택하고, 오른쪽 운영 메모에서 공개 반영 상태를 확인하세요.</p>
+      </article>
+      <article class="dash-card">
+        <span class="dash-label">관리자 등록</span>
+        <strong class="dash-value">Owner 전용</strong>
+        <p>인증번호 방식이 아니라 등록된 이메일 아이디와 비밀번호로 로그인합니다.</p>
+      </article>
+      <article class="dash-card">
+        <span class="dash-label">업로드</span>
+        <strong class="dash-value">사진 / 주보</strong>
+        <p>R2 저장소에 올리고 공개 갤러리와 주보 목록에 반영합니다.</p>
+      </article>
+      <article class="dash-card">
+        <span class="dash-label">번역</span>
+        <strong class="dash-value">KO 기준 자동</strong>
+        <p>Hero 문구 저장 시 영어·중국어·스페인어가 함께 생성됩니다.</p>
+      </article>
+    </section>
+
     <div id="status" class="status warn" role="status" aria-live="polite">
       <strong>관리 백엔드 확인 중</strong>
       <span>Cloudflare Pages Functions와 저장소 연결 상태를 확인하고 있습니다.</span>
     </div>
 
     <main class="grid">
-      <aside class="panel" aria-label="관리 메뉴">
+      <aside class="panel side-panel" aria-label="관리 메뉴">
         <div class="tabs" role="tablist">
           <button class="tab" type="button" role="tab" aria-selected="true" data-section="hero">첫 화면 <span>Hero</span></button>
           <button class="tab" type="button" role="tab" aria-selected="false" data-section="services">예배 시간 <span>Times</span></button>
@@ -99,6 +140,11 @@
           <button class="tab" type="button" role="tab" aria-selected="false" data-section="contact">연락처 <span>Contact</span></button>
           <button class="tab" type="button" role="tab" aria-selected="false" data-section="admins">관리자 <span>Users</span></button>
           <button class="tab" type="button" role="tab" aria-selected="false" data-section="publish">게시 상태 <span>Publish</span></button>
+        </div>
+        <div class="quick-help" aria-label="빠른 사용 순서">
+          <div class="help-step"><b>1</b><span>바꿀 영역을 선택합니다.</span></div>
+          <div class="help-step"><b>2</b><span>한국어 원문을 먼저 정리합니다.</span></div>
+          <div class="help-step"><b>3</b><span>오른쪽 미리보기를 확인한 뒤 저장합니다.</span></div>
         </div>
       </aside>
 
@@ -197,6 +243,7 @@
             <p class="eyebrow">Admin Users</p>
             <h2>관리자 계정 관리</h2>
             <p class="muted">관리 페이지에 로그인할 수 있는 관리자 계정을 추가, 수정, 비활성화, 삭제합니다. 초기 관리자 비밀번호는 계속 백업 로그인으로 사용할 수 있습니다.</p>
+            <div class="notice"><strong>저스틴 등록/인증번호 안내</strong><br>이 관리자 시스템은 문자/이메일 인증번호를 기다리는 방식이 아닙니다. 최고 관리자(owner)가 이 화면에서 저스틴의 이메일 아이디와 임시 비밀번호를 먼저 등록해야 하며, 등록 후에는 로그인 화면에서 이메일과 비밀번호로 바로 접속합니다.</div>
             <div class="form-grid" style="margin-top:20px">
               <label>관리자 이름<input id="adminName" value="KCOC 관리자"></label>
               <label>관리자 이메일 아이디<input id="adminUsername" type="email" placeholder="admin@example.org"></label>
@@ -215,11 +262,15 @@
             <div class="list" id="backendFacts"></div>
           </div>
         </form>
+      </section>
+
+      <aside class="panel panel-pad side-panel">
         <div class="preview">
           <div class="row"><h3>미리보기 / 운영 메모</h3><button class="btn" type="button" id="exportBtn">JSON 내보내기</button></div>
           <div class="preview-card" id="previewBox">입력 값을 수정하면 이곳에 요약이 표시됩니다.</div>
+          <div class="notice"><strong>등록이 안 될 때</strong><br>관리자 추가는 owner 세션에서만 가능합니다. 인증번호가 오지 않는 경우 Cloudflare Access가 아니라 KCOC 자체 로그인 화면인지 확인하고, 먼저 owner가 계정을 등록해 주세요.</div>
         </div>
-      </section>
+      </aside>
     </main>
   </div>
   <script src="admin.js" defer></script>
